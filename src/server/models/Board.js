@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const autopopulate = require("mongoose-autopopulate");
 const Schema = mongoose.Schema;
 
 const superheroes = require("superheroes");
@@ -8,7 +9,13 @@ const boardSchema = new Schema({
   title: {
     type: String
   },
-  columns: { type: Array, default: ["To do", "Doing", "Done"] }
+  columns: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Column",
+      autopopulate: true
+    }
+  ]
 });
 
 boardSchema.pre("save", function(next) {
@@ -24,5 +31,7 @@ boardSchema.pre("save", function(next) {
     next(err);
   }
 });
+
+boardSchema.plugin(autopopulate);
 
 module.exports = mongoose.model("Board", boardSchema);
