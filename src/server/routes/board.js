@@ -35,7 +35,7 @@ router.post("/edit", (req, res) => {
   }
 });
 
-router.get("/", (req, res) => {
+router.get("/data", (req, res) => {
   //browse view in which you see all exisiting boards
   Board.find({})
     .then(boards => {
