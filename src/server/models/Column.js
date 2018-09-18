@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const autopopulate = require("mongoose-autopopulate");
 
 const columnSchema = new Schema({
-  title: String,
+  title: { type: String, required: true },
   limit: Number,
   order: Number,
   ticket: [
