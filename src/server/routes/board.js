@@ -35,11 +35,23 @@ router.post("/edit", (req, res) => {
   }
 });
 
-router.get("/data", (req, res) => {
+router.get("/data/all", (req, res) => {
   //browse view in which you see all exisiting boards
   Board.find({})
     .then(boards => {
       res.send(boards);
+    })
+    .catch(err => {
+      res.send({ error: err });
+    });
+});
+
+router.get("/data/:id", (req, res) => {
+  const { id } = req.params;
+  //browse view in which you see all exisiting boards
+  Board.findById({ _id: id })
+    .then(board => {
+      res.send(board);
     })
     .catch(err => {
       res.send({ error: err });

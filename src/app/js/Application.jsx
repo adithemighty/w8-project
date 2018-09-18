@@ -8,6 +8,7 @@ import Home from "./Home";
 import Navigation from "./Navigation";
 import Profile from "./Profile";
 import Board from "./Board";
+import BoardBrowse from "./BoardBrowse";
 import NotFound from "./NotFound";
 // import api from "./utils/api";
 
@@ -39,9 +40,8 @@ class Application extends React.Component {
               render={() => <Home user={this.state.user} />}
             />
             <Route
-              exact
               path="/b"
-              render={() => <Board user={this.state.user} />}
+              render={() => <BoardBrowse user={this.state.user} />}
             />
             <Route
               exact
