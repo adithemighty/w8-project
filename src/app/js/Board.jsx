@@ -13,15 +13,31 @@ class Board extends Component {
   componentDidMount() {
     api.get("/b/data").then(data => {
       this.setState(function(prevState, props) {
+        const newState = {
+          title: "",
+          columns: []
+        };
         const { title, columns } = data[0];
-        return { title, columns };
+        newState.title = title;
+
+        newState.columns = columns.map(({ title, ticket, _id }) => {
+          return {
+            title,
+            ticket,
+            _id
+          };
+        });
+
+        return { ...newState };
       });
     });
   }
 
   onDragEnd = result => {
-    console.log("state", this.state.columns);
-    console.log(result);
+    console.log("columns", this.state.columns);
+    console.log("source", result.source.droppableId);
+    console.log("destination", result.destination.droppableId);
+    console.log("result", result);
   };
 
   render() {
@@ -32,9 +48,17 @@ class Board extends Component {
       return (
         <div>
           {this.state.title}
+
           <DragDropContext onDragEnd={this.onDragEnd}>
             {this.state.columns.map(column => {
-              return <Column key={column.title} columnInfo={column} />;
+              return (
+                <Column
+                  key={column.title}
+                  title={column.title}
+                  id={column._id}
+                  tickets={column.ticket}
+                />
+              );
             })}
           </DragDropContext>
         </div>
