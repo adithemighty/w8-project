@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Board = require("../src/server/models/Board");
 const Ticket = require("../src/server/models/Ticket");
 const Column = require("../src/server/models/Column");
+const User = require("../src/server/models/User");
 
 const firstSetTickets = [
   { title: "Lorem1" },
@@ -59,7 +60,7 @@ const secondSetTickets = [
     tickets.forEach(ticket => {
       allTicketIds.push(ticket.id);
     });
-    allTicketIds = allTicketIds.slice(5);
+    allTicketIds = allTicketIds.slice(6);
   });
 
   await Column.findByIdAndUpdate(
