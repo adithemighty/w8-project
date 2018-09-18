@@ -32,12 +32,37 @@ class Board extends Component {
     });
   }
 
-  reorder = (listName, list, oldPos, newPos) => {
+  reorder = ({ listName, list, oldPos, newPos }) => {
     var movingElement = list[oldPos];
-    //delete element from old position
-    list.splice(oldPos, 1);
+    if (oldPos >= 0) {
+      //delete element from old position
+      list.splice(oldPos, 1);
+    }
     //add copy of element to array in the new position
     list.splice(newPos, 0, movingElement);
+
+    //refresh state
+    this.setState(function(prevState, props) {
+      const newState = prevState;
+      newState.columns[listName].tickets = list;
+      return newState;
+    });
+  };
+
+  addToList = ({ listName, list, pos, element }) => {
+    list.splice(pos, 0, element);
+    this.setState(function(prevState, props) {
+      const newState = prevState;
+      newState.columns[listName].tickets = list;
+      return newState;
+    });
+  };
+
+  removeFromList = ({ listName, list, element }) => {
+    //find element in array
+    const pos = list.indexOf(element);
+    //remove element from array
+    list.splice(pos, 1);
     this.setState(function(prevState, props) {
       const newState = prevState;
       newState.columns[listName].tickets = list;
@@ -51,23 +76,26 @@ class Board extends Component {
     const initIndex = result.source.index;
     const endIndex = result.destination.index;
 
-    console.log("result", result);
     //DnD inside of one column
     if (startColumn === endColumn) {
-      //1. find column in state
-      //   console.log("movement inside of one column");
-      //   console.log(
-      //     `movement from position ${initIndex} to ${endIndex} inside ${
-      //       this.state.columns[startColumn].title
-      //     }`
-      //   );
-      //2. define new index for column
-      this.reorder(
-        startColumn,
-        this.state.columns[startColumn].tickets,
-        initIndex,
-        endIndex
-      );
+      this.reorder({
+        listName: startColumn,
+        list: this.state.columns[startColumn].tickets,
+        oldPos: initIndex,
+        newPos: endIndex
+      });
+    } else {
+      this.addToList({
+        listName: endColumn,
+        list: this.state.columns[endColumn].tickets,
+        pos: endIndex,
+        element: this.state.columns[startColumn].tickets[initIndex]
+      });
+      this.removeFromList({
+        listName: startColumn,
+        list: this.state.columns[startColumn].tickets,
+        element: this.state.columns[startColumn].tickets[initIndex]
+      });
     }
   };
 
@@ -76,7 +104,6 @@ class Board extends Component {
       console.log("it's null");
       return <div>Loading</div>;
     } else {
-      console.log(this.state);
       return (
         <div>
           {this.state.title}
