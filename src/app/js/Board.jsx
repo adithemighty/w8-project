@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import api from "./utils/api";
 import Column from "./Column";
 import { DragDropContext } from "react-beautiful-dnd";
+import { withRouter } from "react-router";
 
 class Board extends Component {
   constructor(props) {
@@ -11,13 +12,16 @@ class Board extends Component {
   }
 
   componentDidMount() {
-    api.get("/b/data").then(data => {
+    const { id } = this.props.match.params;
+    //get this.props.match.params.id
+    api.get(`/b/data/${id}`).then(board => {
+      console.log(board);
       this.setState(function(prevState, props) {
         const newState = {
           title: "",
           columns: {}
         };
-        const { title, columns } = data[0];
+        const { title, columns } = board;
         newState.title = title;
 
         columns.forEach(({ title, ticket, _id }) => {
@@ -30,6 +34,7 @@ class Board extends Component {
         return { ...newState };
       });
     });
+    console.log("props", this.props);
   }
 
   reorder = ({ listName, list, oldPos, newPos }) => {
@@ -127,4 +132,4 @@ class Board extends Component {
   }
 }
 
-export default Board;
+export default withRouter(Board);
