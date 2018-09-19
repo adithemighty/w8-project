@@ -20,7 +20,6 @@ class Board extends Component {
     const { id } = this.props.match.params;
     //get this.props.match.params.id
     api.get(`/b/data/${id}`).then(board => {
-      console.log(board);
       this.setState(function(prevState, props) {
         const { title, columns } = board;
         const newState = {
@@ -111,7 +110,6 @@ class Board extends Component {
 
   render() {
     if (this.state == null) {
-      console.log("it's null");
       return <div>Loading</div>;
     } else {
       return (
