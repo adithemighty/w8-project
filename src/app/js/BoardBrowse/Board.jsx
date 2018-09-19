@@ -8,44 +8,47 @@ import { withRouter } from "react-router";
 class Board extends Component {
   constructor(props) {
     super(props);
-    this.state;
+    this.state = {
+      id: "",
+      columns: {},
+      changed: false
+    };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   boardChangedHandler = () => {
-    console.log("hallo from boardChangedHandler");
     //check if board changed
     if (this.state.changed) {
       //update the columns
 
       const columns = Object.keys(this.state.columns);
-      console.log("column keys ", columns);
       columns.forEach((columnName, ind) => {
         const column = this.state.columns[columnName];
-        console.log("column ", column);
         //if yes, send data to BE
-        api
-          .post("/c/update", {
-            title: "Hihi" + ind,
-            id: column.id,
-            tickets: column.tickets
-          })
-          .then(() => {
-            console.log("i am in this get board data");
-          });
+        api.post("/c/update", {
+          title: column.title,
+          id: column.id,
+          tickets: column.tickets
+        });
       });
+
       this.getBoardData();
     }
     //set this.state.changed to false
-    //trigger getBoardData
-    //if no do nothing
   };
 
   componentDidMount() {
-    // const intervalId = setInterval(this.boardChangedHandler, 30000);
-    // this.setState({ intervalId: intervalId });
-    this.getBoardData();
+    const intervalId = setInterval(this.boardChangedHandler, 30000);
     // store intervalId in the state so it can be accessed later:
+    this.setState({ intervalId: intervalId });
+
+    this.getBoardData();
+  }
+
+  componentWillUnmount() {
+    // use intervalId from the state to clear the interval
+    this.boardChangedHandler();
+    clearInterval(this.state.intervalId);
   }
 
   getBoardData = () => {
@@ -57,12 +60,9 @@ class Board extends Component {
         const newState = {
           title: "",
           columns: {},
-          id: id,
-          changed: true
+          id: id
         };
         newState.title = title;
-
-        console.log(board.columns);
 
         columns.forEach(({ title, ticket, _id }) => {
           newState.columns[title] = {
@@ -88,6 +88,7 @@ class Board extends Component {
     //refresh state
     this.setState(function(prevState, props) {
       const newState = prevState;
+      newState.changed = true;
       newState.columns[listName].tickets = list;
       return newState;
     });
@@ -97,6 +98,7 @@ class Board extends Component {
     list.splice(pos, 0, element);
     this.setState(function(prevState, props) {
       const newState = prevState;
+      newState.changed = true;
       newState.columns[listName].tickets = list;
       return newState;
     });
@@ -109,6 +111,7 @@ class Board extends Component {
     list.splice(pos, 1);
     this.setState(function(prevState, props) {
       const newState = prevState;
+      newState.changed = true;
       newState.columns[listName].tickets = list;
       return newState;
     });
