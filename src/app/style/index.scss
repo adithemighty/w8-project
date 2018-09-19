@@ -3,6 +3,8 @@ $secondary-color: #ff686b;
 $text-color: #333;
 $grey: rgb(200, 200, 200);
 
-@import './base.scss';
-@import './components.scss';
-@import './navigation.scss';
+@import "./base.scss";
+@import "./components.scss";
+@import "./components/board.scss";
+@import "./components/column.scss";
+@import "./navigation.scss";

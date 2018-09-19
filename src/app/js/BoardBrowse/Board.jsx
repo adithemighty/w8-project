@@ -113,10 +113,10 @@ class Board extends Component {
       return <div>Loading</div>;
     } else {
       return (
-        <div>
-          {this.state.title}
+        <div className="board">
+          <p className="title">{this.state.title}</p>
 
-          <div className="board">
+          <div className="board-container">
             <DragDropContext onDragEnd={this.onDragEnd}>
               {Object.keys(this.state.columns).map(columnName => {
                 const column = this.state.columns;

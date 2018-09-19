@@ -1,13 +1,6 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-const style = {
-  border: "1px solid grey",
-  margin: "5px",
-  width: "300px",
-  height: "50px"
-};
-
 const Card = props => {
   const { title, blocker, _id } = props.ticket;
   return (
@@ -15,7 +8,7 @@ const Card = props => {
       {(provided, snapshot) => {
         return (
           <div
-            style={style}
+            className="card"
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
