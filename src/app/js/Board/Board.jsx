@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import api from "./utils/api";
-import Column from "./Column";
+import api from "../utils/api";
+import Column from "../Column";
+import ColumnCreate from "../Column/ColumnCreate";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
 
@@ -12,14 +13,18 @@ class Board extends Component {
   }
 
   componentDidMount() {
+    this.getBoardData();
+  }
+
+  getBoardData = () => {
     const { id } = this.props.match.params;
     //get this.props.match.params.id
     api.get(`/b/data/${id}`).then(board => {
-      console.log(board);
       this.setState(function(prevState, props) {
         const newState = {
           title: "",
-          columns: {}
+          columns: {},
+          id: id
         };
         const { title, columns } = board;
         newState.title = title;
@@ -34,8 +39,7 @@ class Board extends Component {
         return { ...newState };
       });
     });
-    console.log("props", this.props);
-  }
+  };
 
   reorder = ({ listName, list, oldPos, newPos }) => {
     var movingElement = list[oldPos];
@@ -113,19 +117,26 @@ class Board extends Component {
         <div>
           {this.state.title}
 
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            {Object.keys(this.state.columns).map(columnName => {
-              const column = this.state.columns;
-              return (
-                <Column
-                  key={column[columnName].title}
-                  title={column[columnName].title}
-                  id={column[columnName].id}
-                  tickets={column[columnName].tickets}
-                />
-              );
-            })}
-          </DragDropContext>
+          <div className="board">
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              {Object.keys(this.state.columns).map(columnName => {
+                const column = this.state.columns;
+                return (
+                  <Column
+                    key={column[columnName].title}
+                    title={column[columnName].title}
+                    id={column[columnName].id}
+                    tickets={column[columnName].tickets}
+                  />
+                );
+              })}
+            </DragDropContext>
+            <ColumnCreate
+              columns={this.state.columns}
+              boardId={this.state.id}
+              getBoardData={this.getBoardData}
+            />
+          </div>
         </div>
       );
     }

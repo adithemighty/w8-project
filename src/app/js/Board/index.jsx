@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from "./utils/api";
+import api from "../utils/api";
 import Board from "./Board";
 import { Link, Route, Switch } from "react-router-dom";
 

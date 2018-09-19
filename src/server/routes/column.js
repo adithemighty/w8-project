@@ -19,9 +19,4 @@ router.post("/new", (req, res) => {
   });
 });
 
-// await Column.findByIdAndUpdate(
-//     { _id: columnId1 },
-//     { $push: { ticket: { $each: allTicketIds } } }
-//   );
-
 module.exports = router;
