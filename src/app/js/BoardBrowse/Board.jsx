@@ -20,13 +20,14 @@ class Board extends Component {
     const { id } = this.props.match.params;
     //get this.props.match.params.id
     api.get(`/b/data/${id}`).then(board => {
+      console.log(board);
       this.setState(function(prevState, props) {
+        const { title, columns } = board;
         const newState = {
           title: "",
           columns: {},
           id: id
         };
-        const { title, columns } = board;
         newState.title = title;
 
         columns.forEach(({ title, ticket, _id }) => {
@@ -126,6 +127,8 @@ class Board extends Component {
                     key={column[columnName].title}
                     title={column[columnName].title}
                     id={column[columnName].id}
+                    getBoardData={this.getBoardData}
+                    boardId={this.state.id}
                     tickets={column[columnName].tickets}
                   />
                 );
