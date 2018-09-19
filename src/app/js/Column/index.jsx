@@ -11,22 +11,30 @@ const Column = props => {
   });
 
   return (
-    <Droppable droppableId={title}>
-      {(provided, snapshot) => (
-        <div ref={provided.innerRef} {...provided.droppableProps}>
-          <p>{title}</p>
-          <DeleteColumnButton
-            sourceColumnId={id}
-            columnHasTickets={tickets.length > 0 ? true : false}
-            getBoardData={props.getBoardData}
-            boardId={boardId}
-            columns={columns}
-          />
-          {ticketsList}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    <div className="column">
+      <p className="title">{title}</p>
+      <DeleteColumnButton
+        sourceColumnId={id}
+        columnHasTickets={tickets.length > 0 ? true : false}
+        getBoardData={props.getBoardData}
+        boardId={boardId}
+        columns={columns}
+      />
+      <Droppable droppableId={title}>
+        {(provided, snapshot) => (
+          <div
+            className="column-container"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <div className="column-tickets">
+              {ticketsList}
+              {provided.placeholder}
+            </div>
+          </div>
+        )}
+      </Droppable>
+    </div>
   );
 };
 

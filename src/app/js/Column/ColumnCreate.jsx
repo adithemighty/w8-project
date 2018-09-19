@@ -39,7 +39,7 @@ class ColumnCreate extends Component {
 
   render() {
     return (
-      <div>
+      <div className="column">
         <input
           value={this.state.columnTitle}
           onChange={event =>
