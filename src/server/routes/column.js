@@ -19,4 +19,48 @@ router.post("/new", (req, res) => {
   });
 });
 
+router.post("/delete", (req, res) => {
+  const { sourceColumnId, destinationColumnId, boardId } = req.body;
+  let ticketsFromSource = [];
+
+  //if there there were tickets in the source column
+  //there will be a destination
+  if (typeof destinationColumnId !== "undefined") {
+    //find column by id
+    Column.findById({ _id: sourceColumnId }).then(column => {
+      //get all tickets from source
+      ticketsFromSource = column.ticket.map(ticket => {
+        return ticket._id;
+      });
+      Column.findByIdAndUpdate(
+        { _id: destinationColumnId },
+        //add them to the destination column
+        { $push: { ticket: { $each: ticketsFromSource } } },
+        { new: true }
+      ).then(column => {
+        Column.findByIdAndRemove({ _id: sourceColumnId }).then(() => {
+          Board.findByIdAndUpdate(
+            { _id: boardId },
+            { $pull: { columns: sourceColumnId } },
+            { safe: true }
+          ).then(board => {
+            res.send(board);
+          });
+        });
+      });
+    });
+  } else {
+    //there were no tickets in the source column
+    Column.findByIdAndRemove({ _id: sourceColumnId }).then(column => {
+      Board.findByIdAndUpdate(
+        { _id: boardId },
+        { $pull: { columns: sourceColumnId } },
+        { safe: true }
+      ).then(board => {
+        res.send(board);
+      });
+    });
+  }
+});
+
 module.exports = router;
