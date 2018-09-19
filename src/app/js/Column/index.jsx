@@ -8,17 +8,23 @@ const Column = props => {
   const ticketsList = tickets.map((ticket, ind) => {
     return <Card key={ind} index={ind} ticket={ticket} />;
   });
+  const deleteButton =
+    tickets.length === 0 ? (
+      <DeleteColumn
+        sourceColumnId={id}
+        columnHasTickets={tickets.length > 0 ? true : false}
+        getBoardData={props.getBoardData}
+        boardId={boardId}
+      />
+    ) : (
+      ""
+    );
   return (
     <Droppable droppableId={title}>
       {(provided, snapshot) => (
         <div ref={provided.innerRef} {...provided.droppableProps}>
           <p>{title}</p>
-          <DeleteColumn
-            sourceColumnId={id}
-            columnHasTickets={tickets.length > 0 ? true : false}
-            getBoardData={props.getBoardData}
-            boardId={boardId}
-          />
+          {deleteButton}
           {ticketsList}
           {provided.placeholder}
         </div>
