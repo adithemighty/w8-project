@@ -7,9 +7,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
+import Typography from "@material-ui/core/Typography";
 
 class DeleteDialog extends React.Component {
-  handleListItemClick = value => {};
+  handleListItemClick = value => {
+    this.props.onSelect(value);
+  };
 
   render() {
     const { classes, onClose, selectedValue, ...other } = this.props;
@@ -20,11 +23,13 @@ class DeleteDialog extends React.Component {
         aria-labelledby="simple-dialog-title"
         {...other}
       >
-        <DialogTitle id="simple-dialog-title">Choose a column</DialogTitle>
+        <DialogTitle id="simple-dialog-title">Column not empty</DialogTitle>
+        <Typography variant="subheading">
+          Where should the tickets be moved?
+        </Typography>
         <div>
           <List>
             {Object.keys(this.props.columns).map(column => {
-              console.log("map colum", this.props.columns[column]);
               return (
                 <ListItem
                   button
@@ -43,7 +48,7 @@ class DeleteDialog extends React.Component {
             <Button onClick={this.props.onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleOk} color="primary">
+            <Button onClick={this.props.onDelete} color="primary">
               Ok
             </Button>
           </DialogActions>
@@ -56,7 +61,7 @@ class DeleteDialog extends React.Component {
 class DeleteColumnButton extends Component {
   constructor(props) {
     super(props);
-    console.log("DeleteColumnButton props", this.props);
+
     this.state = {
       open: false,
       selectedValue: ""
@@ -69,6 +74,18 @@ class DeleteColumnButton extends Component {
     });
   };
 
+  handleClose = () => {
+    this.setState((prevState, props) => {
+      return { open: false };
+    });
+  };
+
+  handleSelection = value => {
+    this.setState((prevState, props) => {
+      return { selectedValue: value };
+    });
+  };
+
   handleDelete = () => {
     const { sourceColumnId, boardId } = this.props;
     const destinationColumnId = this.state.selectedValue;
@@ -77,13 +94,13 @@ class DeleteColumnButton extends Component {
       api.post("/c/delete", { sourceColumnId, boardId }).then(() => {
         this.props.getBoardData();
       });
+    } else {
+      api
+        .post("/c/delete", { sourceColumnId, boardId, destinationColumnId })
+        .then(() => {
+          this.props.getBoardData();
+        });
     }
-  };
-
-  handleClose = value => {
-    this.setState((prevState, props) => {
-      return { open: false };
-    });
   };
 
   render() {
@@ -104,6 +121,8 @@ class DeleteColumnButton extends Component {
           selectedValue={this.state.selectedValue}
           open={this.state.open}
           onClose={this.handleClose}
+          onSelect={this.handleSelection}
+          onDelete={this.handleDelete}
         />
       </div>
     );
