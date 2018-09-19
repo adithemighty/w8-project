@@ -124,6 +124,7 @@ class Board extends Component {
                 const column = this.state.columns;
                 return (
                   <Column
+                    columns={this.state.columns}
                     key={column[columnName].title}
                     title={column[columnName].title}
                     id={column[columnName].id}
