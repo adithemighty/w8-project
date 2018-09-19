@@ -12,8 +12,40 @@ class Board extends Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
+  boardChangedHandler = () => {
+    console.log("hallo from boardChangedHandler");
+    //check if board changed
+    if (this.state.changed) {
+      //update the columns
+
+      const columns = Object.keys(this.state.columns);
+      console.log("column keys ", columns);
+      columns.forEach((columnName, ind) => {
+        const column = this.state.columns[columnName];
+        console.log("column ", column);
+        //if yes, send data to BE
+        api
+          .post("/c/update", {
+            title: "Hihi" + ind,
+            id: column.id,
+            tickets: column.tickets
+          })
+          .then(() => {
+            console.log("i am in this get board data");
+          });
+      });
+      this.getBoardData();
+    }
+    //set this.state.changed to false
+    //trigger getBoardData
+    //if no do nothing
+  };
+
   componentDidMount() {
+    // const intervalId = setInterval(this.boardChangedHandler, 30000);
+    // this.setState({ intervalId: intervalId });
     this.getBoardData();
+    // store intervalId in the state so it can be accessed later:
   }
 
   getBoardData = () => {
@@ -25,9 +57,12 @@ class Board extends Component {
         const newState = {
           title: "",
           columns: {},
-          id: id
+          id: id,
+          changed: true
         };
         newState.title = title;
+
+        console.log(board.columns);
 
         columns.forEach(({ title, ticket, _id }) => {
           newState.columns[title] = {
@@ -114,6 +149,7 @@ class Board extends Component {
     } else {
       return (
         <div className="board">
+          <button onClick={this.boardChangedHandler}>Update</button>
           <p className="title">{this.state.title}</p>
 
           <div className="board-container">
