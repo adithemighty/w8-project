@@ -5,8 +5,7 @@ class ColumnCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columnTitle: "",
-      boardId: this.props.boardId
+      columnTitle: ""
     };
     this.handleInput = this.handleInput.bind(this);
   }
@@ -26,7 +25,7 @@ class ColumnCreate extends Component {
   handleSubmit = e => {
     api
       .post("/c/new", {
-        boardId: this.state.boardId,
+        boardId: this.props.boardId,
         columnTitle: this.state.columnTitle
       })
       .then(result => {
