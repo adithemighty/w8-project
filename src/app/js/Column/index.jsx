@@ -5,7 +5,6 @@ import { Droppable } from "react-beautiful-dnd";
 
 const Column = props => {
   const { title, tickets, id, boardId, columns } = props;
-  console.log("props", props);
 
   const ticketsList = tickets.map((ticket, ind) => {
     return <Card key={ind} index={ind} ticket={ticket} />;

@@ -65,7 +65,6 @@ class Board extends Component {
         newState.title = title;
 
         columns.forEach(({ title, ticket, _id, limit }) => {
-          console.log(limit);
           newState.columns[title] = {
             tickets: ticket,
             id: _id,
@@ -125,6 +124,12 @@ class Board extends Component {
     const initIndex = result.source.index;
     const endIndex = result.destination.index;
 
+    const destinationColumnLimit = this.state.columns[endColumn].limit;
+    const destinationColumnTickets = this.state.columns[endColumn].tickets
+      .length;
+
+    console.log(destinationColumnLimit);
+
     //DnD inside of one column
     if (startColumn === endColumn) {
       this.reorder({
@@ -133,7 +138,10 @@ class Board extends Component {
         oldPos: initIndex,
         newPos: endIndex
       });
-    } else {
+    } else if (
+      destinationColumnTickets < destinationColumnLimit ||
+      typeof destinationColumnLimit === "undefined"
+    ) {
       this.addToList({
         listName: endColumn,
         list: this.state.columns[endColumn].tickets,
