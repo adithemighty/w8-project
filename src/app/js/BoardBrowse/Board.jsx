@@ -130,6 +130,10 @@ class Board extends Component {
   };
 
   onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+
     const startColumn = result.source.droppableId;
     const endColumn = result.destination.droppableId;
     const initIndex = result.source.index;
