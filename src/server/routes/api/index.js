@@ -4,6 +4,7 @@ const router = express.Router();
 const authRoutes = require("./auth");
 const boardRoutes = require("../board");
 const columnRoutes = require("../column");
+const ticketRoutes = require("../ticket");
 
 const { userMiddleware, checkLoggedIn } = require("../../utils/middleware");
 
@@ -21,6 +22,7 @@ router.get("/protected", checkLoggedIn, (req, res) => {
 router.use("/auth", authRoutes);
 router.use("/b", boardRoutes);
 router.use("/c", columnRoutes);
+router.use("/t", ticketRoutes);
 
 router.use((req, res) => {
   res.status(404).send({ error: "not-found" });
