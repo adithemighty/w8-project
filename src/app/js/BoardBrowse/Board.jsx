@@ -25,7 +25,7 @@ class Board extends Component {
       columns.forEach((columnName, ind) => {
         const column = this.state.columns[columnName];
         //if yes, send data to BE
-        api.post("/c/update", {
+        api.post("/api/c/update", {
           title: column.title,
           id: column.id,
           tickets: column.tickets,
