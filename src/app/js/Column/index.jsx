@@ -12,14 +12,16 @@ const Column = props => {
 
   return (
     <div className="column">
-      <p className="title">{title}</p>
-      <DeleteColumnButton
-        sourceColumnId={id}
-        columnHasTickets={tickets.length > 0 ? true : false}
-        getBoardData={props.getBoardData}
-        boardId={boardId}
-        columns={columns}
-      />
+      <div className="column-header">
+        <p className="title">{title}</p>
+        <DeleteColumnButton
+          sourceColumnId={id}
+          columnHasTickets={tickets.length > 0 ? true : false}
+          getBoardData={props.getBoardData}
+          boardId={boardId}
+          columns={columns}
+        />
+      </div>
       <Droppable droppableId={title}>
         {(provided, snapshot) => (
           <div

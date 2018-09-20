@@ -1,20 +1,28 @@
 .navigation {
-    background-color: $primary-color;
+  // background-color: $primary-color;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(255, 252, 214, 1) 0%,
+    rgba(255, 102, 102, 0.44) 90%
+  );
 }
 
 .nav-content {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-link {
-    color: #fff;
+  color: $text-color;
+  font-size: 2rem;
+  padding: 1rem;
+  transition: all 0.5;
 
-    &:visited {
-        color: #fff;
-    }
+  &:visited {
+    color: $text-color;
+  }
 
-    &:hover {
-        color: #fff;
-    }
+  &:hover {
+    border-bottom: 3px solid $text-color;
+  }
 }

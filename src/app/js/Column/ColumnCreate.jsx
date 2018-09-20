@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import api from "../utils/api";
+import Button from "@material-ui/core/Button";
 
 class ColumnCreate extends Component {
   constructor(props) {
@@ -44,10 +45,16 @@ class ColumnCreate extends Component {
           onChange={event =>
             this.handleInput("columnTitle", event.target.value)
           }
+          placeholder="New column name"
+          className="column-create-input"
           type="text"
           onKeyPress={e => this.handleEnter(e)}
         />
-        <button type="submit" onClick={e => this.handleSubmit(e)}>
+        <button
+          type="submit"
+          className="column-create-button"
+          onClick={e => this.handleSubmit(e)}
+        >
           Create new column
         </button>
       </div>

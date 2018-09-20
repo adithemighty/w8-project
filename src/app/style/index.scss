@@ -1,10 +1,12 @@
-$primary-color: #63adf2;
+$primary-color: rgb(48, 25, 25);
 $secondary-color: #ff686b;
+$ok-color: rgb(97, 184, 97);
 $text-color: #333;
 $grey: rgb(200, 200, 200);
 
 @import "./base.scss";
 @import "./components.scss";
 @import "./components/board.scss";
+@import "./components/buttons.scss";
 @import "./components/column.scss";
 @import "./navigation.scss";
