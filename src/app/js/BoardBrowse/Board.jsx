@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import Column from "../Column";
+import LimitWarning from "./LimitWarning";
 import ColumnCreate from "../Column/ColumnCreate";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
@@ -11,16 +12,15 @@ class Board extends Component {
     this.state = {
       id: "",
       columns: {},
-      changed: false
+      changed: false,
+      limitWarningOpen: false
     };
-    this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   boardChangedHandler = () => {
     //check if board changed
     if (this.state.changed) {
       //update the columns
-
       const columns = Object.keys(this.state.columns);
       columns.forEach((columnName, ind) => {
         const column = this.state.columns[columnName];
@@ -28,13 +28,24 @@ class Board extends Component {
         api.post("/c/update", {
           title: column.title,
           id: column.id,
-          tickets: column.tickets
+          tickets: column.tickets,
+          destinationColumn: null
         });
       });
 
       this.getBoardData();
     }
-    //set this.state.changed to false
+  };
+
+  limitWarningHandler = destinationColumn => {
+    console.log("limit warning");
+    this.setState((prevState, props) => {
+      console.log(prevState);
+      return {
+        limitWarningOpen: !prevState.limitWarningOpen,
+        destinationColumn: destinationColumn
+      };
+    });
   };
 
   componentDidMount() {
@@ -128,8 +139,6 @@ class Board extends Component {
     const destinationColumnTickets = this.state.columns[endColumn].tickets
       .length;
 
-    console.log(destinationColumnLimit);
-
     //DnD inside of one column
     if (startColumn === endColumn) {
       this.reorder({
@@ -139,6 +148,8 @@ class Board extends Component {
         newPos: endIndex
       });
     } else if (
+      //DnD from one column into another
+      //check if WiP limit is being broken
       destinationColumnTickets < destinationColumnLimit ||
       typeof destinationColumnLimit === "undefined"
     ) {
@@ -153,6 +164,8 @@ class Board extends Component {
         list: this.state.columns[startColumn].tickets,
         element: this.state.columns[startColumn].tickets[initIndex]
       });
+    } else {
+      this.limitWarningHandler(endColumn);
     }
   };
 
@@ -162,6 +175,12 @@ class Board extends Component {
     } else {
       return (
         <div className="board">
+          {this.state.limitWarningOpen ? (
+            <LimitWarning
+              limitWarningHandler={this.limitWarningHandler}
+              destinationColumn={this.state.destinationColumn}
+            />
+          ) : null}
           <p className="title">{this.state.title}</p>
 
           <div className="board-container">
