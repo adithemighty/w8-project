@@ -64,11 +64,13 @@ class Board extends Component {
         };
         newState.title = title;
 
-        columns.forEach(({ title, ticket, _id }) => {
+        columns.forEach(({ title, ticket, _id, limit }) => {
+          console.log(limit);
           newState.columns[title] = {
             tickets: ticket,
             id: _id,
-            title: title
+            title: title,
+            limit: limit
           };
         });
         return { ...newState };
@@ -158,12 +160,14 @@ class Board extends Component {
             <DragDropContext onDragEnd={this.onDragEnd}>
               {Object.keys(this.state.columns).map(columnName => {
                 const column = this.state.columns;
+
                 return (
                   <Column
                     columns={this.state.columns}
                     key={column[columnName].title}
                     title={column[columnName].title}
                     id={column[columnName].id}
+                    limit={column[columnName].limit}
                     getBoardData={this.getBoardData}
                     boardId={this.state.id}
                     tickets={column[columnName].tickets}

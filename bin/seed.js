@@ -25,6 +25,7 @@ const secondSetTickets = [
 (async () => {
   let columnId1 = "";
   let columnId2 = "";
+  let columnIds = [];
 
   let allTicketIds = [];
 
@@ -33,7 +34,7 @@ const secondSetTickets = [
   });
 
   await Column.create({ title: "To Do" }).then(column => {
-    columnId1 = column.id;
+    columnIds[0] = column.id;
   });
 
   await Ticket.find({}).then(tickets => {
@@ -43,7 +44,7 @@ const secondSetTickets = [
   });
 
   await Column.findByIdAndUpdate(
-    { _id: columnId1 },
+    { _id: columnIds[0] },
     { $push: { ticket: { $each: allTicketIds } } }
   );
 
@@ -51,8 +52,8 @@ const secondSetTickets = [
     if (err) throw err;
   });
 
-  await Column.create({ title: "Doing" }).then(column => {
-    columnId2 = column.id;
+  await Column.create({ title: "Doing", limit: 5 }).then(column => {
+    columnIds[1] = column.id;
   });
 
   await Ticket.find({}).then(tickets => {
@@ -64,12 +65,20 @@ const secondSetTickets = [
   });
 
   await Column.findByIdAndUpdate(
-    { _id: columnId2 },
+    { _id: columnIds[1] },
     { $push: { ticket: { $each: allTicketIds } } }
   );
 
+  await Column.create({ title: "Review", limit: 3 }).then(column => {
+    columnIds[2] = column.id;
+  });
+
+  await Column.create({ title: "Done" }).then(column => {
+    columnIds[3] = column.id;
+  });
+
   await Board.create({
-    columns: [columnId1, columnId2]
+    columns: columnIds
   });
 
   await mongoose.connection.close();
