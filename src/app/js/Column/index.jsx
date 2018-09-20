@@ -15,7 +15,7 @@ const Column = props => {
       <div className="column-header">
         {/* column header with title and delete button */}
         <p className="column-title">{title}</p>
-        <p>{props.limit ? `${props.tickets.length}/${props.limit}` : ""}</p>
+        <p>{props.limit ? `${props.tickets.length}/${props.limit}` : null}</p>
 
         <DeleteColumnButton
           sourceColumnId={id}
