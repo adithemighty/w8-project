@@ -3,6 +3,10 @@ const Board = require("../src/server/models/Board");
 const Ticket = require("../src/server/models/Ticket");
 const Column = require("../src/server/models/Column");
 const User = require("../src/server/models/User");
+const config = require("../src/server/config");
+
+const dbName = "ja";
+mongoose.connect(config.MONGODB_URI || `mongodb://localhost/${dbName}`);
 
 const firstSetTickets = [
   { title: "Lorem1" },
@@ -83,6 +87,3 @@ const secondSetTickets = [
 
   await mongoose.connection.close();
 })();
-
-const dbName = "ja";
-mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost/${dbName}`);
