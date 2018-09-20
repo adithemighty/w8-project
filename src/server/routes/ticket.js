@@ -4,7 +4,7 @@ const Column = require("../models/Column");
 const Ticket = require("../models/Ticket");
 
 router.post("/new", (req, res) => {
-  const { title, blocker, description, estimation, columnId } = req.body;
+  const { title, description, estimation, columnId } = req.body;
 
   const newTicket = {};
 
@@ -31,5 +31,24 @@ router.post("/new", (req, res) => {
     });
   });
 });
+
+router.get("/show/:id", (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  Ticket.findById({ _id: id })
+    .then(ticket => {
+      res.send(ticket);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
+// router("/edit", (req, res) => {
+//     const {title, }
+// })
+
+// router("/delete")
 
 module.exports = router;
