@@ -13,7 +13,7 @@ const config = require("./config");
 
 const apiRoutes = require("./routes/api");
 const appRoutes = require("./routes/app");
-const boardRoutes = require("./routes/board");
+// const boardRoutes = require("./routes/board");
 const columnRoutes = require("./routes/column");
 
 mongoose.connect(
@@ -35,7 +35,7 @@ if (!config.IS_PRODUCTION) {
 
 server.use(express.static(path.join(__dirname, "public")));
 server.use("/api", apiRoutes);
-server.use("/b", boardRoutes);
+// server.use("/b", boardRoutes);
 server.use("/c", columnRoutes);
 server.use(appRoutes);
 

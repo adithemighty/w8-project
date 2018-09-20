@@ -25,7 +25,7 @@ class ColumnCreate extends Component {
 
   handleSubmit = e => {
     api
-      .post("/c/new", {
+      .post("/api/c/new", {
         boardId: this.props.boardId,
         columnTitle: this.state.columnTitle
       })

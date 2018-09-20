@@ -25,7 +25,7 @@ class Board extends Component {
       columns.forEach((columnName, ind) => {
         const column = this.state.columns[columnName];
         //if yes, send data to BE
-        api.post("/c/update", {
+        api.post("/api/c/update", {
           title: column.title,
           id: column.id,
           tickets: column.tickets,
@@ -65,7 +65,7 @@ class Board extends Component {
   getBoardData = () => {
     const { id } = this.props.match.params;
     //get this.props.match.params.id
-    api.get(`/b/data/${id}`).then(board => {
+    api.get(`/api/b/data/${id}`).then(board => {
       this.setState(function(prevState, props) {
         const { title, columns } = board;
         const newState = {

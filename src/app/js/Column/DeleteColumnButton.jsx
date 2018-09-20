@@ -107,12 +107,12 @@ class DeleteColumnButton extends Component {
     const destinationColumnId = this.state.selectedValue;
 
     if (destinationColumnId.length === 0) {
-      api.post("/c/delete", { sourceColumnId, boardId }).then(() => {
+      api.post("/api/c/delete", { sourceColumnId, boardId }).then(() => {
         this.props.getBoardData();
       });
     } else {
       api
-        .post("/c/delete", { sourceColumnId, boardId, destinationColumnId })
+        .post("/api/c/delete", { sourceColumnId, boardId, destinationColumnId })
         .then(() => {
           this.props.getBoardData();
         });
