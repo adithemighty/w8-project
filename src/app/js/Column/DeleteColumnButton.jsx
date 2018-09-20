@@ -8,6 +8,20 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Typography from "@material-ui/core/Typography";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import green from "@material-ui/core/colors/green";
+
+const theme = createMuiTheme({
+  typography: {
+    fontSize: "1.3rem"
+  }
+});
+
+const style = {
+  backgroundImage:
+    "linear-gradient(to right, #FF512F 0%, #DD2476 51%, #FF512F 100%)",
+  color: "white"
+};
 
 class DeleteDialog extends React.Component {
   handleListItemClick = value => {
@@ -18,42 +32,44 @@ class DeleteDialog extends React.Component {
     const { classes, onClose, selectedValue, ...other } = this.props;
 
     return (
-      <Dialog
-        onClose={this.props.onClose}
-        aria-labelledby="simple-dialog-title"
-        {...other}
-      >
-        <DialogTitle id="simple-dialog-title">Column not empty</DialogTitle>
-        <Typography variant="subheading">
-          Where should the tickets be moved?
-        </Typography>
-        <div>
-          <List>
-            {Object.keys(this.props.columns).map(column => {
-              return (
-                <ListItem
-                  button
-                  onClick={() =>
-                    this.handleListItemClick(this.props.columns[column].id)
-                  }
-                  key={column}
-                  id={this.props.columns[column].id}
-                >
-                  <ListItemText primary={column} />
-                </ListItem>
-              );
-            })}
-          </List>
-          <DialogActions>
-            <Button onClick={this.props.onClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.props.onDelete} color="primary">
-              Ok
-            </Button>
-          </DialogActions>
-        </div>
-      </Dialog>
+      <MuiThemeProvider theme={theme}>
+        <Dialog
+          onClose={this.props.onClose}
+          aria-labelledby="simple-dialog-title"
+          {...other}
+        >
+          <DialogTitle id="simple-dialog-title">Column not empty</DialogTitle>
+          <Typography variant="subheading">
+            Where should the tickets be moved?
+          </Typography>
+          <div>
+            <List>
+              {Object.keys(this.props.columns).map(column => {
+                return (
+                  <ListItem
+                    button
+                    onClick={() =>
+                      this.handleListItemClick(this.props.columns[column].id)
+                    }
+                    key={column}
+                    id={this.props.columns[column].id}
+                  >
+                    <ListItemText primary={column} />
+                  </ListItem>
+                );
+              })}
+            </List>
+            <DialogActions>
+              <Button onClick={this.props.onClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.props.onDelete} color="primary">
+                Ok
+              </Button>
+            </DialogActions>
+          </div>
+        </Dialog>
+      </MuiThemeProvider>
     );
   }
 }
@@ -106,16 +122,20 @@ class DeleteColumnButton extends Component {
   render() {
     return (
       <div>
-        <br />
-        <Button
-          onClick={
-            this.props.columnHasTickets
-              ? this.handleClickOpen
-              : this.handleDelete
-          }
-        >
-          Delete
-        </Button>
+        <MuiThemeProvider theme={theme}>
+          <Button
+            style={style}
+            size="medium"
+            onClick={
+              this.props.columnHasTickets
+                ? this.handleClickOpen
+                : this.handleDelete
+            }
+          >
+            Delete
+          </Button>
+        </MuiThemeProvider>
+
         <DeleteDialog
           columns={this.props.columns}
           selectedValue={this.state.selectedValue}

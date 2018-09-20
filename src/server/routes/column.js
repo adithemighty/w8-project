@@ -82,7 +82,6 @@ router.post("/update", (req, res) => {
   // }
 
   if (tickets) {
-    console.log(tickets);
     updatedFields["ticket"] = tickets.map(ticket => {
       return ticket._id;
     });
