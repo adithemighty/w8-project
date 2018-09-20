@@ -9,7 +9,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Typography from "@material-ui/core/Typography";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import green from "@material-ui/core/colors/green";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const theme = createMuiTheme({
   typography: {
@@ -29,7 +30,7 @@ class DeleteDialog extends React.Component {
   };
 
   render() {
-    const { classes, onClose, selectedValue, ...other } = this.props;
+    const { classes, onClose, selectedValue, onDelete, ...other } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -122,19 +123,16 @@ class DeleteColumnButton extends Component {
   render() {
     return (
       <div>
-        <MuiThemeProvider theme={theme}>
-          <Button
-            style={style}
-            size="medium"
-            onClick={
-              this.props.columnHasTickets
-                ? this.handleClickOpen
-                : this.handleDelete
-            }
-          >
-            Delete
-          </Button>
-        </MuiThemeProvider>
+        <IconButton
+          aria-label="Delete"
+          onClick={
+            this.props.columnHasTickets
+              ? this.handleClickOpen
+              : this.handleDelete
+          }
+        >
+          <DeleteIcon fontSize="small" />
+        </IconButton>
 
         <DeleteDialog
           columns={this.props.columns}

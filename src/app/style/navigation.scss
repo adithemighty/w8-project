@@ -13,16 +13,16 @@
 }
 
 .nav-link {
-  color: rgb(48, 25, 25);
+  color: $text-color;
   font-size: 2rem;
   padding: 1rem;
   transition: all 0.5;
 
   &:visited {
-    color: rgb(48, 25, 25);
+    color: $text-color;
   }
 
   &:hover {
-    border-bottom: 3px solid rgb(66, 39, 39);
+    border-bottom: 3px solid $text-color;
   }
 }

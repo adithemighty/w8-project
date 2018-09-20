@@ -1,13 +1,44 @@
 .column {
   height: 80%;
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-  // background-color: rgba(128, 128, 128, 0.466);
   border-radius: 5px;
   padding: 3rem 0;
   margin: 1.5rem;
+  max-width: 27rem;
+  min-width: 27rem;
+
+  .column-create-input {
+    background-color: inherit;
+    border: none;
+    border-bottom: 3px solid #666a6d;
+    padding: 1rem 2rem;
+    width: 85%;
+    margin: 2rem;
+
+    &:focus {
+      border-radius: 5px;
+      border: 3px solid $text-color;
+    }
+  }
+
+  .column-create-button {
+    margin: 0 2rem;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-transform: capitalize;
+    color: rgb(23, 32, 20);
+    font-weight: 400;
+    font-size: 1.5rem;
+
+    // background-color: $ok-color;
+    background-image: linear-gradient(60deg, #abecd6 0%, #7bc2aa 100%);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 .column-container {
-  //   background-color: burlywood;
   min-width: 25rem;
 
   font-size: inherit;
@@ -18,8 +49,11 @@
 }
 
 .column-header {
+  .title {
+    font-size: 2.5rem;
+  }
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   padding-right: 3rem;
 
@@ -30,14 +64,12 @@
 
 .column-tickets {
   min-height: 30rem;
-  // background-color: rgba(255, 255, 255, 0.37);
   padding: 0.5rem;
 }
 
 .card {
   height: 5rem;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-  // border: 1px solid rgba(128, 128, 128, 0.637);
   border-radius: 3px;
   margin: 0.5rem 0;
   padding: 1rem;

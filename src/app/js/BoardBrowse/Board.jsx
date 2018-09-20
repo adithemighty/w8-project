@@ -152,7 +152,6 @@ class Board extends Component {
     } else {
       return (
         <div className="board">
-          <button onClick={this.boardChangedHandler}>Update</button>
           <p className="title">{this.state.title}</p>
 
           <div className="board-container">
