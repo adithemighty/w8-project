@@ -125,6 +125,12 @@ class Board extends Component {
     const initIndex = result.source.index;
     const endIndex = result.destination.index;
 
+    const destinationColumnLimit = this.state.columns[endColumn].limit;
+    const destinationColumnTickets = this.state.columns[endColumn].tickets
+      .length;
+
+    console.log("blah", this.state.columns[endColumn]);
+
     //DnD inside of one column
     if (startColumn === endColumn) {
       this.reorder({
@@ -133,7 +139,7 @@ class Board extends Component {
         oldPos: initIndex,
         newPos: endIndex
       });
-    } else {
+    } else if (destinationColumnTickets < destinationColumnLimit) {
       this.addToList({
         listName: endColumn,
         list: this.state.columns[endColumn].tickets,
