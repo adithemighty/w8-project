@@ -13,6 +13,7 @@ const Column = props => {
   return (
     <div className="column">
       <div className="column-header">
+        {/* column header with title and delete button */}
         <p className="title">{title}</p>
         <DeleteColumnButton
           sourceColumnId={id}
@@ -22,7 +23,9 @@ const Column = props => {
           columns={columns}
         />
       </div>
+
       <Droppable droppableId={title}>
+        {/* this is necessary for the drag and drop to work so that after dnd we know which is the source and destination column */}
         {(provided, snapshot) => (
           <div
             className="column-container"
@@ -31,6 +34,7 @@ const Column = props => {
           >
             <div className="column-tickets">
               {ticketsList}
+              {/* the placeholder is there so that the space from which a card is dragged  doesn't collapse */}
               {provided.placeholder}
             </div>
           </div>
