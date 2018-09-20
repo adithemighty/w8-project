@@ -12,7 +12,7 @@ class BoardBrowse extends Component {
   }
 
   componentDidMount() {
-    api.get("/b/data/all").then(data => {
+    api.get("/api/b/data/all").then(data => {
       const boards = data.map((board, ind) => {
         return (
           <Link key={ind} to={`/b/${board._id}`}>

@@ -65,7 +65,7 @@ class Board extends Component {
   getBoardData = () => {
     const { id } = this.props.match.params;
     //get this.props.match.params.id
-    api.get(`/b/data/${id}`).then(board => {
+    api.get(`/api/b/data/${id}`).then(board => {
       this.setState(function(prevState, props) {
         const { title, columns } = board;
         const newState = {
