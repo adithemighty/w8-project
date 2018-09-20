@@ -10,7 +10,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Typography from "@material-ui/core/Typography";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+// import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from "../../assets/trash.svg";
 
 const theme = createMuiTheme({
   typography: {
@@ -123,16 +124,22 @@ class DeleteColumnButton extends Component {
   render() {
     return (
       <div>
-        <IconButton
+        {/* <IconButton
           aria-label="Delete"
+          
+        > */}
+        <button
+          className="trash-btn"
           onClick={
             this.props.columnHasTickets
               ? this.handleClickOpen
               : this.handleDelete
           }
         >
-          <DeleteIcon fontSize="small" />
-        </IconButton>
+          <img className="trash-icon" src={DeleteIcon} alt="" />
+        </button>
+        {/* <DeleteIcon fontSize="small" /> */}
+        {/* </IconButton> */}
 
         <DeleteDialog
           columns={this.props.columns}
