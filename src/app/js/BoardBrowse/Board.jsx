@@ -28,7 +28,8 @@ class Board extends Component {
         api.post("/c/update", {
           title: column.title,
           id: column.id,
-          tickets: column.tickets
+          tickets: column.tickets,
+          destinationColumn: null
         });
       });
 
@@ -36,11 +37,14 @@ class Board extends Component {
     }
   };
 
-  limitWarningHandler = () => {
+  limitWarningHandler = destinationColumn => {
     console.log("limit warning");
     this.setState((prevState, props) => {
       console.log(prevState);
-      return { limitWarningOpen: !prevState.limitWarningOpen };
+      return {
+        limitWarningOpen: !prevState.limitWarningOpen,
+        destinationColumn: destinationColumn
+      };
     });
   };
 
@@ -161,7 +165,7 @@ class Board extends Component {
         element: this.state.columns[startColumn].tickets[initIndex]
       });
     } else {
-      this.limitWarningHandler();
+      this.limitWarningHandler(endColumn);
     }
   };
 
@@ -172,7 +176,10 @@ class Board extends Component {
       return (
         <div className="board">
           {this.state.limitWarningOpen ? (
-            <LimitWarning limitWarningHandler={this.limitWarningHandler} />
+            <LimitWarning
+              limitWarningHandler={this.limitWarningHandler}
+              destinationColumn={this.state.destinationColumn}
+            />
           ) : null}
           <p className="title">{this.state.title}</p>
 
