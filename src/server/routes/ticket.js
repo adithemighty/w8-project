@@ -26,15 +26,18 @@ router.post("/new", (req, res) => {
       { _id: columnId },
       { $push: { ticket: ticket._id } },
       { new: true }
-    ).then(column => {
-      res.send(column);
-    });
+    )
+      .then(column => {
+        res.send(column);
+      })
+      .catch(err => {
+        res.send(err);
+      });
   });
 });
 
 router.get("/show/:id", (req, res) => {
   const { id } = req.params;
-  console.log(id);
 
   Ticket.findById({ _id: id })
     .then(ticket => {
@@ -45,10 +48,54 @@ router.get("/show/:id", (req, res) => {
     });
 });
 
-// router("/edit", (req, res) => {
-//     const {title, }
-// })
+router.post("/update/:id", (req, res) => {
+  const { id } = req.params;
 
-// router("/delete")
+  const { title, description, estimation, blocker, ticketType } = req.body;
+
+  const updatedFields = {};
+
+  if (typeof title !== "undefined") {
+    updatedFields["title"] = title;
+  }
+
+  if (typeof description !== "undefined") {
+    updatedFields["description"] = description;
+  }
+
+  if (typeof estimation !== "undefined") {
+    updatedFields["estimation"] = Number(estimation);
+  }
+
+  if (typeof blocker !== "undefined") {
+    updatedFields["blocker"] = blocker;
+  }
+
+  if (typeof ticketType !== "undefined") {
+    updatedFields["ticketType"] = ticketType;
+  }
+
+  Ticket.findByIdAndUpdate({ _id: id }, updatedFields, { new: true })
+    .then(ticket => {
+      res.send(ticket);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
+
+router.post("/delete/:id", (req, res) => {
+  const { id } = req.params;
+
+  Column.findOneAndUpdate({ ticket: id }, { $pull: { ticket: id } })
+    .then(column => {
+      Ticket.findByIdAndRemove({ _id: id }).then(ticket => {
+        res.send(ticket);
+      });
+    })
+    .catch(err => {
+      res.send(err);
+    });
+});
 
 module.exports = router;
