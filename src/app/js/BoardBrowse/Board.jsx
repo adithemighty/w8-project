@@ -38,9 +38,7 @@ class Board extends Component {
   };
 
   limitWarningHandler = destinationColumn => {
-    console.log("limit warning");
     this.setState((prevState, props) => {
-      console.log(prevState);
       return {
         limitWarningOpen: !prevState.limitWarningOpen,
         destinationColumn: destinationColumn
