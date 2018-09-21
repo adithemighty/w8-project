@@ -40,14 +40,6 @@ class Board extends Component {
             )}
           />
 
-          {/* {this.state.ticketDetailViewOpen ? (
-            <CardDetails
-              setBoardChangeBoolean={this.setBoardChangeBoolean}
-              ticket={this.state.currentTicket}
-              ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
-            />
-          ) : null} */}
-
           {/* modal that pops up when limit of a column is reached */}
           {this.state.limitWarningOpen ? (
             <LimitWarning
