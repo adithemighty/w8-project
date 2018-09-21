@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 
 import { RIEInput, RIETextArea, RIESelect } from "riek";
 import _ from "lodash";
@@ -11,10 +12,12 @@ class CardDetails extends Component {
     this.state = {
       title: "",
       blocker: false,
-      ticketType: { id: "2", text: "User Story" },
+      ticketType: "",
       id: null,
       description: "",
       estimation: "",
+      ticketType: "",
+      ticketTypeFieldValue: { id: "2", text: "User Story" },
       ticketTypeOptions: [
         { id: "1", text: "Bug" },
         { id: "2", text: "User Story" },
@@ -45,7 +48,7 @@ class CardDetails extends Component {
               <label>Ticket type</label>
               <RIESelect
                 className="select"
-                value={this.state.ticketType}
+                value={this.state.ticketTypeFieldValue}
                 options={this.state.ticketTypeOptions}
                 change={this.handleInputChange}
                 propName="ticketType"
@@ -64,19 +67,24 @@ class CardDetails extends Component {
                 change={this.handleInputChange}
                 propName="description"
               />
-            </div>
+              {/* action handlers for cancel and submit */}
 
-            {/* action handlers for cancel and submit */}
-            <div className="action-btns">
-              <button onClick={this.handleInputSubmit} className="btn-confirm">
-                Save changes
-              </button>
-              <button
-                className="btn-cancel"
-                onClick={this.props.ticketDetailViewOpenHandler}
-              >
-                Back to board
-              </button>
+              <div className="action-btns">
+                <button
+                  onClick={this.handleInputSubmit}
+                  className="btn-confirm"
+                >
+                  Save changes
+                </button>
+                <button className="btn-cancel">
+                  <Link
+                    className="link"
+                    to={`/b/${this.props.match.params.boardId}`}
+                  >
+                    Back to board
+                  </Link>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -116,11 +124,11 @@ class CardDetails extends Component {
       }
 
       if (ticketType === "Bug") {
-        newState["ticketType"] = { id: "1", text: "Bug" };
+        newState["ticketTypeFieldValue"] = { id: "1", text: "Bug" };
       } else if (ticketType === "User Story") {
-        newState["ticketType"] = { id: "2", text: "User Story" };
+        newState["ticketTypeFieldValue"] = { id: "2", text: "User Story" };
       } else if (ticketType === "Action Item") {
-        newState["ticketType"] = { id: "3", text: "Action Item" };
+        newState["ticketTypeFieldValue"] = { id: "3", text: "Action Item" };
       }
 
       this.setState((prevState, props) => {
@@ -131,14 +139,18 @@ class CardDetails extends Component {
 
   handleModalQuitClick = e => {
     if (e.target.className === "modal") {
-      this.props.ticketDetailViewOpenHandler();
+      this.props.history.push(`/b/${this.props.match.params.boardId}`);
     }
   };
 
   handleInputChange = field => {
     if (Object.keys(field)[0] === "ticketType") {
+      field[""];
       this.setState((prevState, props) => {
-        return field.ticketType;
+        return {
+          ticketTypeFieldValue: field.ticketType,
+          ticketType: field.ticketType.text
+        };
       });
     }
     this.setState((prevState, props) => {

@@ -51,15 +51,17 @@
         width: inherit;
       }
     }
-    .action-btns {
-      padding-left: 5rem;
+
+    .link {
+      text-decoration: inherit;
+      color: inherit;
     }
   }
-
+}
+.action-btns {
   button {
     min-width: 20rem;
     max-width: 30vw;
-    margin-bottom: 2rem;
-    height: 100%;
+    margin: 4rem 2rem 2rem 0;
   }
 }
