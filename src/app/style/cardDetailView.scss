@@ -1,7 +1,65 @@
-.card-details-card {
-  background-color: rgb(255, 255, 255);
-  min-width: 80vw;
-  max-width: 80vw;
+.card-details {
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  min-width: 60vw;
+  max-width: 60vw;
   min-height: 80vh;
   max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 0;
+  border-radius: 5px;
+
+  @media (max-width: 900px) {
+    min-width: 80vw;
+    max-width: 80vw;
+  }
+
+  .editable-fields {
+    height: 50rem;
+    min-width: 80%;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .input {
+      width: 70%;
+      height: 3rem;
+      font-size: inherit;
+      margin-bottom: 2rem;
+    }
+
+    .text-area {
+      height: 40%;
+      width: 70%;
+      border: 1px solid rgb(200, 200, 200);
+      border-radius: 3px;
+      background-color: white;
+      padding: 1rem;
+      font-size: inherit;
+    }
+
+    .select {
+      border-bottom: 3px solid black;
+      margin-bottom: 2rem;
+      padding: 1rem 2rem 0;
+
+      &:focus {
+        font-size: inherit;
+        margin: 1rem 0 2rem;
+        width: inherit;
+      }
+    }
+    .action-btns {
+      padding-left: 5rem;
+    }
+  }
+
+  button {
+    min-width: 20rem;
+    max-width: 30vw;
+    margin-bottom: 2rem;
+    height: 100%;
+  }
 }

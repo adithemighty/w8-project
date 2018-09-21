@@ -28,12 +28,25 @@ class Board extends Component {
       return (
         <div className="board">
           {/* modal that is shown when card details are opened */}
-          {this.state.ticketDetailViewOpen ? (
+
+          <Route
+            path="/b/:boardId/t/:ticketId"
+            render={() => (
+              <CardDetails
+                setBoardChangeBoolean={this.setBoardChangeBoolean}
+                ticket={this.state.currentTicket}
+                ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
+              />
+            )}
+          />
+
+          {/* {this.state.ticketDetailViewOpen ? (
             <CardDetails
+              setBoardChangeBoolean={this.setBoardChangeBoolean}
               ticket={this.state.currentTicket}
               ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
             />
-          ) : null}
+          ) : null} */}
 
           {/* modal that pops up when limit of a column is reached */}
           {this.state.limitWarningOpen ? (
@@ -82,6 +95,28 @@ class Board extends Component {
     }
   }
 
+  componentDidMount() {
+    const intervalId = setInterval(this.boardChangedHandler, 30000);
+    // store intervalId in the state so it can be accessed later:
+    this.setState({ intervalId: intervalId });
+
+    this.getBoardData();
+  }
+
+  componentWillUnmount() {
+    // use intervalId from the state to clear the interval
+    this.boardChangedHandler();
+    clearInterval(this.state.intervalId);
+  }
+
+  //this is here so that the board can be updated when something happens to the cards
+  setBoardChangeBoolean = () => {
+    this.setState((prevState, props) => {
+      return { changed: true };
+    });
+    this.boardChangedHandler();
+  };
+
   boardChangedHandler = () => {
     //check if board changed
     if (this.state.changed) {
@@ -119,20 +154,6 @@ class Board extends Component {
       };
     });
   };
-
-  componentDidMount() {
-    const intervalId = setInterval(this.boardChangedHandler, 30000);
-    // store intervalId in the state so it can be accessed later:
-    this.setState({ intervalId: intervalId });
-
-    this.getBoardData();
-  }
-
-  componentWillUnmount() {
-    // use intervalId from the state to clear the interval
-    this.boardChangedHandler();
-    clearInterval(this.state.intervalId);
-  }
 
   getBoardData = () => {
     const { id } = this.props.match.params;

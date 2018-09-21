@@ -41,8 +41,9 @@ class BoardBrowse extends Component {
       return (
         <div>
           <Switch>
-            <Route path="/b/:id/t/:id" component={CardDetails} />
+            {/* <Route path="/b/:id/t/:id" component={CardDetails} /> */}
             <Route path="/b/:id" render={() => <Board />} />
+
             <Route
               render={() => {
                 return <div>{this.state.boards}</div>;

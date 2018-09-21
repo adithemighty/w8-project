@@ -7,6 +7,7 @@ import { Link, Route, Switch } from "react-router-dom";
 
 const Card = props => {
   const { title, blocker, _id } = props.ticket;
+  console.log(props);
   return (
     <div>
       <Draggable key={_id} draggableId={_id} index={props.index}>
@@ -19,9 +20,7 @@ const Card = props => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              {/* <Link to={`${props.location.pathname}/t/${_id}`}> */}
-              {title}
-              {/* </Link> */}
+              <Link to={`${props.match.url}/t/${_id}`}>{title}</Link>
             </div>
           );
         }}
