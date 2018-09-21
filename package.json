@@ -27,6 +27,7 @@
     "helmet": "^3.13.0",
     "jsonwebtoken": "^8.3.0",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "mongoose": "^5.2.14",
     "mongoose-autopopulate": "^0.8.1",
@@ -49,7 +50,8 @@
     "cssnano": "^4.1.0",
     "node-sass": "^4.9.3",
     "parcel-bundler": "^1.9.7",
-    "react-hot-loader": "^4.3.7"
+    "react-hot-loader": "^4.3.7",
+    "riek": "^1.1.0"
   },
   "engines": {
     "node": "8.11.4"
