@@ -1,0 +1,49 @@
+.button {
+  padding: 10px 15px;
+  background-color: $primary-color;
+  color: #fff;
+  transition: 250ms all ease-in-out;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($primary-color, 20%);
+  }
+
+  &-secondary {
+    background-color: $secondary-color;
+
+    &:hover {
+      background-color: lighten($secondary-color, 8%);
+    }
+  }
+}
+
+.btn {
+  &-cancel {
+    background-image: radial-gradient(
+      circle farthest-corner at 10% 20%,
+      rgba(232, 72, 85, 1) 0%,
+      rgba(232, 72, 85, 1) 90%
+    );
+    font-size: inherit;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+  }
+
+  &-confirm {
+    background-image: radial-gradient(
+      circle 865px at 10% 20%,
+      rgba(62, 200, 158, 1) 0%,
+      rgba(103, 242, 121, 1) 91.7%
+    );
+
+    font-size: inherit;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+  }
+}

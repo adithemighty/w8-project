@@ -19,7 +19,6 @@ class CardDetails extends Component {
   };
 
   handleClick = e => {
-    console.log(e.target.className);
     if (e.target.className === "modal") {
       this.props.ticketDetailViewOpenHandler();
     }
@@ -28,8 +27,9 @@ class CardDetails extends Component {
   render() {
     return (
       <div className="modal" onClick={event => this.handleClick(event)}>
-        <div className="modal-text">
+        <div className="card-details-card">
           <p>{this.state.title}</p>
+          <button className="btn-confirm">Save changes</button>
           <button
             className="btn-cancel"
             onClick={this.props.ticketDetailViewOpenHandler}
