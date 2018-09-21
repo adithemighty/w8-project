@@ -65,8 +65,7 @@ router.post("/delete", (req, res) => {
 
 router.post("/update", (req, res) => {
   let updatedFields = {};
-  let updatedTickets = [];
-  // { $set: { <field1>: <value1>, ... }, $push: { <field>: <value>, ..} }
+
   const { title, limit, order, tickets, id } = req.body;
 
   if (title) {
@@ -77,19 +76,11 @@ router.post("/update", (req, res) => {
     updatedFields["limit"] = limit;
   }
 
-  // if (order) {
-  //   updatedFields.push({ order: order });
-  // }
-
   if (tickets) {
     updatedFields["ticket"] = tickets.map(ticket => {
       return ticket._id;
     });
   }
-
-  // [{ticket: Array(12), _id: "5ba262562cb1d15f17832d99", title: "To Do", __v: 0}
-
-  // {ticket: Array(0), _id: "5ba2637a2cb1d15f17832d9a", title: "Doing", __v: 0}]
 
   Column.findByIdAndUpdate(
     { _id: id },

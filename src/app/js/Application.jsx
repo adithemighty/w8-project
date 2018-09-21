@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
@@ -7,10 +6,9 @@ import Auth from "./Auth";
 import Home from "./Home";
 import Navigation from "./Navigation";
 import Profile from "./Profile";
-// import Board from "./Board";
 import BoardBrowse from "./BoardBrowse";
 import NotFound from "./NotFound";
-// import api from "./utils/api";
+import CardDetails from "./Card/CardDetails";
 
 class Application extends React.Component {
   constructor(props) {
@@ -48,6 +46,11 @@ class Application extends React.Component {
               path="/profile"
               render={() => <Profile user={this.state.user} />}
             />
+            {/* <Route
+              exact
+              path="/t"
+              render={() => <CardDetails user={this.state.user} />}
+            /> */}
             <Route
               path="/auth"
               render={() => (

@@ -40,23 +40,25 @@ class ColumnCreate extends Component {
   render() {
     return (
       <div className="column">
-        <input
-          value={this.state.columnTitle}
-          onChange={event =>
-            this.handleInput("columnTitle", event.target.value)
-          }
-          placeholder="New column name"
-          className="column-create-input"
-          type="text"
-          onKeyPress={e => this.handleEnter(e)}
-        />
-        <button
-          type="submit"
-          className="column-create-button"
-          onClick={e => this.handleSubmit(e)}
-        >
-          Create new column
-        </button>
+        <div className="new">
+          <input
+            value={this.state.columnTitle}
+            onChange={event =>
+              this.handleInput("columnTitle", event.target.value)
+            }
+            placeholder="New column name"
+            className="create-input"
+            type="text"
+            onKeyPress={e => this.handleEnter(e)}
+          />
+          <button
+            type="submit"
+            className="btn-confirm column-create-button"
+            onClick={e => this.handleSubmit(e)}
+          >
+            Create new column
+          </button>
+        </div>
       </div>
     );
   }
