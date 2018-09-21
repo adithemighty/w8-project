@@ -67,22 +67,24 @@ class CardDetails extends Component {
                 change={this.handleInputChange}
                 propName="description"
               />
-            </div>
+              {/* action handlers for cancel and submit */}
 
-            {/* action handlers for cancel and submit */}
-
-            <div className="action-btns">
-              <button onClick={this.handleInputSubmit} className="btn-confirm">
-                Save changes
-              </button>
-              <button className="btn-cancel">
-                <Link
-                  className="link"
-                  to={`/b/${this.props.match.params.boardId}`}
+              <div className="action-btns">
+                <button
+                  onClick={this.handleInputSubmit}
+                  className="btn-confirm"
                 >
-                  Back to board
-                </Link>
-              </button>
+                  Save changes
+                </button>
+                <button className="btn-cancel">
+                  <Link
+                    className="link"
+                    to={`/b/${this.props.match.params.boardId}`}
+                  >
+                    Back to board
+                  </Link>
+                </button>
+              </div>
             </div>
           </div>
         </div>
