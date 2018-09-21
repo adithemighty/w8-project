@@ -7,7 +7,6 @@ import { Link, Route, Switch } from "react-router-dom";
 
 const Card = props => {
   const { title, blocker, _id } = props.ticket;
-  console.log(props);
   return (
     <div>
       <Draggable key={_id} draggableId={_id} index={props.index}>

@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import api from "../utils/api";
-import {
-  RIEToggle,
-  RIEInput,
-  RIETextArea,
-  RIENumber,
-  RIETags,
-  RIESelect
-} from "riek";
+import { withRouter } from "react-router";
+
+import { RIEInput, RIETextArea, RIESelect } from "riek";
 import _ from "lodash";
 
 class CardDetails extends Component {
@@ -90,7 +85,8 @@ class CardDetails extends Component {
   }
 
   componentDidMount = () => {
-    api.get(`/api/t/show/${this.props.ticket}`).then(ticket => {
+    const ticketId = this.props.match.params.ticketId;
+    api.get(`/api/t/show/${ticketId}`).then(ticket => {
       const {
         title,
         blocker,
@@ -157,10 +153,11 @@ class CardDetails extends Component {
     updatedFields["ticketType"] = this.state.ticketType.text;
 
     api.post(`/api/t/update/${this.state.id}`, updatedFields).then(() => {
-      this.props.setBoardChangeBoolean();
       this.props.ticketDetailViewOpenHandler();
+      this.props.setBoardChangeBoolean();
+      this.props.history.push(`/b/${this.props.match.params.boardId}`);
     });
   };
 }
 
-export default CardDetails;
+export default withRouter(CardDetails);

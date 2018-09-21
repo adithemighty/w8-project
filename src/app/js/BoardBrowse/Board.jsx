@@ -6,7 +6,6 @@ import ColumnCreate from "../Column/ColumnCreate";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
 import CardDetails from "../Card/CardDetails";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class Board extends Component {
   constructor(props) {
@@ -39,14 +38,6 @@ class Board extends Component {
               />
             )}
           />
-
-          {/* {this.state.ticketDetailViewOpen ? (
-            <CardDetails
-              setBoardChangeBoolean={this.setBoardChangeBoolean}
-              ticket={this.state.currentTicket}
-              ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
-            />
-          ) : null} */}
 
           {/* modal that pops up when limit of a column is reached */}
           {this.state.limitWarningOpen ? (
