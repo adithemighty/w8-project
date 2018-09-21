@@ -40,14 +40,14 @@ class ColumnCreate extends Component {
   render() {
     return (
       <div className="column">
-        <div className="column-new">
+        <div className="new">
           <input
             value={this.state.columnTitle}
             onChange={event =>
               this.handleInput("columnTitle", event.target.value)
             }
             placeholder="New column name"
-            className="column-create-input"
+            className="create-input"
             type="text"
             onKeyPress={e => this.handleEnter(e)}
           />
