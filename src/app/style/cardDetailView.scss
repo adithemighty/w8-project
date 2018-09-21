@@ -54,12 +54,17 @@
     .action-btns {
       padding-left: 5rem;
     }
-  }
 
-  button {
-    min-width: 20rem;
-    max-width: 30vw;
-    margin-bottom: 2rem;
-    height: 100%;
+    .link {
+      text-decoration: inherit;
+      color: inherit;
+      cursor: auto;
+    }
+    button {
+      min-width: 20rem;
+      max-width: 30vw;
+
+      // height: 100%;
+    }
   }
 }
