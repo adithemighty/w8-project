@@ -6,6 +6,7 @@ import ColumnCreate from "../Column/ColumnCreate";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
 import CardDetails from "../Card/CardDetails";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class Board extends Component {
   constructor(props) {
