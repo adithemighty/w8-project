@@ -6,10 +6,16 @@ import { Link, Route, Switch } from "react-router-dom";
 
 const Column = props => {
   const { title, tickets, id, boardId, columns } = props;
-  console.log(props);
 
   const ticketsList = tickets.map((ticket, ind) => {
-    return <Card key={ind} index={ind} ticket={ticket} />;
+    return (
+      <Card
+        ticketDetailViewOpenHandler={props.ticketDetailViewOpenHandler}
+        key={ind}
+        index={ind}
+        ticket={ticket}
+      />
+    );
   });
 
   return (

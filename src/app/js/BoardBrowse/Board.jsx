@@ -15,8 +15,71 @@ class Board extends Component {
       id: "",
       columns: {},
       changed: false,
-      limitWarningOpen: false
+      limitWarningOpen: false,
+      ticketDetailViewOpen: false,
+      currentTicket: ""
     };
+  }
+
+  render() {
+    if (this.state.id === "") {
+      return <div>Loading</div>;
+    } else {
+      return (
+        <div className="board">
+          {/* modal that is shown when card details are opened */}
+          {this.state.ticketDetailViewOpen ? (
+            <CardDetails
+              ticket={this.state.currentTicket}
+              ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
+            />
+          ) : null}
+
+          {/* modal that pops up when limit of a column is reached */}
+          {this.state.limitWarningOpen ? (
+            <LimitWarning
+              limitWarningHandler={this.limitWarningHandler}
+              destinationColumn={this.state.destinationColumn}
+            />
+          ) : null}
+
+          {/* Board header with title */}
+          <p className="title">{this.state.title}</p>
+
+          {/* Columns of the board */}
+          <div className="board-container">
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              {Object.keys(this.state.columns).map(columnName => {
+                const column = this.state.columns;
+
+                return (
+                  <Column
+                    columns={this.state.columns}
+                    key={column[columnName].title}
+                    title={column[columnName].title}
+                    id={column[columnName].id}
+                    limit={column[columnName].limit}
+                    getBoardData={this.getBoardData}
+                    boardId={this.state.id}
+                    tickets={column[columnName].tickets}
+                    ticketDetailViewOpenHandler={
+                      this.ticketDetailViewOpenHandler
+                    }
+                  />
+                );
+              })}
+            </DragDropContext>
+
+            {/* Additional add column element that is stylised like a column */}
+            <ColumnCreate
+              columns={this.state.columns}
+              boardId={this.state.id}
+              getBoardData={this.getBoardData}
+            />
+          </div>
+        </div>
+      );
+    }
   }
 
   boardChangedHandler = () => {
@@ -44,6 +107,15 @@ class Board extends Component {
       return {
         limitWarningOpen: !prevState.limitWarningOpen,
         destinationColumn: destinationColumn
+      };
+    });
+  };
+
+  ticketDetailViewOpenHandler = ticketId => {
+    this.setState((prevState, props) => {
+      return {
+        ticketDetailViewOpen: !prevState.ticketDetailViewOpen,
+        currentTicket: ticketId
       };
     });
   };
@@ -172,56 +244,6 @@ class Board extends Component {
       this.limitWarningHandler(endColumn);
     }
   };
-
-  render() {
-    if (this.state == null) {
-      return <div>Loading</div>;
-    } else {
-      return (
-        <div className="board">
-          {/* modal that pops up when limit of a column is reached */}
-          {this.state.limitWarningOpen ? (
-            <LimitWarning
-              limitWarningHandler={this.limitWarningHandler}
-              destinationColumn={this.state.destinationColumn}
-            />
-          ) : null}
-
-          {/* Board header with title */}
-          <p className="title">{this.state.title}</p>
-
-          {/* Columns of the board */}
-          <div className="board-container">
-            <DragDropContext onDragEnd={this.onDragEnd}>
-              {Object.keys(this.state.columns).map(columnName => {
-                const column = this.state.columns;
-
-                return (
-                  <Column
-                    columns={this.state.columns}
-                    key={column[columnName].title}
-                    title={column[columnName].title}
-                    id={column[columnName].id}
-                    limit={column[columnName].limit}
-                    getBoardData={this.getBoardData}
-                    boardId={this.state.id}
-                    tickets={column[columnName].tickets}
-                  />
-                );
-              })}
-            </DragDropContext>
-
-            {/* Additional add column element that is stylised like a column */}
-            <ColumnCreate
-              columns={this.state.columns}
-              boardId={this.state.id}
-              getBoardData={this.getBoardData}
-            />
-          </div>
-        </div>
-      );
-    }
-  }
 }
 
 export default withRouter(Board);
