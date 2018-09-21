@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import Board from "./Board";
+import CardDetails from "../Card/CardDetails";
 import { Link, Route, Switch } from "react-router-dom";
 
 class BoardBrowse extends Component {
@@ -40,6 +41,7 @@ class BoardBrowse extends Component {
       return (
         <div>
           <Switch>
+            <Route path="/b/:id/t/:id" component={CardDetails} />
             <Route path="/b/:id" render={() => <Board />} />
             <Route
               render={() => {

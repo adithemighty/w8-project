@@ -5,6 +5,8 @@ import LimitWarning from "./LimitWarning";
 import ColumnCreate from "../Column/ColumnCreate";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
+import CardDetails from "../Card/CardDetails";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class Board extends Component {
   constructor(props) {
@@ -67,11 +69,11 @@ class Board extends Component {
       this.setState(function(prevState, props) {
         const { title, columns } = board;
         const newState = {
-          title: "",
+          title: title,
           columns: {},
           id: id
         };
-        newState.title = title;
+        // newState.title = title;
 
         columns.forEach(({ title, ticket, _id, limit }) => {
           newState.columns[title] = {
@@ -177,14 +179,18 @@ class Board extends Component {
     } else {
       return (
         <div className="board">
+          {/* modal that pops up when limit of a column is reached */}
           {this.state.limitWarningOpen ? (
             <LimitWarning
               limitWarningHandler={this.limitWarningHandler}
               destinationColumn={this.state.destinationColumn}
             />
           ) : null}
+
+          {/* Board header with title */}
           <p className="title">{this.state.title}</p>
 
+          {/* Columns of the board */}
           <div className="board-container">
             <DragDropContext onDragEnd={this.onDragEnd}>
               {Object.keys(this.state.columns).map(columnName => {
@@ -204,6 +210,8 @@ class Board extends Component {
                 );
               })}
             </DragDropContext>
+
+            {/* Additional add column element that is stylised like a column */}
             <ColumnCreate
               columns={this.state.columns}
               boardId={this.state.id}

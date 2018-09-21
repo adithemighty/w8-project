@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import Card from "../Card";
 import DeleteColumnButton from "./DeleteColumnButton";
 import { Droppable } from "react-beautiful-dnd";
+import { Link, Route, Switch } from "react-router-dom";
 
 const Column = props => {
   const { title, tickets, id, boardId, columns } = props;
+  console.log(props);
 
   const ticketsList = tickets.map((ticket, ind) => {
     return <Card key={ind} index={ind} ticket={ticket} />;
@@ -12,8 +14,8 @@ const Column = props => {
 
   return (
     <div className="column">
+      {/* column header with title and delete button */}
       <div className="column-header">
-        {/* column header with title and delete button */}
         <p className="column-title">{title}</p>
         <p>{props.limit ? `${props.tickets.length}/${props.limit}` : null}</p>
 
@@ -26,8 +28,8 @@ const Column = props => {
         />
       </div>
 
+      {/* this is necessary for the drag and drop to work so that after dnd we know which is the source and destination column */}
       <Droppable droppableId={title}>
-        {/* this is necessary for the drag and drop to work so that after dnd we know which is the source and destination column */}
         {(provided, snapshot) => (
           <div
             className="column-container"
