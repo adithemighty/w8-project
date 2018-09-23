@@ -2,7 +2,6 @@ import React from "react";
 import Card from "../Card";
 import DeleteColumnButton from "./DeleteColumnButton";
 import { Droppable } from "react-beautiful-dnd";
-import { Link, Route, Switch } from "react-router-dom";
 
 const Column = props => {
   const { title, tickets, id, boardId, columns } = props;

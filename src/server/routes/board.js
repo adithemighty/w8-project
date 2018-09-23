@@ -24,7 +24,6 @@ router.post("/edit", (req, res) => {
         res.send(updatedBoard);
       })
       .catch(err => {
-        console.log(err);
         res.send({ error: "Edit: id doesn't exist" });
       });
   } else {

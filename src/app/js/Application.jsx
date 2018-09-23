@@ -8,7 +8,6 @@ import Navigation from "./Navigation";
 import Profile from "./Profile";
 import BoardBrowse from "./BoardBrowse";
 import NotFound from "./NotFound";
-import CardDetails from "./Card/CardDetails";
 
 class Application extends React.Component {
   constructor(props) {
@@ -46,11 +45,7 @@ class Application extends React.Component {
               path="/profile"
               render={() => <Profile user={this.state.user} />}
             />
-            {/* <Route
-              exact
-              path="/t"
-              render={() => <CardDetails user={this.state.user} />}
-            /> */}
+
             <Route
               path="/auth"
               render={() => (

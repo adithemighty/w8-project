@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Column = require("../models/Column");
 const Ticket = require("../models/Ticket");
+const Board = require("../models/Board");
 
 router.post("/new", (req, res) => {
-  const { title, description, estimation, columnId } = req.body;
+  const { title, description, estimation, boardId } = req.body;
 
   const newTicket = {};
 
@@ -21,18 +22,23 @@ router.post("/new", (req, res) => {
   }
 
   //TODO generate keys based on board
-  Ticket.create(newTicket).then(ticket => {
-    Column.findByIdAndUpdate(
-      { _id: columnId },
-      { $push: { ticket: ticket._id } },
-      { new: true }
-    )
-      .then(column => {
-        res.send(column);
-      })
-      .catch(err => {
-        res.send(err);
-      });
+  let firstColumnId;
+  Board.findById({ _id: boardId }).then(board => {
+    firstColumnId = board.columns[0]._id;
+
+    Ticket.create(newTicket).then(ticket => {
+      Column.findByIdAndUpdate(
+        { _id: firstColumnId },
+        { $push: { ticket: ticket._id } },
+        { new: true }
+      )
+        .then(column => {
+          res.send(column);
+        })
+        .catch(err => {
+          res.send(err);
+        });
+    });
   });
 });
 
