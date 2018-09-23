@@ -28,6 +28,11 @@
       height: 3rem;
       font-size: inherit;
       margin-bottom: 2rem;
+      box-shadow: 0 1px 5px 0 hsla(0, 0%, 0%, 0.2);
+
+      &:hover {
+        cursor: text;
+      }
     }
 
     .text-area {
@@ -50,11 +55,23 @@
         margin: 1rem 0 2rem;
         width: inherit;
       }
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .link {
       text-decoration: inherit;
       color: inherit;
+      height: inherit;
+      width: inherit;
+      display: inline-block;
+
+      // &::after {
+      //   content: "";
+      //   width: 100%;
+      // }
     }
   }
 }
