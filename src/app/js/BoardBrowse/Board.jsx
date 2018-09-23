@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import { withRouter } from "react-router";
+import { Route, Link, Switch } from "react-router-dom";
+
 import api from "../utils/api";
+
 import Column from "../Column";
 import LimitWarning from "./LimitWarning";
 import ColumnCreate from "../Column/ColumnCreate";
-import { DragDropContext } from "react-beautiful-dnd";
-import { withRouter } from "react-router";
 import CardDetails from "../Card/CardDetails";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class Board extends Component {
   constructor(props) {
@@ -14,7 +16,6 @@ class Board extends Component {
     this.state = {
       id: "",
       columns: {},
-      changed: false,
       limitWarningOpen: false,
       ticketDetailViewOpen: false,
       currentTicket: ""
@@ -27,18 +28,30 @@ class Board extends Component {
     } else {
       return (
         <div className="board">
-          {/* modal that is shown when card details are opened */}
-
-          <Route
-            path="/b/:boardId/t/:ticketId"
-            render={() => (
-              <CardDetails
-                setBoardChangeBoolean={this.setBoardChangeBoolean}
-                ticket={this.state.currentTicket}
-                ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
-              />
-            )}
-          />
+          <Switch>
+            <Route
+              exact
+              path="/b/:boardId/t/new"
+              render={() => (
+                <CardDetails
+                  ticket={this.state.currentTicket}
+                  ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
+                  getBoardData={this.getBoardData}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/b/:boardId/t/:ticketId"
+              render={() => (
+                <CardDetails
+                  getBoardData={this.getBoardData}
+                  ticket={this.state.currentTicket}
+                  ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
+                />
+              )}
+            />
+          </Switch>
 
           {/* modal that pops up when limit of a column is reached */}
           {this.state.limitWarningOpen ? (
@@ -49,24 +62,30 @@ class Board extends Component {
           ) : null}
 
           {/* Board header with title */}
-          <p className="title">{this.state.title}</p>
+          <div className="board-header">
+            <p className="title">{this.state.title}</p>
+            <Link to={`/b/${this.props.match.params.id}/t/new`}>
+              Create new issue
+            </Link>
+          </div>
 
           {/* Columns of the board */}
           <div className="board-container">
             <DragDropContext onDragEnd={this.onDragEnd}>
-              {Object.keys(this.state.columns).map(columnName => {
+              {Object.keys(this.state.columns).map((columnName, ind) => {
                 const column = this.state.columns;
 
+                const { title, id, limit, tickets } = column[columnName];
                 return (
                   <Column
-                    columns={this.state.columns}
-                    key={column[columnName].title}
-                    title={column[columnName].title}
-                    id={column[columnName].id}
-                    limit={column[columnName].limit}
+                    columns={column}
+                    key={ind}
+                    title={title}
+                    id={id}
+                    limit={limit}
                     getBoardData={this.getBoardData}
                     boardId={this.state.id}
-                    tickets={column[columnName].tickets}
+                    tickets={tickets}
                     ticketDetailViewOpenHandler={
                       this.ticketDetailViewOpenHandler
                     }
@@ -97,36 +116,27 @@ class Board extends Component {
 
   componentWillUnmount() {
     // use intervalId from the state to clear the interval
-    this.boardChangedHandler();
     clearInterval(this.state.intervalId);
   }
 
-  //this is here so that the board can be updated when something happens to the cards
-  setBoardChangeBoolean = () => {
-    this.setState((prevState, props) => {
-      return { changed: true };
-    });
-    this.boardChangedHandler();
-  };
-
   boardChangedHandler = () => {
     //check if board changed
-    if (this.state.changed) {
-      //update the columns
-      const columns = Object.keys(this.state.columns);
-      columns.forEach((columnName, ind) => {
-        const column = this.state.columns[columnName];
-        //if yes, send data to BE
-        api.post("/api/c/update", {
-          title: column.title,
-          id: column.id,
-          tickets: column.tickets,
-          destinationColumn: null
-        });
+    // if (this.state.changed) {
+    // update the columns
+    const columns = Object.keys(this.state.columns);
+    columns.forEach((columnName, ind) => {
+      const column = this.state.columns[columnName];
+      //if yes, send data to BE
+      api.post("/api/c/update", {
+        title: column.title,
+        id: column.id,
+        tickets: column.tickets,
+        destinationColumn: null
       });
+    });
 
-      this.getBoardData();
-    }
+    this.getBoardData();
+    // }
   };
 
   limitWarningHandler = destinationColumn => {
@@ -149,7 +159,7 @@ class Board extends Component {
 
   getBoardData = () => {
     const { id } = this.props.match.params;
-    //get this.props.match.params.id
+    //this function is needed for updating the board on every change
     api.get(`/api/b/data/${id}`).then(board => {
       this.setState(function(prevState, props) {
         const { title, columns } = board;
@@ -158,7 +168,6 @@ class Board extends Component {
           columns: {},
           id: id
         };
-        // newState.title = title;
 
         columns.forEach(({ title, ticket, _id, limit }) => {
           newState.columns[title] = {
@@ -185,20 +194,21 @@ class Board extends Component {
     //refresh state
     this.setState(function(prevState, props) {
       const newState = prevState;
-      newState.changed = true;
       newState.columns[listName].tickets = list;
       return newState;
     });
+    this.boardChangedHandler();
   };
 
   addToList = ({ listName, list, pos, element }) => {
     list.splice(pos, 0, element);
     this.setState(function(prevState, props) {
       const newState = prevState;
-      newState.changed = true;
+
       newState.columns[listName].tickets = list;
       return newState;
     });
+    this.boardChangedHandler();
   };
 
   removeFromList = ({ listName, list, element }) => {
@@ -208,10 +218,11 @@ class Board extends Component {
     list.splice(pos, 1);
     this.setState(function(prevState, props) {
       const newState = prevState;
-      newState.changed = true;
+
       newState.columns[listName].tickets = list;
       return newState;
     });
+    this.boardChangedHandler();
   };
 
   onDragEnd = result => {

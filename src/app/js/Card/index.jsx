@@ -1,6 +1,5 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import CardDetails from "./CardDetails";
 import { withRouter } from "react-router";
 
 import { Link, Route, Switch } from "react-router-dom";

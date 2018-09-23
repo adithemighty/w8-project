@@ -2,9 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Column = require("../models/Column");
 const Ticket = require("../models/Ticket");
+const Board = require("../models/Board");
 
 router.post("/new", (req, res) => {
-  const { title, description, estimation, columnId } = req.body;
+  const { title, description, estimation, boardId } = req.body;
+
+  console.log("req body: ", req.body, description, estimation, boardId);
 
   const newTicket = {};
 
@@ -20,19 +23,29 @@ router.post("/new", (req, res) => {
     newTicket["estimation"] = estimation;
   }
 
+  console.log("ticket insides", newTicket);
+
   //TODO generate keys based on board
-  Ticket.create(newTicket).then(ticket => {
-    Column.findByIdAndUpdate(
-      { _id: columnId },
-      { $push: { ticket: ticket._id } },
-      { new: true }
-    )
-      .then(column => {
-        res.send(column);
-      })
-      .catch(err => {
-        res.send(err);
-      });
+  console.log(boardId);
+  let firstColumnId;
+  Board.findById({ _id: boardId }).then(board => {
+    firstColumnId = board.columns[0]._id;
+    console.log("found first column, id:", firstColumnId);
+
+    Ticket.create(newTicket).then(ticket => {
+      console.log("ticket", ticket);
+      Column.findByIdAndUpdate(
+        { _id: firstColumnId },
+        { $push: { ticket: ticket._id } },
+        { new: true }
+      )
+        .then(column => {
+          res.send(column);
+        })
+        .catch(err => {
+          res.send(err);
+        });
+    });
   });
 });
 

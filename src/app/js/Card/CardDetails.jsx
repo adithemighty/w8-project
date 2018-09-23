@@ -1,21 +1,22 @@
 import React, { Component } from "react";
-import api from "../utils/api";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
+import api from "../utils/api";
+
 import { RIEInput, RIETextArea, RIESelect } from "riek";
-import _ from "lodash";
 
 class CardDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      new: false,
       title: "",
       blocker: false,
       ticketType: "",
       id: null,
       description: "",
-      estimation: "",
+      estimation: 0,
       ticketType: "",
       ticketTypeFieldValue: { id: "2", text: "User Story" },
       ticketTypeOptions: [
@@ -74,7 +75,8 @@ class CardDetails extends Component {
                   onClick={this.handleInputSubmit}
                   className="btn-confirm"
                 >
-                  Save changes
+                  {/* so that the user is not confused and I don't want to use any too generic button text */}
+                  {this.state.new ? "Create Issue" : "Save changes"}
                 </button>
                 <button className="btn-cancel">
                   <Link
@@ -93,6 +95,11 @@ class CardDetails extends Component {
   }
 
   componentDidMount = () => {
+    if (this.props.match.path.indexOf("new") > 0) {
+      this.setState((prevState, props) => {
+        return { new: true };
+      });
+    }
     const ticketId = this.props.match.params.ticketId;
     api.get(`/api/t/show/${ticketId}`).then(ticket => {
       const {
@@ -161,14 +168,27 @@ class CardDetails extends Component {
   handleInputSubmit = () => {
     const { title, description, estimation, blocker } = this.state;
 
-    const updatedFields = { title, description, estimation, blocker };
-    updatedFields["ticketType"] = this.state.ticketType.text;
+    const submitableFields = { title, description, estimation, blocker };
+    submitableFields["boardId"] = this.props.match.params.boardId;
 
-    api.post(`/api/t/update/${this.state.id}`, updatedFields).then(() => {
-      this.props.ticketDetailViewOpenHandler();
-      this.props.setBoardChangeBoolean();
-      this.props.history.push(`/b/${this.props.match.params.boardId}`);
-    });
+    submitableFields["ticketType"] = this.state.ticketType.text;
+    if (!this.state.new) {
+      api.post(`/api/t/update/${this.state.id}`, submitableFields).then(() => {
+        this.props.ticketDetailViewOpenHandler();
+        this.props.getBoardData();
+        this.props.history.push(`/b/${this.props.match.params.boardId}`);
+      });
+    } else {
+      api
+        .post(`/api/t/new`, {
+          title: submitableFields.title,
+          boardId: this.props.match.params.boardId
+        })
+        .then(result => {
+          this.props.getBoardData();
+          this.props.history.push(`/b/${this.props.match.params.boardId}`);
+        });
+    }
   };
 }
 
