@@ -8,7 +8,7 @@ import api from "../utils/api";
 import Column from "../Column";
 import LimitWarning from "./LimitWarning";
 import ColumnCreate from "../Column/ColumnCreate";
-import CardDetails from "../Card/CardDetails";
+import CardShowAndCreate from "../Card/CardShowAndCreate";
 
 class Board extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class Board extends Component {
               exact
               path="/b/:boardId/t/new"
               render={() => (
-                <CardDetails
+                <CardShowAndCreate
                   ticket={this.state.currentTicket}
                   ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
                   getBoardData={this.getBoardData}
@@ -44,7 +44,7 @@ class Board extends Component {
               exact
               path="/b/:boardId/t/:ticketId"
               render={() => (
-                <CardDetails
+                <CardShowAndCreate
                   getBoardData={this.getBoardData}
                   ticket={this.state.currentTicket}
                   ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
@@ -116,7 +116,7 @@ class Board extends Component {
 
   componentWillUnmount() {
     // use intervalId from the state to clear the interval
-    clearInterval(this.state.intervalId);
+    // clearInterval(this.state.intervalId);
   }
 
   boardChangedHandler = () => {

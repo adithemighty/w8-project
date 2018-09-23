@@ -7,8 +7,6 @@ const Board = require("../models/Board");
 router.post("/new", (req, res) => {
   const { title, description, estimation, boardId } = req.body;
 
-  console.log("req body: ", req.body, description, estimation, boardId);
-
   const newTicket = {};
 
   if (typeof title !== "undefined") {
@@ -23,17 +21,12 @@ router.post("/new", (req, res) => {
     newTicket["estimation"] = estimation;
   }
 
-  console.log("ticket insides", newTicket);
-
   //TODO generate keys based on board
-  console.log(boardId);
   let firstColumnId;
   Board.findById({ _id: boardId }).then(board => {
     firstColumnId = board.columns[0]._id;
-    console.log("found first column, id:", firstColumnId);
 
     Ticket.create(newTicket).then(ticket => {
-      console.log("ticket", ticket);
       Column.findByIdAndUpdate(
         { _id: firstColumnId },
         { $push: { ticket: ticket._id } },

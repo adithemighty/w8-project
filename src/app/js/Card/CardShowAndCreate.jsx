@@ -6,7 +6,7 @@ import api from "../utils/api";
 
 import { RIEInput, RIETextArea, RIESelect } from "riek";
 
-class CardDetails extends Component {
+class CardShowAndCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -192,4 +192,4 @@ class CardDetails extends Component {
   };
 }
 
-export default withRouter(CardDetails);
+export default withRouter(CardShowAndCreate);
