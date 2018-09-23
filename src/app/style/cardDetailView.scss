@@ -2,22 +2,25 @@
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   min-width: 60vw;
   max-width: 60vw;
-  min-height: 80vh;
-  max-height: 80vh;
+  min-height: 60vh;
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
   padding: 5rem 0;
   border-radius: 5px;
 
   @media (max-width: 900px) {
-    min-width: 80vw;
     max-width: 80vw;
   }
 
   .editable-fields {
-    height: 50rem;
+    height: 50vh;
     min-width: 80%;
     margin: 0 auto;
+    @media (max-width: 900px) {
+      margin: 0 3rem;
+      max-width: 80vw;
+    }
 
     display: flex;
     flex-direction: column;
@@ -48,12 +51,15 @@
     .select {
       border-bottom: 3px solid black;
       margin-bottom: 2rem;
-      padding: 1rem 2rem 0;
+      padding: 1rem;
 
       &:focus {
         font-size: inherit;
         margin: 1rem 0 2rem;
+        padding: 0;
+        height: 4rem;
         width: inherit;
+        text-align: center;
       }
 
       &:hover {
@@ -79,6 +85,6 @@
   button {
     min-width: 20rem;
     max-width: 30vw;
-    margin: 4rem 2rem 2rem 0;
+    margin: 2rem 2rem 0;
   }
 }
