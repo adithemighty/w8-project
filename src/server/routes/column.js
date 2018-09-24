@@ -3,6 +3,7 @@ const router = express.Router();
 const Board = require("../models/Board");
 const Column = require("../models/Column");
 const axios = require("axios");
+const config = require("../config");
 
 router.post("/new", (req, res) => {
   const { boardId, columnTitle: title } = req.body;
@@ -92,24 +93,25 @@ router.post("/update", (req, res) => {
   });
 });
 
-// router.post("/gitTest", (req, res) => {
-//   axios
-//     .post(
-//       "https://api.github.com/repos/adiyathemighty/w8-project/issues",
-//       { title: "title123" },
+router.post("/gitTest", (req, res) => {
+  console.log(process.env.GIT_TOKEN);
+  axios
+    .post(
+      "https://api.github.com/repos/adiyathemighty/w8-project/issues",
+      { title: "title123" },
 
-//       {
-//         headers: {
-//           Authorization: "token 80618094caf92bc277d8d7da0ebc1968722da421",
-//           Accept: "application/vnd.github.symmetra-preview+json",
-//           "Content-Type": "application/json"
-//         }
-//       }
-//     )
-//     .then(result => {
-//       res.send(result);
-//     })
-//     .catch(err => res.send(err));
-// });
+      {
+        headers: {
+          Authorization: `token ${config.GIT_TOKEN}`,
+          Accept: "application/vnd.github.symmetra-preview+json",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => res.send(err));
+});
 
 module.exports = router;

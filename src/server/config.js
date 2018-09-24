@@ -2,8 +2,9 @@ module.exports = {
   IS_PRODUCTION: process.env.NODE_ENV === "production",
   PORT: process.env.PORT || 3000,
   MONGODB_URI: process.env.MONGODB_URI || "mongodb://localhost:27017/ja",
-  SECRET_JWT_PASSPHRASE: "TWLom9RDbmGYBtkHHPe4m8pKswyUY",
-  CLOUDINARY_NAME: "dzr2ham2r",
-  CLOUDINARY_KEY: "154938791918322",
-  CLOUDINARY_SECRET: "L26vmA2jIyHFItXfYqXZIgSt4NU"
+  SECRET_JWT_PASSPHRASE: process.env.SECRET_JWT_PASSPHRASE,
+  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
+  CLOUDINARY_KEY: process.env.CLOUDINARY_KEY,
+  CLOUDINARY_SECRET: process.env.CLOUDINARY_SECRET,
+  GIT_TOKEN: process.env.GIT_TOKEN
 };

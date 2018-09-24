@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import Board from "./Board";
+import NewBoard from "./NewBoard";
+import { withRouter } from "react-router";
+
 import { Link, Route, Switch } from "react-router-dom";
 
 class BoardBrowse extends Component {
@@ -12,6 +15,10 @@ class BoardBrowse extends Component {
   }
 
   componentDidMount() {
+    this.getAllBoards();
+  }
+
+  getAllBoards = () => {
     api.get("/api/b/data/all").then(data => {
       const boards = data.map((board, ind) => {
         return (
@@ -27,9 +34,10 @@ class BoardBrowse extends Component {
         return newState;
       });
     });
-  }
+  };
 
   render() {
+    console.log(this.props);
     if (this.state.boards.length === 0) {
       return (
         <div>
@@ -40,18 +48,27 @@ class BoardBrowse extends Component {
       return (
         <div>
           <Switch>
-            <Route path="/b/:id" render={() => <Board />} />
-
             <Route
-              render={() => {
-                return <div>{this.state.boards}</div>;
-              }}
+              exact
+              path="/b/new"
+              render={() => <NewBoard getAllBoards={this.getAllBoards} />}
             />
+            <Route path="/b/:id" render={() => <Board />} />
           </Switch>
+          <div>
+            <button
+              onClick={() => {
+                this.props.history.push(`/b/new`);
+              }}
+            >
+              Create
+            </button>
+            {this.state.boards}
+          </div>
         </div>
       );
     }
   }
 }
 
-export default BoardBrowse;
+export default withRouter(BoardBrowse);
