@@ -53,7 +53,7 @@ class BoardBrowse extends Component {
               path="/b/new"
               render={() => <NewBoard getAllBoards={this.getAllBoards} />}
             />
-            <Route path="/b/:id" render={() => <Board />} />
+            <Route exact path="/b/:id" render={() => <Board />} />
           </Switch>
           <div>
             <button
