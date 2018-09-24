@@ -3,15 +3,7 @@ const router = express.Router();
 const Board = require("../models/Board");
 
 router.post("/new", (req, res) => {
-  const { githubRepoLink, title } = req.body;
-  const boardParams = {};
-  if (typeof githubRepoLink !== undefined || githubRepoLink.length > 0) {
-    boardParams["githubRepoLink"] = githubRepoLink;
-  }
-  if (typeof title !== undefined || title.length > 0) {
-    boardParams["title"] = title;
-  }
-  new Board(boardParams)
+  new Board({})
     .save()
     .then(newBoard => {
       res.send(newBoard);

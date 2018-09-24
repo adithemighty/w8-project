@@ -116,7 +116,7 @@ class Board extends Component {
 
   componentWillUnmount() {
     // use intervalId from the state to clear the interval
-    clearInterval(this.state.intervalId);
+    // clearInterval(this.state.intervalId);
   }
 
   boardChangedHandler = () => {

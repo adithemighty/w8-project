@@ -78,15 +78,13 @@ class CardShowAndCreate extends Component {
                   {/* so that the user is not confused and I don't want to use any too generic button text */}
                   {this.state.new ? "Create Issue" : "Save changes"}
                 </button>
-                <button
-                  onClick={() => {
-                    this.props.history.push(
-                      `/b/${this.props.match.params.boardId}`
-                    );
-                  }}
-                  className="btn-cancel"
-                >
-                  Back to board
+                <button className="btn-cancel">
+                  <Link
+                    className="link"
+                    to={`/b/${this.props.match.params.boardId}`}
+                  >
+                    Back to board
+                  </Link>
                 </button>
               </div>
             </div>
@@ -146,7 +144,6 @@ class CardShowAndCreate extends Component {
     });
   };
 
-  //if a user happens to click outside of modal, it closes
   handleModalQuitClick = e => {
     if (e.target.className === "modal") {
       this.props.history.push(`/b/${this.props.match.params.boardId}`);

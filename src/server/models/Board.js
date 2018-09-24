@@ -15,8 +15,7 @@ const boardSchema = new Schema({
       ref: "Column",
       autopopulate: true
     }
-  ],
-  githubRepoLink: String
+  ]
 });
 
 boardSchema.pre("save", function(next) {
