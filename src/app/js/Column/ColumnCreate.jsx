@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import api from "../utils/api";
-import Button from "@material-ui/core/Button";
 
 class ColumnCreate extends Component {
   constructor(props) {

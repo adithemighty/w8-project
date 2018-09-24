@@ -1,76 +1,72 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
-
 import api from "../utils/api";
+import { withRouter } from "react-router";
 
 class NewBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      githubRepoLink: "",
-      title: ""
+      title: "",
+      userId: ""
     };
+
+    console.log("new board props", this.props);
   }
 
-  handleInputChange = (key, value) => {
-    this.setState(() => {
-      return { [key]: value };
+  submitHandler = () => {
+    const { title, userId } = this.state;
+    api
+      .post("/api/b/new", {
+        title,
+        userId
+      })
+      .then(() => {
+        this.props.getBoards();
+        this.props.history.push("/b");
+      });
+  };
+
+  inputHandler = (key, value) => {
+    this.setState({
+      [key]: value
     });
   };
 
-  handleSubmit = () => {
-    api.post("/api/b/new", this.state).then(() => {
-      this.props.getAllBoards();
-      this.props.history.push(`/b`);
-    });
-  };
-
-  //if a user happens to click outside of modal, it closes
-  handleModalQuitClick = e => {
-    if (e.target.className === "modal") {
-      this.props.history.push(`/b/${this.props.match.params.boardId}`);
-    }
+  componentDidMount = () => {
+    this.setState({ userId: this.props.user._id });
   };
 
   render() {
     return (
-      <div
-        className="modal"
-        onClick={() => {
-          this.props.history.push(`/b`);
-        }}
-      >
-        <div className="card-details">
-          <label htmlFor="title">Board title</label>
-          <input
-            value={this.state.title}
-            type="text"
-            id="title"
-            onChange={event => {
-              this.handleInputChange("title", event.target.value);
-            }}
-          />
+      <div className="modal">
+        <div className="modal-text">
+          <div className="editable-fields">
+            <label htmlFor="title">Title</label>
+            <input
+              placeholder="New board title"
+              id="title"
+              onChange={e => this.inputHandler("title", e.target.value)}
+              type="text"
+              value={this.state.title}
+            />
+          </div>
 
-          <label htmlFor="githubRepoLink">Link board to GitHub repo</label>
-          <input
-            value={this.state.githubRepoLink}
-            type="text"
-            id="githubRepoLink"
-            onChange={event => {
-              this.handleInputChange("githubRepoLink", event.target.value);
-            }}
-          />
-          <button onClick={this.handleSubmit} className="btn-confirm">
-            Create board
-          </button>
-          <button
-            onClick={() => {
-              this.props.history.push(`/b`);
-            }}
-            className="btn-cancel"
-          >
-            Cancel
-          </button>
+          <div className="action-btns">
+            <button
+              className="btn-confirm column-create-button"
+              onClick={this.submitHandler}
+            >
+              Create board
+            </button>
+            <button
+              className="btn-cancel"
+              onClick={() => {
+                this.props.history.push("/b");
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     );

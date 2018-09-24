@@ -1,12 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const Board = require("../models/Board");
+const User = require("../models/User");
 
 router.post("/new", (req, res) => {
-  new Board({})
+  const { title, userId } = req.body;
+
+  new Board({ title })
     .save()
     .then(newBoard => {
-      res.send(newBoard);
+      User.findByIdAndUpdate(
+        { _id: userId },
+        { $push: { board: newBoard._id } },
+        { new: true }
+      ).then(user => {
+        res.send(newBoard);
+      });
     })
     .catch(err => {
       res.send({ error: err });
@@ -34,11 +43,12 @@ router.post("/edit", (req, res) => {
   }
 });
 
-router.get("/data/all", (req, res) => {
+router.get("/data/all/:userId", (req, res) => {
+  const { userId } = req.params;
   //browse view in which you see all exisiting boards
-  Board.find({})
-    .then(boards => {
-      res.send(boards);
+  User.findById({ _id: userId })
+    .then(user => {
+      res.send(user.board);
     })
     .catch(err => {
       res.send({ error: err });

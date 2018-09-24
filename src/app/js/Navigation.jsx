@@ -9,15 +9,16 @@ const Navigation = props => {
           <Link className="link nav-link" to="/">
             Home
           </Link>
-          &nbsp; &nbsp; &nbsp;
-          <Link className="link nav-link" to="/b">
-            Browse all boards
-          </Link>
+
           {props.user && (
             <span>
               &nbsp; &nbsp; &nbsp;
               <Link className="link nav-link" to="/profile">
                 Profile
+              </Link>
+              &nbsp; &nbsp; &nbsp;
+              <Link className="link nav-link" to="/b">
+                My boards
               </Link>
             </span>
           )}
