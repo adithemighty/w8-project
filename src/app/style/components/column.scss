@@ -44,25 +44,33 @@
 
 .card {
   height: 5rem;
-  background-image: $btn-neutral;
-  background-blend-mode: difference;
+  background-color: rgb(255, 255, 255);
   border-radius: 3px;
-  margin: 0.5rem 0;
+  margin: 1rem 0.5rem;
   padding: 1rem;
-}
-
-.trash-btn {
-  border-radius: 50px;
-  padding: 1rem;
-  background-image: $btn-neutral;
-  border: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: $shadow;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &:hover {
-    cursor: pointer;
-  }
-
-  .trash-icon {
-    width: 2rem;
-    height: 2rem;
+    box-shadow: $shadow-hover;
   }
 }
+
+// .trash-btn {
+//   border-radius: 50px;
+//   padding: 1rem;
+//   background-image: $btn-neutral;
+//   border: none;
+
+//   &:hover {
+//     cursor: pointer;
+//   }
+
+//   // .trash-icon {
+//   //   width: 2rem;
+//   //   height: 2rem;
+//   // }
+// }

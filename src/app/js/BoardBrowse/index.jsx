@@ -29,24 +29,24 @@ class BoardBrowse extends Component {
               {" "}
               <p>{board.title}</p>
               <button
-                className="trash-btn"
+                className="icon-button"
                 onClick={
                   this.props.columnHasTickets
                     ? this.handleClickOpen
                     : this.handleDelete
                 }
               >
-                <img className="trash-icon" src={DeleteIcon} alt="" />
+                <img className="icon" src={DeleteIcon} alt="" />
               </button>
               <button
-                className="trash-btn"
+                className="icon-button"
                 onClick={
                   this.props.columnHasTickets
                     ? this.handleClickOpen
                     : this.handleDelete
                 }
               >
-                <img className="trash-icon" src={EditIcon} alt="" />
+                <img className="icon" src={EditIcon} alt="" />
               </button>
             </div>
           </Link>

@@ -52,10 +52,7 @@ class NewBoard extends Component {
           </div>
 
           <div className="action-btns">
-            <button
-              className="btn-confirm column-create-button"
-              onClick={this.submitHandler}
-            >
+            <button className="btn-confirm " onClick={this.submitHandler}>
               Create board
             </button>
             <button
