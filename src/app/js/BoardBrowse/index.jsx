@@ -13,7 +13,12 @@ class BoardBrowse extends Component {
   }
 
   componentDidMount() {
+    this.getBoards();
+  }
+
+  getBoards = () => {
     api.get("/api/b/data/all").then(data => {
+      console.log(this.props);
       const boards = data.map((board, ind) => {
         return (
           <Link key={ind} to={`/b/${board._id}`}>
@@ -28,9 +33,10 @@ class BoardBrowse extends Component {
         return newState;
       });
     });
-  }
+  };
 
   render() {
+    if (!this.props.user) return <Redirect to="/auth/sign-in" />; // this is actually the protection
     if (this.state.boards.length === 0) {
       return (
         <div>
@@ -41,15 +47,20 @@ class BoardBrowse extends Component {
       return (
         <div>
           <Switch>
-            <Route exact path="/b/new" render={() => <NewBoard />} />
+            <Route
+              exact
+              path="/b/new"
+              render={() => <NewBoard getBoards={this.getBoards} />}
+            />
             <Route path="/b/:id" render={() => <Board />} />
 
-            <Route
+            {/* <Route
               render={() => {
                 return <div>{this.state.boards}</div>;
               }}
-            />
+            /> */}
           </Switch>
+          <div>{this.state.boards}</div>
         </div>
       );
     }

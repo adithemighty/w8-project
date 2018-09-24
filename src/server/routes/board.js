@@ -3,7 +3,8 @@ const router = express.Router();
 const Board = require("../models/Board");
 
 router.post("/new", (req, res) => {
-  new Board({})
+  const { title } = req.body;
+  new Board({ title })
     .save()
     .then(newBoard => {
       res.send(newBoard);
