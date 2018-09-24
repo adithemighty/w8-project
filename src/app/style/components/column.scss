@@ -1,9 +1,14 @@
 .column {
   height: 80%;
-  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  background-image: linear-gradient(
+    to bottom,
+    #cfd9df50 30%,
+    #cfd9df6c 50%,
+    #ffffff 100%
+  );
   border-radius: 5px;
   padding: 3rem 0;
-  margin: 1.5rem;
+  margin: 2rem 1rem;
   max-width: 27rem;
   min-width: 27rem;
 }
@@ -25,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.5rem 0 1rem;
+  padding: 0 2rem 0 2rem;
 
   @media (max-width: 600px) {
     font-size: 40.5%;
@@ -39,7 +44,8 @@
 
 .card {
   height: 5rem;
-  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  background-image: $btn-neutral;
+  background-blend-mode: difference;
   border-radius: 3px;
   margin: 0.5rem 0;
   padding: 1rem;
@@ -48,7 +54,7 @@
 .trash-btn {
   border-radius: 50px;
   padding: 1rem;
-  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  background-image: $btn-neutral;
   border: none;
 
   &:hover {

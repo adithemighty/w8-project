@@ -1,6 +1,24 @@
 $primary-color: rgb(48, 25, 25);
 $secondary-color: #ff686b;
 $ok-color: rgb(97, 184, 97);
+$btn-neutral: linear-gradient(120deg, #fdfbfb42 0%, #ebedee33 100%);
+$btn-nope: radial-gradient(
+  circle farthest-corner at 10% 20%,
+  rgba(232, 72, 85, 1) 0%,
+  rgba(232, 72, 85, 1) 90%
+);
+$greybg: radial-gradient(73% 147%, #eadfdf 59%, #ece2df 100%),
+  radial-gradient(
+    91% 146%,
+    rgba(255, 255, 255, 0.5) 47%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+
+$btn-yepp: radial-gradient(
+  circle 865px at 10% 20%,
+  rgba(62, 200, 158, 1) 0%,
+  rgba(103, 242, 121, 1) 91.7%
+);
 $text-color: #333;
 $grey: rgb(200, 200, 200);
 
