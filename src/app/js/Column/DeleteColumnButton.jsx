@@ -123,14 +123,14 @@ class DeleteColumnButton extends Component {
     return (
       <div>
         <button
-          className="trash-btn"
+          className="icon-button"
           onClick={
             this.props.columnHasTickets
               ? this.handleClickOpen
               : this.handleDelete
           }
         >
-          <img className="trash-icon" src={DeleteIcon} alt="" />
+          <img className="icon" src={DeleteIcon} alt="" />
         </button>
 
         <DeleteDialog

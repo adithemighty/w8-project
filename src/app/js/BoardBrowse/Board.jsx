@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { Route, Link, Switch } from "react-router-dom";
 
 import api from "../utils/api";
+import PlusIcon from "../../assets/plus.svg";
 
 import Column from "../Column";
 import LimitWarning from "./LimitWarning";
@@ -64,9 +65,20 @@ class Board extends Component {
           {/* Board header with title */}
           <div className="board-header">
             <p className="title">{this.state.title}</p>
-            <Link to={`/b/${this.props.match.params.id}/t/new`}>
-              Create new issue
-            </Link>
+
+            <button
+              className="add-btn"
+              onClick={() => {
+                console.log("button press");
+                console.log(this.props);
+                this.props.history.push(
+                  `/b/${this.props.match.params.id}/t/new`
+                );
+              }}
+            >
+              <p>Create new issue</p>
+              <img className="add-icon" src={PlusIcon} alt="" />
+            </button>
           </div>
 
           {/* Columns of the board */}

@@ -3,6 +3,8 @@ import api from "../utils/api";
 import Board from "./Board";
 import NewBoard from "./NewBoard";
 import { Link, Route, Switch } from "react-router-dom";
+import DeleteIcon from "../../assets/trash.svg";
+import EditIcon from "../../assets/edit.svg";
 
 class BoardBrowse extends Component {
   constructor(props) {
@@ -20,10 +22,33 @@ class BoardBrowse extends Component {
     api.get(`/api/b/data/all/${this.props.user._id}`).then(data => {
       console.log(this.props);
       const boards = data.map((board, ind) => {
+        console.log(board);
         return (
-          <Link key={ind} to={`/b/${board._id}`}>
-            {" "}
-            {board.title}
+          <Link className="link" key={ind} to={`/b/${board._id}`}>
+            <div key={ind} className="board-card">
+              {" "}
+              <p>{board.title}</p>
+              <button
+                className="icon-button"
+                onClick={
+                  this.props.columnHasTickets
+                    ? this.handleClickOpen
+                    : this.handleDelete
+                }
+              >
+                <img className="icon" src={DeleteIcon} alt="" />
+              </button>
+              <button
+                className="icon-button"
+                onClick={
+                  this.props.columnHasTickets
+                    ? this.handleClickOpen
+                    : this.handleDelete
+                }
+              >
+                <img className="icon" src={EditIcon} alt="" />
+              </button>
+            </div>
           </Link>
         );
       });
@@ -55,14 +80,12 @@ class BoardBrowse extends Component {
               )}
             />
             <Route path="/b/:id" render={() => <Board />} />
-
-            {/* <Route
-              render={() => {
-                return <div>{this.state.boards}</div>;
-              }}
-            /> */}
+            <Route
+              render={() => (
+                <div className="board-browse">{this.state.boards}</div>
+              )}
+            />
           </Switch>
-          <div>{this.state.boards}</div>
         </div>
       );
     }

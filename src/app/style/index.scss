@@ -1,6 +1,37 @@
 $primary-color: rgb(48, 25, 25);
 $secondary-color: #ff686b;
 $ok-color: rgb(97, 184, 97);
+$btn-neutral: linear-gradient(120deg, #fdfbfb42 0%, #ebedee33 100%);
+
+$shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$shadow-hover: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$shadow-bottom: 0 6px 10px -7px rgb(0, 0, 0);
+
+$btn-nope: radial-gradient(
+  circle farthest-corner at 10% 20%,
+  rgba(246, 69, 69, 1) 0%,
+  rgba(251, 132, 132, 1) 90%
+);
+$greybg: linear-gradient(to bottom, #d5dee7 0%, #e8ebf2 50%, #e2e7ed 100%),
+  linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.02) 50%,
+    rgba(255, 255, 255, 0.02) 61%,
+    rgba(0, 0, 0, 0.02) 73%
+  ),
+  linear-gradient(33deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+
+$btn-yepp: radial-gradient(
+  circle farthest-corner at 8.7% 21.2%,
+  rgba(146, 213, 171, 1) 0.6%,
+  rgba(148, 247, 184, 1) 73.1%
+);
+$side-menu-gb: linear-gradient(
+  to top,
+  #48c6ef 0%,
+  #6f86d6 100%
+); //background-image
+
 $text-color: #333;
 $grey: rgb(200, 200, 200);
 

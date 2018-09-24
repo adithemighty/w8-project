@@ -1,6 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
+import EditIcon from "../../assets/edit.svg";
 
 import { Link, Route, Switch } from "react-router-dom";
 
@@ -18,7 +19,16 @@ const Card = props => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <Link to={`${props.match.url}/t/${_id}`}>{title}</Link>
+              {/* <Link to={`${props.match.url}/t/${_id}`}>{title}</Link> */}
+              {title}
+              <button
+                className="icon-button"
+                onClick={() => {
+                  props.history.push(`${props.match.url}/t/${_id}`);
+                }}
+              >
+                <img className="icon" src={EditIcon} alt="" />
+              </button>
             </div>
           );
         }}
