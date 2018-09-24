@@ -17,7 +17,7 @@ class BoardBrowse extends Component {
   }
 
   getBoards = () => {
-    api.get("/api/b/data/all").then(data => {
+    api.get(`/api/b/data/all/${this.props.user._id}`).then(data => {
       console.log(this.props);
       const boards = data.map((board, ind) => {
         return (
@@ -50,7 +50,9 @@ class BoardBrowse extends Component {
             <Route
               exact
               path="/b/new"
-              render={() => <NewBoard getBoards={this.getBoards} />}
+              render={() => (
+                <NewBoard user={this.props.user} getBoards={this.getBoards} />
+              )}
             />
             <Route path="/b/:id" render={() => <Board />} />
 

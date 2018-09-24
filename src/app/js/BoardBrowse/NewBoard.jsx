@@ -6,16 +6,19 @@ class NewBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: ""
+      title: "",
+      userId: ""
     };
 
     console.log("new board props", this.props);
   }
 
   submitHandler = () => {
+    const { title, userId } = this.state;
     api
       .post("/api/b/new", {
-        title: this.state.title
+        title,
+        userId
       })
       .then(() => {
         this.props.getBoards();
@@ -27,6 +30,10 @@ class NewBoard extends Component {
     this.setState({
       [key]: value
     });
+  };
+
+  componentDidMount = () => {
+    this.setState({ userId: this.props.user._id });
   };
 
   render() {
