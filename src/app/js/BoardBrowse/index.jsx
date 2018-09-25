@@ -22,8 +22,6 @@ class BoardBrowse extends Component {
     this.getBoards();
   }
 
-  handleEdit = () => {};
-
   getBoards = () => {
     api.get(`/api/b/data/all/${this.props.user._id}`).then(data => {
       this.setState((prevState, props) => {
@@ -31,6 +29,12 @@ class BoardBrowse extends Component {
         newState.boards = data;
         return newState;
       });
+    });
+  };
+
+  deleteBoard = id => {
+    api.post("/api/b/delete", { id }).then(() => {
+      this.getBoards();
     });
   };
 
@@ -52,13 +56,13 @@ class BoardBrowse extends Component {
       return (
         // <div></div>
 
-        <Link className="link board-card" key={ind} to={`/b/${board._id}`}>
+        <Link className="link board-card" key={ind} to={`/b`}>
           <p>{board.title}</p>
           {/* Delete button */}
           <button
             className="icon-button"
             onClick={() => {
-              this.props.history.push(`/b/delete`);
+              this.deleteBoard(board._id);
               this.getBoards();
             }}
           >

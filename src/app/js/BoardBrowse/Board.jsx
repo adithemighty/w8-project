@@ -130,8 +130,6 @@ class Board extends Component {
   }
 
   boardChangedHandler = () => {
-    //check if board changed
-    // if (this.state.changed) {
     // update the columns
     const columns = Object.keys(this.state.columns);
     columns.forEach((columnName, ind) => {
@@ -146,7 +144,6 @@ class Board extends Component {
     });
 
     this.getBoardData();
-    // }
   };
 
   limitWarningHandler = destinationColumn => {
