@@ -22,6 +22,12 @@ router.post("/new", (req, res) => {
     });
 });
 
+router.post("/delete", (req, res) => {
+  const { id } = req.body;
+
+  Board.findByIdAndRemove({ _id: id }).then(() => res.send("board deleted"));
+});
+
 router.post("/edit", (req, res) => {
   const { id } = req.body;
   //in case the title is a string with only whitespaces
