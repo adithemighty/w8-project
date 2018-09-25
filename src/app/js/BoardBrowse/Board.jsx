@@ -67,7 +67,7 @@ class Board extends Component {
             <p className="title">{this.state.title}</p>
 
             <button
-              className="add-btn"
+              className="add-btn marg-left-md"
               onClick={() => {
                 this.props.history.push(
                   `/b/${this.props.match.params.id}/t/new`
