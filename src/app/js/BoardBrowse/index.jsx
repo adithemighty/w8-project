@@ -73,7 +73,7 @@ class BoardBrowse extends Component {
           this.getBoards();
         }}
       >
-        <p>Create new issue</p>
+        <p>Create new board</p>
         <img className="add-icon" src={PlusIcon} alt="" />
       </button>
     );
@@ -98,7 +98,9 @@ class BoardBrowse extends Component {
                   {this.state.boards.length > 0 ? (
                     <div>{this.state.boards}</div>
                   ) : (
-                    <p>You don't have any boards yet.</p>
+                    <div className="marg-top-md">
+                      You don't have any boards yet.
+                    </div>
                   )}
                 </div>
               );
