@@ -55,5 +55,6 @@
   &:hover {
     transform: translateY(-2px);
     cursor: pointer;
+    box-shadow: $shadow-hover;
   }
 }
