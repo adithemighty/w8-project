@@ -15,7 +15,7 @@ class CreateEditBoard extends Component {
   submitHandler = () => {
     const { title, userId } = this.state;
     const boardId = this.props.match.params.boardId;
-    if (this.props.edit) {
+    if (this.state.edit) {
       api
         .post("/api/b/edit", {
           title,
@@ -65,7 +65,7 @@ class CreateEditBoard extends Component {
 
           <div className="action-btns">
             <button className="btn-confirm " onClick={this.submitHandler}>
-              Create board
+              {this.state.edit ? "Edit board" : "Create board"}
             </button>
             <button
               className="btn-cancel"
