@@ -2,26 +2,40 @@ import React, { Component } from "react";
 import api from "../utils/api";
 import { withRouter } from "react-router";
 
-class NewBoard extends Component {
+class CreateEditBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      userId: ""
+      userId: "",
+      edit: false
     };
   }
 
   submitHandler = () => {
     const { title, userId } = this.state;
-    api
-      .post("/api/b/new", {
-        title,
-        userId
-      })
-      .then(() => {
-        this.props.getBoards();
-        this.props.history.push("/b");
-      });
+    const boardId = this.props.match.params.boardId;
+    if (this.state.edit) {
+      api
+        .post("/api/b/edit", {
+          title,
+          id: boardId
+        })
+        .then(() => {
+          this.props.getBoards();
+          this.props.history.push("/b");
+        });
+    } else {
+      api
+        .post("/api/b/new", {
+          title,
+          userId
+        })
+        .then(() => {
+          this.props.getBoards();
+          this.props.history.push("/b");
+        });
+    }
   };
 
   inputHandler = (key, value) => {
@@ -31,7 +45,7 @@ class NewBoard extends Component {
   };
 
   componentDidMount = () => {
-    this.setState({ userId: this.props.user._id });
+    this.setState({ userId: this.props.user._id, edit: this.props.edit });
   };
 
   render() {
@@ -51,7 +65,7 @@ class NewBoard extends Component {
 
           <div className="action-btns">
             <button className="btn-confirm " onClick={this.submitHandler}>
-              Create board
+              {this.state.edit ? "Edit board" : "Create board"}
             </button>
             <button
               className="btn-cancel"
@@ -68,4 +82,4 @@ class NewBoard extends Component {
   }
 }
 
-export default withRouter(NewBoard);
+export default withRouter(CreateEditBoard);
