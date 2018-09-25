@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import Board from "./Board";
-import NewBoard from "./NewBoard";
+import CreateEditBoard from "./CreateEditBoard";
 import { withRouter } from "react-router";
 
 import { Link, Route, Switch } from "react-router-dom";
@@ -22,38 +22,36 @@ class BoardBrowse extends Component {
     this.getBoards();
   }
 
+  handleEdit = () => {};
+
   getBoards = () => {
     api.get(`/api/b/data/all/${this.props.user._id}`).then(data => {
+      console.log(data);
       const boards = data.map((board, ind) => {
         return (
-          <Link className="link" key={ind} to={`/b/${board._id}`}>
-            <div key={ind} className="board-card">
-              {" "}
-              <p>{board.title}</p>
-              {/* Delete button */}
-              <button
-                className="icon-button"
-                onClick={
-                  this.props.columnHasTickets
-                    ? this.handleClickOpen
-                    : this.handleDelete
-                }
-              >
-                <img className="icon" src={DeleteIcon} alt="" />
-              </button>
-              {/* Edit button */}
-              <button
-                className="icon-button"
-                onClick={
-                  this.props.columnHasTickets
-                    ? this.handleClickOpen
-                    : this.handleDelete
-                }
-              >
-                <img className="icon" src={EditIcon} alt="" />
-              </button>
-            </div>
-          </Link>
+          <div key={ind} className="board-card">
+            <p>{board.title}</p>
+            {/* Delete button */}
+            <button
+              className="icon-button"
+              onClick={() => {
+                this.props.history.push(`/b/delete`);
+                this.getBoards();
+              }}
+            >
+              <img className="icon" src={DeleteIcon} alt="" />
+            </button>
+            {/* Edit button */}
+            <button
+              className="icon-button"
+              onClick={() => {
+                this.props.history.push(`/b/edit`);
+                this.getBoards();
+              }}
+            >
+              <img className="icon" src={EditIcon} alt="" />
+            </button>
+          </div>
         );
       });
       this.setState((prevState, props) => {
@@ -86,7 +84,20 @@ class BoardBrowse extends Component {
             exact
             path="/b/new"
             render={() => (
-              <NewBoard user={this.props.user} getBoards={this.getBoards} />
+              <CreateEditBoard
+                user={this.props.user}
+                getBoards={this.getBoards}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/b/edit"
+            render={() => (
+              <CreateEditBoard
+                user={this.props.user}
+                getBoards={this.getBoards}
+              />
             )}
           />
           <Route path="/b/:id" render={() => <Board />} />

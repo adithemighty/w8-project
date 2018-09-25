@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import api from "../utils/api";
 import { withRouter } from "react-router";
 
-class NewBoard extends Component {
+class CreateEditBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,4 +68,4 @@ class NewBoard extends Component {
   }
 }
 
-export default withRouter(NewBoard);
+export default withRouter(CreateEditBoard);
