@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import api from "../utils/api";
 import Board from "./Board";
 import NewBoard from "./NewBoard";
+import { withRouter } from "react-router";
+
 import { Link, Route, Switch } from "react-router-dom";
+
 import DeleteIcon from "../../assets/trash.svg";
 import EditIcon from "../../assets/edit.svg";
+import PlusIcon from "../../assets/plus.svg";
 
 class BoardBrowse extends Component {
   constructor(props) {
@@ -26,6 +30,7 @@ class BoardBrowse extends Component {
             <div key={ind} className="board-card">
               {" "}
               <p>{board.title}</p>
+              {/* Delete button */}
               <button
                 className="icon-button"
                 onClick={
@@ -36,6 +41,7 @@ class BoardBrowse extends Component {
               >
                 <img className="icon" src={DeleteIcon} alt="" />
               </button>
+              {/* Edit button */}
               <button
                 className="icon-button"
                 onClick={
@@ -59,35 +65,49 @@ class BoardBrowse extends Component {
   };
 
   render() {
+    const addBoardBtn = (
+      <button
+        className="add-btn marg-top-md"
+        onClick={() => {
+          this.props.history.push(`/b/new`);
+          this.getBoards();
+        }}
+      >
+        <p>Create new issue</p>
+        <img className="add-icon" src={PlusIcon} alt="" />
+      </button>
+    );
     if (!this.props.user) return <Redirect to="/auth/sign-in" />; // this is actually the protection
-    if (this.state.boards.length === 0) {
-      return (
-        <div>
-          <p>Browse boards view</p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Switch>
-            <Route
-              exact
-              path="/b/new"
-              render={() => (
-                <NewBoard user={this.props.user} getBoards={this.getBoards} />
-              )}
-            />
-            <Route path="/b/:id" render={() => <Board />} />
-            <Route
-              render={() => (
-                <div className="board-browse">{this.state.boards}</div>
-              )}
-            />
-          </Switch>
-        </div>
-      );
-    }
+
+    return (
+      <div>
+        <Switch>
+          <Route
+            exact
+            path="/b/new"
+            render={() => (
+              <NewBoard user={this.props.user} getBoards={this.getBoards} />
+            )}
+          />
+          <Route path="/b/:id" render={() => <Board />} />
+          <Route
+            render={() => {
+              return (
+                <div className="board-browse">
+                  {addBoardBtn}
+                  {this.state.boards.length > 0 ? (
+                    <div>{this.state.boards}</div>
+                  ) : (
+                    <p>You don't have any boards yet.</p>
+                  )}
+                </div>
+              );
+            }}
+          />
+        </Switch>
+      </div>
+    );
   }
 }
 
-export default BoardBrowse;
+export default withRouter(BoardBrowse);

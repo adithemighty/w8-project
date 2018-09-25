@@ -58,3 +58,29 @@
     box-shadow: $shadow-hover;
   }
 }
+
+.add-btn {
+  font-size: inherit;
+  border-radius: 50px;
+  padding: 1rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  // margin: 0 0 0.5rem 3rem;
+  background-image: $btn-neutral;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $shadow-hover;
+  }
+
+  p {
+    margin: 0 3rem;
+  }
+}
+.add-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
