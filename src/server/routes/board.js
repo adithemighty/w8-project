@@ -73,4 +73,16 @@ router.get("/data/:id", (req, res) => {
     });
 });
 
+router.post("/updateColumns", (req, res) => {
+  const { columnIds, boardId } = req.body;
+
+  Board.findByIdAndUpdate(
+    { _id: boardId },
+    { $set: { columns: columnIds } },
+    { new: true }
+  ).then(updatedBoard => {
+    res.send(updatedBoard);
+  });
+});
+
 module.exports = router;

@@ -1,6 +1,8 @@
 import React from "react";
 import Card from "../Card";
 import DeleteColumnButton from "./DeleteColumnButton";
+import ArrowLeft from "../../assets/arrLeft.svg";
+import ArrowRight from "../../assets/arrRight.svg";
 import { Droppable } from "react-beautiful-dnd";
 
 const Column = props => {
@@ -21,6 +23,14 @@ const Column = props => {
     <div className="column">
       {/* column header with title and delete button */}
       <div className="column-header">
+        {props.first ? null : (
+          <button
+            onClick={() => props.columnMoveHandler("left", props.ind)}
+            className="icon-button"
+          >
+            <img className="icon" src={ArrowLeft} alt="" />
+          </button>
+        )}
         <p className="column-title">{title}</p>
         <p>{props.limit ? `${props.tickets.length}/${props.limit}` : null}</p>
 
@@ -31,6 +41,14 @@ const Column = props => {
           boardId={boardId}
           columns={columns}
         />
+        {props.last ? null : (
+          <button
+            onClick={() => props.columnMoveHandler("right", props.ind)}
+            className="icon-button"
+          >
+            <img className="icon" src={ArrowRight} alt="" />
+          </button>
+        )}
       </div>
 
       {/* this is necessary for the drag and drop to work so that after dnd we know which is the source and destination column */}
