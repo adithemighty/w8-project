@@ -19,11 +19,38 @@ class Board extends Component {
       columns: {},
       limitWarningOpen: false,
       ticketDetailViewOpen: false,
-      currentTicket: ""
+      currentTicket: "",
+      sortedColumnIds: []
     };
   }
 
   render() {
+    const numberOfColumns = Object.keys(this.state.columns).length;
+    const columns = Object.keys(this.state.columns).map(columnName => {
+      const column = this.state.columns;
+      const { title, ind, id, limit, tickets } = column[columnName];
+      let first = ind === 0;
+      let last = numberOfColumns === ind + 1;
+
+      return (
+        <Column
+          first={first}
+          last={last}
+          columns={column}
+          key={ind}
+          title={title}
+          id={id}
+          ind={ind}
+          limit={limit}
+          getBoardData={this.getBoardData}
+          boardId={this.state.id}
+          tickets={tickets}
+          ticketDetailViewOpenHandler={this.ticketDetailViewOpenHandler}
+          columnMoveHandler={this.columnMoveHandler}
+        />
+      );
+    });
+
     if (this.state.id === "") {
       return <div>Loading</div>;
     } else {
@@ -62,7 +89,7 @@ class Board extends Component {
             />
           ) : null}
 
-          {/* Board header with title */}
+          {/* Board header with title and add ticket btn */}
           <div className="board-header">
             <p className="title">{this.state.title}</p>
 
@@ -82,26 +109,7 @@ class Board extends Component {
           {/* Columns of the board */}
           <div className="board-container">
             <DragDropContext onDragEnd={this.onDragEnd}>
-              {Object.keys(this.state.columns).map((columnName, ind) => {
-                const column = this.state.columns;
-
-                const { title, id, limit, tickets } = column[columnName];
-                return (
-                  <Column
-                    columns={column}
-                    key={ind}
-                    title={title}
-                    id={id}
-                    limit={limit}
-                    getBoardData={this.getBoardData}
-                    boardId={this.state.id}
-                    tickets={tickets}
-                    ticketDetailViewOpenHandler={
-                      this.ticketDetailViewOpenHandler
-                    }
-                  />
-                );
-              })}
+              {columns}
             </DragDropContext>
 
             {/* Additional add column element that is stylised like a column */}
@@ -117,24 +125,16 @@ class Board extends Component {
   }
 
   componentDidMount() {
-    const intervalId = setInterval(this.boardChangedHandler, 30000);
-    // store intervalId in the state so it can be accessed later:
-    this.setState({ intervalId: intervalId });
-
     this.getBoardData();
-  }
-
-  componentWillUnmount() {
-    // use intervalId from the state to clear the interval
-    clearInterval(this.state.intervalId);
   }
 
   boardChangedHandler = () => {
     // update the columns
     const columns = Object.keys(this.state.columns);
+    const columnIds = [];
     columns.forEach((columnName, ind) => {
       const column = this.state.columns[columnName];
-      //if yes, send data to BE
+      columnIds.push(column.id);
       api.post("/api/c/update", {
         title: column.title,
         id: column.id,
@@ -144,6 +144,26 @@ class Board extends Component {
     });
 
     this.getBoardData();
+  };
+
+  columnMoveHandler = (direction, ind) => {
+    const sortedColumnIds = this.state.sortedColumnIds;
+    const movedColumnId = sortedColumnIds[ind];
+    sortedColumnIds.splice(ind, 1);
+    if (direction === "right") {
+      sortedColumnIds.splice(ind + 1, 0, movedColumnId);
+    } else if (direction === "left") {
+      sortedColumnIds.splice(ind - 1, 0, movedColumnId);
+    }
+
+    api
+      .post("/api/b/updateColumns", {
+        columnIds: sortedColumnIds,
+        boardId: this.state.id
+      })
+      .then(() => {
+        this.getBoardData();
+      });
   };
 
   limitWarningHandler = destinationColumn => {
@@ -173,18 +193,22 @@ class Board extends Component {
         const newState = {
           title: title,
           columns: {},
-          id: id
+          id: id,
+          sortedColumnIds: []
         };
 
-        columns.forEach(({ title, ticket, _id, limit }) => {
+        columns.forEach(({ title, ticket, _id, limit }, ind) => {
+          newState.sortedColumnIds.push(_id);
           newState.columns[title] = {
             tickets: ticket,
             id: _id,
             title: title,
-            limit: limit
+            limit: limit,
+            ind: ind
           };
         });
-        return { ...newState };
+
+        return newState;
       });
     });
   };
