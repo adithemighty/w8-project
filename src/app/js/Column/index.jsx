@@ -51,7 +51,7 @@ const Column = props => {
         )}
       </div>
 
-      {/* this is necessary for the drag and drop to work so that after dnd we know which is the source and destination column */}
+      {/* this is necessary for the drag and drop to work so that after dnd we know which is the source and destination column. KEY IS IMPORTANT! DON'T DELETE, MOVE OR WHATEVER! OTHERWISE DRAG AND FUCKING DROP WILL NOT FUCKING MOVE! */}
       <Droppable key={id} droppableId={title}>
         {(provided, snapshot) => (
           <div
