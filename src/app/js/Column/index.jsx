@@ -4,7 +4,8 @@ import DeleteColumnButton from "./DeleteColumnButton";
 import ArrowLeft from "../../assets/arrLeft.svg";
 import ArrowRight from "../../assets/arrRight.svg";
 import { Droppable } from "react-beautiful-dnd";
-import { RIEInput, RIETextArea, RIESelect } from "riek";
+import { RIEInput } from "riek";
+import api from "../utils/api";
 
 class Column extends Component {
   constructor(props) {
@@ -15,10 +16,12 @@ class Column extends Component {
   }
 
   handleInputChange = field => {
-    console.log(field);
-    this.setState((prevState, props) => {
-      return field;
-    });
+    field.limit = Number(field.limit);
+    api
+      .post("/api/c/update", { id: this.props.id, limit: field.limit })
+      .then(() => {
+        this.props.getBoardData();
+      });
   };
 
   render() {
