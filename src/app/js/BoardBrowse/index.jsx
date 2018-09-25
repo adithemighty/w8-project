@@ -20,9 +20,7 @@ class BoardBrowse extends Component {
 
   getBoards = () => {
     api.get(`/api/b/data/all/${this.props.user._id}`).then(data => {
-      console.log(this.props);
       const boards = data.map((board, ind) => {
-        console.log(board);
         return (
           <Link className="link" key={ind} to={`/b/${board._id}`}>
             <div key={ind} className="board-card">

@@ -69,8 +69,6 @@ class Board extends Component {
             <button
               className="add-btn"
               onClick={() => {
-                console.log("button press");
-                console.log(this.props);
                 this.props.history.push(
                   `/b/${this.props.match.params.id}/t/new`
                 );

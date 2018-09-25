@@ -9,8 +9,6 @@ class NewBoard extends Component {
       title: "",
       userId: ""
     };
-
-    console.log("new board props", this.props);
   }
 
   submitHandler = () => {

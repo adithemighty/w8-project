@@ -4,7 +4,6 @@
     align-items: center;
     padding: 2rem 2rem 0 2rem;
     margin-left: 3rem;
-    // width: 35rem;
     border-bottom: 3px solid $btn-neutral;
 
     .title {
@@ -21,9 +20,11 @@
       padding: 1rem 2rem;
       margin: 0 0 0.5rem 3rem;
       background-image: $btn-neutral;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
       &:hover {
         cursor: pointer;
+        box-shadow: $shadow-hover;
       }
 
       p {
