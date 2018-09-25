@@ -52,7 +52,7 @@ const Column = props => {
       </div>
 
       {/* this is necessary for the drag and drop to work so that after dnd we know which is the source and destination column */}
-      <Droppable droppableId={title}>
+      <Droppable key={id} droppableId={title}>
         {(provided, snapshot) => (
           <div
             className="column-container"

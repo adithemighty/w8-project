@@ -162,8 +162,11 @@ class Board extends Component {
         boardId: this.state.id
       })
       .then(() => {
+        this.boardChangedHandler();
         this.getBoardData();
       });
+    this.boardChangedHandler();
+    this.getBoardData();
   };
 
   limitWarningHandler = destinationColumn => {
