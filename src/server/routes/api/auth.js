@@ -7,7 +7,7 @@ const config = require("../../config");
 const upload = require("../../utils/upload");
 
 router.post("/sign-up", (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   if (!email || !password)
     res.status(400).send({ error: "Missing Credentials." });
@@ -26,7 +26,8 @@ router.post("/sign-up", (req, res) => {
       return new User({
         email,
         password: hashedPassword,
-        profilePicture: pictureUrl
+        profilePicture: pictureUrl,
+        username
       }).save();
     })
     .then(user => {
@@ -34,6 +35,7 @@ router.post("/sign-up", (req, res) => {
         {
           _id: user._id,
           email: user.email,
+          username: user.username,
           profilePicture: user.profilePicture
         },
         config.SECRET_JWT_PASSPHRASE

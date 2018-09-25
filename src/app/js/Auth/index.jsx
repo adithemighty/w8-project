@@ -17,7 +17,8 @@ class Auth extends Component {
       email: "",
       password: "",
       picture: undefined,
-      error: ""
+      error: "",
+      username: ""
     };
 
     this._handleInputChange = this._handleInputChange.bind(this);
@@ -35,6 +36,7 @@ class Auth extends Component {
               handleInputChange={this._handleInputChange}
               email={this.state.email}
               password={this.state.password}
+              username={this.state.username}
               error={this.state.error}
               sign={this._sign}
             />
@@ -79,7 +81,11 @@ class Auth extends Component {
     api
       .post(
         `/api/auth/sign-${type}`,
-        { email: this.state.email, password: this.state.password },
+        {
+          email: this.state.email,
+          password: this.state.password,
+          username: this.state.username
+        },
         pictureDeclaration
       )
       .then(data => {
