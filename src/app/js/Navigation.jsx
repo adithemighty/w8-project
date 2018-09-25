@@ -36,10 +36,7 @@ class Navigation extends Component {
     });
   };
 
-  clickHandler() {
-    console.log(window);
-    console.log("click");
-  }
+  clickHandler() {}
 
   render() {
     window.onresize = this.updateSize;
