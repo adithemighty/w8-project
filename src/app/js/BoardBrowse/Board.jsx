@@ -62,7 +62,7 @@ class Board extends Component {
             />
           ) : null}
 
-          {/* Board header with title */}
+          {/* Board header with title and add ticket btn */}
           <div className="board-header">
             <p className="title">{this.state.title}</p>
 

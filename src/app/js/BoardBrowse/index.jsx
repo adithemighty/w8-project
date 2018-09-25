@@ -38,6 +38,32 @@ class BoardBrowse extends Component {
     });
   };
 
+  createDeleteButton = boardId => {
+    return (
+      <Link to={`/b`}>
+        <button
+          className="icon-button"
+          onClick={() => {
+            this.deleteBoard(boardId);
+            this.getBoards();
+          }}
+        >
+          <img className="icon" src={DeleteIcon} alt="" />
+        </button>
+      </Link>
+    );
+  };
+
+  createEditButton = boardId => {
+    return (
+      <Link to={`/b/${boardId}/edit`}>
+        <button className="icon-button">
+          <img className="icon" src={EditIcon} alt="" />
+        </button>
+      </Link>
+    );
+  };
+
   render() {
     const addBoardBtn = (
       <button
@@ -54,30 +80,18 @@ class BoardBrowse extends Component {
 
     const boardCards = this.state.boards.map((board, ind) => {
       return (
-        // <div></div>
-
-        <Link className="link board-card" key={ind} to={`/b`}>
+        <Link className="link board-card" key={ind} to={`/b/${board._id}`}>
           <p>{board.title}</p>
-          {/* Delete button */}
-          <button
-            className="icon-button"
-            onClick={() => {
-              this.deleteBoard(board._id);
-              this.getBoards();
-            }}
-          >
-            <img className="icon" src={DeleteIcon} alt="" />
-          </button>
-          {/* Edit button */}
-          <Link to={`/b/${board._id}/edit`}>
-            <button className="icon-button">
-              <img className="icon" src={EditIcon} alt="" />
-            </button>
-          </Link>
+
+          {this.createDeleteButton(board._id)}
+
+          {this.createEditButton(board._id)}
         </Link>
       );
     });
+
     if (!this.props.user) return <Redirect to="/auth/sign-in" />; // this is actually the protection
+
     return (
       <div>
         <Switch>
@@ -91,6 +105,7 @@ class BoardBrowse extends Component {
               />
             )}
           />
+
           <Route
             exact
             path="/b/:boardId/edit"
@@ -102,7 +117,9 @@ class BoardBrowse extends Component {
               />
             )}
           />
+
           <Route path="/b/:id" render={() => <Board />} />
+
           <Route
             render={() => {
               return (
