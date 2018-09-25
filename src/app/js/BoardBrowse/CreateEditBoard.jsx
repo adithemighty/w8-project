@@ -7,21 +7,35 @@ class CreateEditBoard extends Component {
     super(props);
     this.state = {
       title: "",
-      userId: ""
+      userId: "",
+      edit: false
     };
   }
 
   submitHandler = () => {
     const { title, userId } = this.state;
-    api
-      .post("/api/b/new", {
-        title,
-        userId
-      })
-      .then(() => {
-        this.props.getBoards();
-        this.props.history.push("/b");
-      });
+    const boardId = this.props.match.params.boardId;
+    if (this.props.edit) {
+      api
+        .post("/api/b/edit", {
+          title,
+          id: boardId
+        })
+        .then(() => {
+          this.props.getBoards();
+          this.props.history.push("/b");
+        });
+    } else {
+      api
+        .post("/api/b/new", {
+          title,
+          userId
+        })
+        .then(() => {
+          this.props.getBoards();
+          this.props.history.push("/b");
+        });
+    }
   };
 
   inputHandler = (key, value) => {
@@ -31,7 +45,7 @@ class CreateEditBoard extends Component {
   };
 
   componentDidMount = () => {
-    this.setState({ userId: this.props.user._id });
+    this.setState({ userId: this.props.user._id, edit: this.props.edit });
   };
 
   render() {
