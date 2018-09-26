@@ -1,19 +1,31 @@
 import React, { Component } from "react";
 import Card from "../Card";
-import DeleteColumnButton from "./DeleteColumnButton";
+import DeleteColumnDialog from "./DeleteColumnDialog";
 import ArrowLeft from "../../assets/arrLeft.svg";
 import ArrowRight from "../../assets/arrRight.svg";
 import { Droppable } from "react-beautiful-dnd";
 import { RIEInput } from "riek";
 import api from "../utils/api";
+import DeleteIcon from "../../assets/trash.svg";
+
+import Modal from "../Component/Modal";
 
 class Column extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      limit: ""
+      limit: "",
+      deleteModalOpen: false
     };
   }
+
+  openModal = type => {
+    this.setState((prevState, props) => {
+      const newStatus = {};
+      newStatus[`${type}ModalOpen`] = !prevState[`${type}ModalOpen`];
+      return newStatus;
+    });
+  };
 
   handleInputChange = field => {
     field.limit = Number(field.limit);
@@ -69,13 +81,26 @@ class Column extends Component {
               : null}
           </p>
 
-          <DeleteColumnButton
-            sourceColumnId={id}
-            columnHasTickets={tickets.length > 0 ? true : false}
-            getBoardData={this.props.getBoardData}
-            boardId={boardId}
-            columns={columns}
-          />
+          <button
+            onClick={() => {
+              this.openModal("delete");
+            }}
+            className="icon-button "
+          >
+            <img className="icon" src={DeleteIcon} alt="" />
+          </button>
+
+          {this.state.deleteModalOpen ? (
+            <DeleteColumnDialog
+              sourceColumnId={id}
+              columnHasTickets={tickets.length > 0 ? true : false}
+              getBoardData={this.props.getBoardData}
+              boardId={boardId}
+              columns={columns}
+              openModal={this.openModal}
+            />
+          ) : null}
+
           {this.props.last ? null : (
             <button
               onClick={() =>
