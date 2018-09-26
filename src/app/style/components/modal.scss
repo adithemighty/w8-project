@@ -16,10 +16,10 @@
 
   .modal-text {
     background-color: white;
-    min-width: 50vw;
-    max-width: 60vw;
-    min-height: 40vh;
-    max-height: 50vh;
+    min-width: 60vw;
+    max-width: 70vw;
+    min-height: 60vh;
+    max-height: 80vh;
     border-radius: 5px;
 
     display: flex;
@@ -27,12 +27,24 @@
     align-items: center;
     justify-content: center;
 
+    button {
+      transition: $transition;
+    }
+
     .options {
-      // background-color: rgb(100, 71, 71);
       width: 50%;
       border: none;
       padding: 2rem;
+      margin: 0.1rem 0;
       background-image: $greybg;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+
+      &:focus {
+        outline: none;
+      }
     }
 
     &:not(:last-child) {

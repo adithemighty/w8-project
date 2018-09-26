@@ -1,18 +1,10 @@
 import React, { Component } from "react";
 import api from "../utils/api";
-// import Button from "@material-ui/core/Button";
-// import List from "@material-ui/core/List";
-// import ListItem from "@material-ui/core/ListItem";
-// import ListItemText from "@material-ui/core/ListItemText";
-// import DialogTitle from "@material-ui/core/DialogTitle";
-// import Dialog from "@material-ui/core/Dialog";
-// import DialogActions from "@material-ui/core/DialogActions";
-// import Typography from "@material-ui/core/Typography";
-// import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
 import DeleteIcon from "../../assets/trash.svg";
 import { link } from "fs";
 
-class DeleteColumnButton extends Component {
+class DeleteColumnDialog extends Component {
   constructor(props) {
     super(props);
 
@@ -29,7 +21,6 @@ class DeleteColumnButton extends Component {
   };
 
   handleSelection = event => {
-    // console.log(event.target.id);
     const destinationColumnId = event.target.id;
     this.setState((prevState, props) => {
       return { destinationColumnId };
@@ -39,7 +30,6 @@ class DeleteColumnButton extends Component {
   handleDelete = () => {
     const { sourceColumnId, boardId } = this.props;
     const destinationColumnId = this.state.destinationColumnId;
-    console.log(sourceColumnId, boardId, destinationColumnId);
 
     if (destinationColumnId.length === 0) {
       api.post("/api/c/delete", { sourceColumnId, boardId }).then(() => {
@@ -55,7 +45,6 @@ class DeleteColumnButton extends Component {
         .then(() => {
           this.props.getBoardData();
         });
-      // }
     }
   };
 
@@ -63,7 +52,6 @@ class DeleteColumnButton extends Component {
     const destinationColumnIdOptions = Object.keys(this.props.columns).map(
       (el, ind) => {
         const column = this.props.columns[el];
-        console.log(this.props.columns[el]);
         if (column.id === this.props.sourceColumnId) {
           //origin column can't be destination column because it will be moved
           return;
@@ -86,15 +74,16 @@ class DeleteColumnButton extends Component {
     return (
       <div className="modal">
         <div className="modal-text">
-          {console.log(this.props)}
-          <p>This action cannot be undone</p>
-          {destinationColumnIdOptions}
-          {this.props.columnHasTickets ? (
-            <p>Column has tickets</p>
-          ) : (
-            <p>NO TICKETS</p>
-          )}
-          <div className="action-btns">
+          <p className="marg-bottom-md">
+            This action cannot be undone.{" "}
+            {this.props.columnHasTickets
+              ? `This column has tickets. Move them to:`
+              : null}
+          </p>
+
+          {this.props.columnHasTickets ? destinationColumnIdOptions : null}
+
+          <div className="action-btns marg-top-md">
             <button
               className="btn-confirm "
               onClick={() => {
@@ -119,4 +108,4 @@ class DeleteColumnButton extends Component {
   }
 }
 
-export default DeleteColumnButton;
+export default DeleteColumnDialog;

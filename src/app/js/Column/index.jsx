@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Card from "../Card";
-import DeleteColumnButton from "./DeleteColumnButton";
+import DeleteColumnDialog from "./DeleteColumnDialog";
 import ArrowLeft from "../../assets/arrLeft.svg";
 import ArrowRight from "../../assets/arrRight.svg";
 import { Droppable } from "react-beautiful-dnd";
 import { RIEInput } from "riek";
 import api from "../utils/api";
+import DeleteIcon from "../../assets/trash.svg";
+
 import Modal from "../Component/Modal";
 
 class Column extends Component {
@@ -83,11 +85,13 @@ class Column extends Component {
             onClick={() => {
               this.openModal("delete");
             }}
+            className="icon-button "
           >
-            Delete column
+            <img className="icon" src={DeleteIcon} alt="" />
           </button>
+
           {this.state.deleteModalOpen ? (
-            <DeleteColumnButton
+            <DeleteColumnDialog
               sourceColumnId={id}
               columnHasTickets={tickets.length > 0 ? true : false}
               getBoardData={this.props.getBoardData}

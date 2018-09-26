@@ -12,6 +12,7 @@ $btn-nope: radial-gradient(
   rgba(246, 69, 69, 1) 0%,
   rgba(251, 132, 132, 1) 90%
 );
+
 $greybg: linear-gradient(to bottom, #d5dee7 0%, #e8ebf2 50%, #e2e7ed 100%),
   linear-gradient(
     to bottom,
@@ -26,11 +27,16 @@ $btn-yepp: radial-gradient(
   rgba(146, 213, 171, 1) 0.6%,
   rgba(148, 247, 184, 1) 73.1%
 );
+
+$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
 $side-menu-gb: linear-gradient(
   to top,
   #48c6ef 0%,
   #6f86d6 100%
 ); //background-image
+
+$light-blue: linear-gradient(120deg, #89f6fe42 0%, #66a6ff2d 100%);
 
 $text-color: #333;
 $grey: rgb(200, 200, 200);
