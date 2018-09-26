@@ -23,7 +23,15 @@ const userSchema = new Schema({
       ref: "Board",
       autopopulate: true
     }
-  ]
+  ],
+  teams: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Team",
+      autopopulate: true
+    }
+  ],
+  daily: String
 });
 
 userSchema.plugin(autopopulate);

@@ -5,6 +5,7 @@ const authRoutes = require("./auth");
 const boardRoutes = require("../board");
 const columnRoutes = require("../column");
 const ticketRoutes = require("../ticket");
+const profileRoutes = require("../profile");
 
 const { userMiddleware, checkLoggedIn } = require("../../utils/middleware");
 
@@ -23,6 +24,7 @@ router.use("/auth", authRoutes);
 router.use("/b", boardRoutes);
 router.use("/c", columnRoutes);
 router.use("/t", ticketRoutes);
+router.use("/p", profileRoutes);
 
 router.use((req, res) => {
   res.status(404).send({ error: "not-found" });
