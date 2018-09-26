@@ -29,24 +29,31 @@ router.post("/delete", (req, res) => {
 });
 
 router.post("/edit", (req, res) => {
-  const { id } = req.body;
+  const { id, dailyTime } = req.body;
   //in case the title is a string with only whitespaces
-  const title = req.body.title.trim();
+  let title = req.body.title;
+  const updatedFields = {};
+
   if (title) {
-    //if there was a change, edit the field
-    Board.findByIdAndUpdate({ _id: id }, { title }, { new: true })
-      .then(updatedBoard => {
-        res.send(updatedBoard);
-      })
-      .catch(err => {
-        res.send({ error: "Edit: id doesn't exist" });
-      });
-  } else {
-    Board.findById({ _id: id }).then(board => {
-      //if nothing was changed just send the board
-      res.send(board);
-    });
+    title = title.trim();
+    updatedFields["title"] = title;
   }
+
+  if (dailyTime) {
+    updatedFields["dailyTime"] = dailyTime;
+  }
+
+  console.log(updatedFields, id);
+
+  //if there was a change, edit the field
+  Board.findByIdAndUpdate({ _id: id }, { $set: updatedFields }, { new: true })
+    .then(updatedBoard => {
+      console.log(updatedBoard);
+      res.send(updatedBoard);
+    })
+    .catch(err => {
+      res.send({ error: "Edit: id doesn't exist" });
+    });
 });
 
 router.get("/data/all/:userId", (req, res) => {

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Board = require("../models/Board");
 const Column = require("../models/Column");
-const axios = require("axios");
 
 router.post("/new", (req, res) => {
   const { boardId, columnTitle: title } = req.body;
