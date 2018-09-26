@@ -64,12 +64,21 @@ class CreateEditBoard extends Component {
           </div>
 
           <div className="action-btns">
-            <button className="btn-confirm " onClick={this.submitHandler}>
+            <button
+              className="btn-confirm marg-left-md"
+              onClick={() => {
+                const type = this.state.edit ? "edit" : "add";
+                this.props.openModal(type);
+                this.submitHandler();
+              }}
+            >
               {this.state.edit ? "Edit board" : "Create board"}
             </button>
             <button
               className="btn-cancel"
               onClick={() => {
+                const type = this.state.edit ? "edit" : "add";
+                this.props.openModal(type);
                 this.props.history.push("/b");
               }}
             >

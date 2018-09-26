@@ -1,26 +1,46 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import Board from "./Board";
+import BoardCard from "./BoardCard";
+import Modal from "../Component/Modal";
 import CreateEditBoard from "./CreateEditBoard";
+import DeleteDialog from "./DeleteDialog";
 import { withRouter } from "react-router";
 
-import { Link, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
-import DeleteIcon from "../../assets/trash.svg";
-import EditIcon from "../../assets/edit.svg";
 import PlusIcon from "../../assets/plus.svg";
 
 class BoardBrowse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boards: []
+      boards: [],
+      editModalOpen: false,
+      deleteModalOpen: false,
+      addModalOpen: false
     };
   }
 
   componentDidMount() {
     this.getBoards();
   }
+
+  openModal = type => {
+    if (type === "edit") {
+      this.setState((prevState, props) => {
+        return { editModalOpen: !prevState.editModalOpen };
+      });
+    } else if (type === "delete") {
+      this.setState((prevState, props) => {
+        return { deleteModalOpen: !prevState.deleteModalOpen };
+      });
+    } else if (type === "add") {
+      this.setState((prevState, props) => {
+        return { addModalOpen: !prevState.addModalOpen };
+      });
+    }
+  };
 
   getBoards = () => {
     api.get(`/api/b/data/all/${this.props.user._id}`).then(data => {
@@ -38,37 +58,12 @@ class BoardBrowse extends Component {
     });
   };
 
-  createDeleteButton = boardId => {
-    return (
-      <Link to={`/b`}>
-        <button
-          className="icon-button"
-          onClick={() => {
-            this.deleteBoard(boardId);
-            this.getBoards();
-          }}
-        >
-          <img className="icon" src={DeleteIcon} alt="" />
-        </button>
-      </Link>
-    );
-  };
-
-  createEditButton = boardId => {
-    return (
-      <Link to={`/b/${boardId}/edit`}>
-        <button className="icon-button">
-          <img className="icon" src={EditIcon} alt="" />
-        </button>
-      </Link>
-    );
-  };
-
   render() {
     const addBoardBtn = (
       <button
         className="add-btn marg-top-md"
         onClick={() => {
+          this.openModal("add");
           this.props.history.push(`/b/new`);
           this.getBoards();
         }}
@@ -80,13 +75,13 @@ class BoardBrowse extends Component {
 
     const boardCards = this.state.boards.map((board, ind) => {
       return (
-        <Link className="link board-card" key={ind} to={`/b/${board._id}`}>
-          <p>{board.title}</p>
-
-          {this.createDeleteButton(board._id)}
-
-          {this.createEditButton(board._id)}
-        </Link>
+        <BoardCard
+          openModal={this.openModal}
+          title={board.title}
+          key={ind}
+          boardId={board._id}
+          ind={ind}
+        />
       );
     });
 
@@ -98,24 +93,84 @@ class BoardBrowse extends Component {
           <Route
             exact
             path="/b/new"
-            render={() => (
-              <CreateEditBoard
-                user={this.props.user}
-                getBoards={this.getBoards}
-              />
-            )}
+            render={() => {
+              return (
+                <div className="board-browse">
+                  {addBoardBtn}
+                  {this.state.boards.length > 0 ? (
+                    <div>{boardCards}</div>
+                  ) : (
+                    <div className="marg-top-md">
+                      You don't have any boards yet.
+                    </div>
+                  )}
+                  {this.state.addModalOpen ? (
+                    <Modal>
+                      <CreateEditBoard
+                        user={this.props.user}
+                        getBoards={this.getBoards}
+                        openModal={this.openModal}
+                      />
+                    </Modal>
+                  ) : null}
+                </div>
+              );
+            }}
           />
 
           <Route
             exact
+            path="/b/:boardId/delete"
+            render={() => {
+              return (
+                <div className="board-browse">
+                  {addBoardBtn}
+                  {this.state.boards.length > 0 ? (
+                    <div>{boardCards}</div>
+                  ) : (
+                    <div className="marg-top-md">
+                      You don't have any boards yet.
+                    </div>
+                  )}
+                  {this.state.deleteModalOpen ? (
+                    <Modal>
+                      <DeleteDialog
+                        openModal={this.openModal}
+                        deleteBoard={this.deleteBoard}
+                      />
+                    </Modal>
+                  ) : null}
+                </div>
+              );
+            }}
+          />
+          <Route
+            exact
             path="/b/:boardId/edit"
-            render={() => (
-              <CreateEditBoard
-                user={this.props.user}
-                getBoards={this.getBoards}
-                edit={true}
-              />
-            )}
+            render={() => {
+              return (
+                <div className="board-browse">
+                  {addBoardBtn}
+                  {this.state.boards.length > 0 ? (
+                    <div>{boardCards}</div>
+                  ) : (
+                    <div className="marg-top-md">
+                      You don't have any boards yet.
+                    </div>
+                  )}
+                  {this.state.editModalOpen ? (
+                    <Modal>
+                      <CreateEditBoard
+                        user={this.props.user}
+                        getBoards={this.getBoards}
+                        edit={true}
+                        openModal={this.openModal}
+                      />
+                    </Modal>
+                  ) : null}
+                </div>
+              );
+            }}
           />
 
           <Route path="/b/:id" render={() => <Board />} />
