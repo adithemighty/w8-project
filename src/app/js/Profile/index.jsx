@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 class Profile extends Component {
   constructor(props) {
     super(props);
+<<<<<<< Updated upstream
     // this.state = {
     //   dailyDate: moment(),
     //   currentTime: moment()
@@ -17,6 +18,33 @@ class Profile extends Component {
   //     currentTime: date
   //   });
   // };
+=======
+    this.state = {
+      dailyDate: moment(),
+      currentTime: moment()
+    };
+  }
+
+  handleChange = date => {
+    console.log("date", date);
+    // const field = `${f}Date`;
+    this.setState({
+      currentTime: date
+    });
+  };
+
+  handleChangeRaw = date => {
+    moment(date);
+    console.log(date);
+    const hour = date.split(":")[0];
+    const minute = date.split(":")[1].split(" ")[0];
+    const formattedDate = moment({ hour: hour, minute: minute });
+    console.log(formattedDate.isValid());
+    this.setState({
+      dailyDate: formattedDate
+    });
+  };
+>>>>>>> Stashed changes
 
   // handleChangeRaw = date => {
   //   console.log(typeof date);
@@ -41,6 +69,7 @@ class Profile extends Component {
   //   });
   // };
 
+<<<<<<< Updated upstream
   // componentWillMount() {
   //   api.get("/api/b/data/5babcebc698cfe1849c12600").then(board => {
   //     this.setState({ dailyDate: moment(board.dailyTime) });
@@ -74,6 +103,22 @@ class Profile extends Component {
   //     }
   //   });
   // }
+=======
+    if (Math.abs(currentTime.hours() - currentTimeHours) > 1) {
+      this.interval = setInterval(this.countingSecond, 3600000);
+    } else if (Math.abs(currentTimeMinutes - currentTime.minutes()) > 10) {
+      this.interval = setInterval(this.countingSecond, 600000);
+    } else {
+      this.interval = setInterval(this.countingSecond, 1000);
+      if (
+        `${currentTime.hours()}:${currentTime.minutes()}` ===
+        this.state.dailyDate
+      ) {
+        this.setState((prevState, props) => {});
+      }
+    }
+  }
+>>>>>>> Stashed changes
 
   // componentDidMount() {}
 
