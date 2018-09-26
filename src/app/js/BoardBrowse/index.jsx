@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import Board from "./Board";
-import BoardCard from "./BoardCard";
 import Modal from "../Component/Modal";
+import BoardCard from "./BoardCard";
 import CreateEditBoard from "./CreateEditBoard";
 import DeleteDialog from "./DeleteDialog";
 import { withRouter } from "react-router";

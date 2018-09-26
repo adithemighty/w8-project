@@ -27,6 +27,22 @@
     align-items: center;
     justify-content: center;
 
+    .options {
+      // background-color: rgb(100, 71, 71);
+      width: 50%;
+      border: none;
+      padding: 2rem;
+      background-image: $greybg;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid grey;
+    }
+
+    .active {
+      background-image: $side-menu-gb;
+    }
+
     p {
       width: 60%;
     }

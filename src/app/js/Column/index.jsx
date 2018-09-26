@@ -6,14 +6,24 @@ import ArrowRight from "../../assets/arrRight.svg";
 import { Droppable } from "react-beautiful-dnd";
 import { RIEInput } from "riek";
 import api from "../utils/api";
+import Modal from "../Component/Modal";
 
 class Column extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      limit: ""
+      limit: "",
+      deleteModalOpen: false
     };
   }
+
+  openModal = type => {
+    this.setState((prevState, props) => {
+      const newStatus = {};
+      newStatus[`${type}ModalOpen`] = !prevState[`${type}ModalOpen`];
+      return newStatus;
+    });
+  };
 
   handleInputChange = field => {
     field.limit = Number(field.limit);
@@ -69,13 +79,24 @@ class Column extends Component {
               : null}
           </p>
 
-          <DeleteColumnButton
-            sourceColumnId={id}
-            columnHasTickets={tickets.length > 0 ? true : false}
-            getBoardData={this.props.getBoardData}
-            boardId={boardId}
-            columns={columns}
-          />
+          <button
+            onClick={() => {
+              this.openModal("delete");
+            }}
+          >
+            Delete column
+          </button>
+          {this.state.deleteModalOpen ? (
+            <DeleteColumnButton
+              sourceColumnId={id}
+              columnHasTickets={tickets.length > 0 ? true : false}
+              getBoardData={this.props.getBoardData}
+              boardId={boardId}
+              columns={columns}
+              openModal={this.openModal}
+            />
+          ) : null}
+
           {this.props.last ? null : (
             <button
               onClick={() =>

@@ -1,78 +1,16 @@
 import React, { Component } from "react";
 import api from "../utils/api";
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import Typography from "@material-ui/core/Typography";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+// import Button from "@material-ui/core/Button";
+// import List from "@material-ui/core/List";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemText from "@material-ui/core/ListItemText";
+// import DialogTitle from "@material-ui/core/DialogTitle";
+// import Dialog from "@material-ui/core/Dialog";
+// import DialogActions from "@material-ui/core/DialogActions";
+// import Typography from "@material-ui/core/Typography";
+// import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import DeleteIcon from "../../assets/trash.svg";
-
-const theme = createMuiTheme({
-  typography: {
-    fontSize: "1.3rem"
-  }
-});
-
-const style = {
-  backgroundImage:
-    "linear-gradient(to right, #FF512F 0%, #DD2476 51%, #FF512F 100%)",
-  color: "white"
-};
-
-class DeleteDialog extends React.Component {
-  handleListItemClick = value => {
-    this.props.onSelect(value);
-  };
-
-  render() {
-    const { classes, onClose, selectedValue, onDelete, ...other } = this.props;
-
-    return (
-      <MuiThemeProvider theme={theme}>
-        <Dialog
-          onClose={this.props.onClose}
-          aria-labelledby="simple-dialog-title"
-          {...other}
-        >
-          <DialogTitle id="simple-dialog-title">Column not empty</DialogTitle>
-          <Typography variant="subheading">
-            Where should the tickets be moved?
-          </Typography>
-          <div>
-            <List>
-              {Object.keys(this.props.columns).map(column => {
-                return (
-                  <ListItem
-                    button
-                    onClick={() =>
-                      this.handleListItemClick(this.props.columns[column].id)
-                    }
-                    key={column}
-                    id={this.props.columns[column].id}
-                  >
-                    <ListItemText primary={column} />
-                  </ListItem>
-                );
-              })}
-            </List>
-            <DialogActions>
-              <Button onClick={this.props.onClose} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={this.props.onDelete} color="primary">
-                Ok
-              </Button>
-            </DialogActions>
-          </div>
-        </Dialog>
-      </MuiThemeProvider>
-    );
-  }
-}
+import { link } from "fs";
 
 class DeleteColumnButton extends Component {
   constructor(props) {
@@ -80,7 +18,7 @@ class DeleteColumnButton extends Component {
 
     this.state = {
       open: false,
-      selectedValue: ""
+      destinationColumnId: ""
     };
   }
 
@@ -90,21 +28,18 @@ class DeleteColumnButton extends Component {
     });
   };
 
-  handleClose = () => {
+  handleSelection = event => {
+    // console.log(event.target.id);
+    const destinationColumnId = event.target.id;
     this.setState((prevState, props) => {
-      return { open: false };
-    });
-  };
-
-  handleSelection = value => {
-    this.setState((prevState, props) => {
-      return { selectedValue: value };
+      return { destinationColumnId };
     });
   };
 
   handleDelete = () => {
     const { sourceColumnId, boardId } = this.props;
-    const destinationColumnId = this.state.selectedValue;
+    const destinationColumnId = this.state.destinationColumnId;
+    console.log(sourceColumnId, boardId, destinationColumnId);
 
     if (destinationColumnId.length === 0) {
       api.post("/api/c/delete", { sourceColumnId, boardId }).then(() => {
@@ -112,42 +47,76 @@ class DeleteColumnButton extends Component {
       });
     } else {
       api
-        .post("/api/c/delete", { sourceColumnId, boardId, destinationColumnId })
+        .post("/api/c/delete", {
+          sourceColumnId,
+          boardId,
+          destinationColumnId
+        })
         .then(() => {
           this.props.getBoardData();
         });
+      // }
     }
   };
 
   render() {
-    return (
-      <div>
-        <button
-          className="icon-button"
-          onClick={
-            this.props.columnHasTickets
-              ? this.handleClickOpen
-              : this.handleDelete
-          }
-        >
-          <img className="icon" src={DeleteIcon} alt="" />
-        </button>
+    const destinationColumnIdOptions = Object.keys(this.props.columns).map(
+      (el, ind) => {
+        const column = this.props.columns[el];
+        console.log(this.props.columns[el]);
+        if (column.id === this.props.sourceColumnId) {
+          //origin column can't be destination column because it will be moved
+          return;
+        }
 
-        <DeleteDialog
-          columns={this.props.columns}
-          selectedValue={this.state.selectedValue}
-          open={this.state.open}
-          onClose={this.handleClose}
-          onSelect={this.handleSelection}
-          onDelete={this.handleDelete}
-        />
+        return (
+          <button
+            key={ind}
+            id={column.id}
+            className={`options ${
+              column.id === this.state.destinationColumnId ? `active` : ``
+            }`}
+            onClick={e => this.handleSelection(e)}
+          >
+            {column.title}
+          </button>
+        );
+      }
+    );
+    return (
+      <div className="modal">
+        <div className="modal-text">
+          {console.log(this.props)}
+          <p>This action cannot be undone</p>
+          {destinationColumnIdOptions}
+          {this.props.columnHasTickets ? (
+            <p>Column has tickets</p>
+          ) : (
+            <p>NO TICKETS</p>
+          )}
+          <div className="action-btns">
+            <button
+              className="btn-confirm "
+              onClick={() => {
+                this.handleDelete();
+                this.props.openModal("delete");
+              }}
+            >
+              Delete column
+            </button>
+            <button
+              className="btn-cancel "
+              onClick={() => {
+                this.props.openModal("delete");
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 }
-
-// sourceColumnId
-// destinationColumnId
-// boardId
 
 export default DeleteColumnButton;
