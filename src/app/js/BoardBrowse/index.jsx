@@ -27,19 +27,11 @@ class BoardBrowse extends Component {
   }
 
   openModal = type => {
-    if (type === "edit") {
-      this.setState((prevState, props) => {
-        return { editModalOpen: !prevState.editModalOpen };
-      });
-    } else if (type === "delete") {
-      this.setState((prevState, props) => {
-        return { deleteModalOpen: !prevState.deleteModalOpen };
-      });
-    } else if (type === "add") {
-      this.setState((prevState, props) => {
-        return { addModalOpen: !prevState.addModalOpen };
-      });
-    }
+    this.setState((prevState, props) => {
+      const newStatus = {};
+      newStatus[`${type}ModalOpen`] = !prevState[`${type}ModalOpen`];
+      return newStatus;
+    });
   };
 
   getBoards = () => {
