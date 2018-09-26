@@ -15,7 +15,8 @@ const boardSchema = new Schema({
       ref: "Column",
       autopopulate: true
     }
-  ]
+  ],
+  dailyTime: Object
 });
 
 boardSchema.pre("save", function(next) {

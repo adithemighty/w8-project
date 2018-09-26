@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
 import { Route, Link, Switch } from "react-router-dom";
+import moment from "moment";
 
 import api from "../utils/api";
 import PlusIcon from "../../assets/plus.svg";
@@ -10,6 +11,8 @@ import Column from "../Column";
 import LimitWarning from "./LimitWarning";
 import ColumnCreate from "../Column/ColumnCreate";
 import CardShowAndCreate from "../Card/CardShowAndCreate";
+import Modal from "../Component/Modal";
+import DailyAlarm from "./DailyAlarm";
 
 class Board extends Component {
   constructor(props) {
@@ -20,9 +23,20 @@ class Board extends Component {
       limitWarningOpen: false,
       ticketDetailViewOpen: false,
       currentTicket: "",
-      sortedColumnIds: []
+      sortedColumnIds: [],
+      dailyModalOpen: false,
+      dailyTime: null,
+      currentTime: moment()
     };
   }
+
+  openModal = type => {
+    this.setState((prevState, props) => {
+      const newStatus = {};
+      newStatus[`${type}ModalOpen`] = !prevState[`${type}ModalOpen`];
+      return newStatus;
+    });
+  };
 
   render() {
     const numberOfColumns = Object.keys(this.state.columns).length;
@@ -91,6 +105,18 @@ class Board extends Component {
 
           {/* Board header with title and add ticket btn */}
           <div className="board-header">
+            {`${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
+              `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}` &&
+            this.state.dailyModalOpen ? (
+              <Modal>
+                <DailyAlarm
+                  openModal={this.openModal}
+                  boardId={this.state.id}
+                  dailyTime={this.state.dailyTime}
+                />
+              </Modal>
+            ) : null}
+
             <p className="title">{this.state.title}</p>
 
             <button
@@ -122,6 +148,16 @@ class Board extends Component {
         </div>
       );
     }
+  }
+
+  countingSecond = () => {
+    this.setState({
+      currentTime: moment()
+    });
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   componentDidMount() {
@@ -192,12 +228,13 @@ class Board extends Component {
     //this function is needed for updating the board on every change
     api.get(`/api/b/data/${id}`).then(board => {
       this.setState(function(prevState, props) {
-        const { title, columns } = board;
+        const { title, columns, dailyTime } = board;
         const newState = {
           title: title,
           columns: {},
           id: id,
-          sortedColumnIds: []
+          sortedColumnIds: [],
+          dailyTime: moment(dailyTime)
         };
 
         columns.forEach(({ title, ticket, _id, limit }, ind) => {
@@ -213,6 +250,29 @@ class Board extends Component {
 
         return newState;
       });
+      if (
+        Math.abs(
+          this.state.currentTime.hours() - this.state.dailyTime.hours()
+        ) > 1
+      ) {
+        this.interval = setInterval(this.countingSecond, 3600000);
+      } else if (
+        Math.abs(
+          this.state.dailyTime.minutes() - this.state.currentTime.minutes()
+        ) > 10
+      ) {
+        this.interval = setInterval(this.countingSecond, 600000);
+      } else {
+        this.interval = setInterval(this.countingSecond, 1000);
+        if (
+          `${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
+          `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}`
+        ) {
+          this.setState((prevState, props) => {
+            return { dailyModalOpen: true };
+          });
+        }
+      }
     });
   };
 

@@ -1,87 +1,111 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import Moment from "react-moment";
-import moment from "moment";
-import DatePicker from "react-datepicker";
-import api from "../utils/api";
-import "react-datepicker/dist/react-datepicker.css";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dailyDate: "18:16",
-      currentTime: moment(),
-      dayOfTheTime: false
-    };
+    // this.state = {
+    //   dailyDate: moment(),
+    //   currentTime: moment()
+    // };
   }
 
-  handleChange = date => {
-    console.log("date", date);
-    // const field = `${f}Date`;
-    this.setState({
-      currentTime: date
-    });
-    if (this.state.dailyDate === `${date.hours()}:${date.minutes()}`) {
-      console.log("Same");
-    }
-  };
+  // handleChange = date => {
+  //   console.log("date", date);
+  //   // const field = `${f}Date`;
+  //   this.setState({
+  //     currentTime: date
+  //   });
+  // };
 
-  countingSecond = () => {
-    this.setState({
-      currentTime: moment()
-    });
-  };
+  // handleChangeRaw = date => {
+  //   console.log(typeof date);
+  //   let formattedDate;
+  //   if (date.indexOf("PM") !== -1) {
+  //     moment(date);
+  //     console.log(date);
+  //     const hour = date.split(":")[0];
+  //     const minute = date.split(":")[1].split(" ")[0];
+  //     formattedDate = moment({ hour: Number(hour) + 12, minute: minute });
+  //     console.log(formattedDate);
+  //   }
+  //   console.log(formattedDate.isValid());
+  //   this.setState({
+  //     dailyDate: formattedDate
+  //   });
+  // };
 
-  componentWillMount() {
-    const currentTime = moment();
-    const currentTimeHours = Number(this.state.dailyDate.split(":")[0]);
-    const currentTimeMinutes =
-      this.state.dailyDate.split(":")[1] === "00"
-        ? 60
-        : Number(this.state.dailyDate.split(":")[1]);
+  // countingSecond = () => {
+  //   this.setState({
+  //     currentTime: moment()
+  //   });
+  // };
 
-    if (Math.abs(currentTime.hours() - currentTimeHours) > 1) {
-      this.interval = setInterval(this.countingSecond, 3600000);
-    } else if (Math.abs(currentTimeMinutes - currentTime.minutes()) > 10) {
-      this.interval = setInterval(this.countingSecond, 600000);
-    } else {
-      this.interval = setInterval(this.countingSecond, 1000);
-      if (
-        `${currentTime.hours()}:${currentTime.minutes()}` ===
-        this.state.dailyDate
-      ) {
-        this.setState((prevState, props) => {
-          return { dayOfTheTime: true };
-        });
-      }
-    }
-  }
+  // componentWillMount() {
+  //   api.get("/api/b/data/5babcebc698cfe1849c12600").then(board => {
+  //     this.setState({ dailyDate: moment(board.dailyTime) });
+  //     if (
+  //       Math.abs(
+  //         this.state.currentTime.hours() - this.state.dailyDate.hours()
+  //       ) > 1
+  //     ) {
+  //       console.log(
+  //         "hallo",
+  //         Math.abs(
+  //           this.state.currentTime.hours() - this.state.dailyDate.hours()
+  //         )
+  //       );
+  //       this.interval = setInterval(this.countingSecond, 3600000);
+  //     } else if (
+  //       Math.abs(
+  //         this.state.dailyDate.minutes() - this.state.currentTime.minutes()
+  //       ) > 10
+  //     ) {
+  //       this.interval = setInterval(this.countingSecond, 600000);
+  //     } else {
+  //       this.interval = setInterval(this.countingSecond, 1000);
+  //       if (
+  //         `${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
+  //         `${this.state.dailyDate.hours()}:${this.state.dailyDate.minutes()}`
+  //       ) {
+  //         console.log(typeof this.state.dailyDate);
+  //         this.setState((prevState, props) => {});
+  //       }
+  //     }
+  //   });
+  // }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+  // componentDidMount() {}
 
-  handleSubmit = a => {};
+  // componentWillUnmount() {
+  //   clearInterval(this.interval);
+  // }
+
+  // handleSubmit = a => {
+  //   api
+  //     .post("/api/b/edit", {
+  //       id: "5babcebc698cfe1849c12600",
+  //       dailyTime: this.state.dailyDate
+  //     })
+  //     .then(() => {
+  //       console.log("success");
+  //     });
+  // };
 
   render() {
     if (!this.props.user) return <Redirect to="/auth/sign-in" />; // this is actually the protection
 
     return (
       <div className="container">
-        <p>
+        {/* <p>
           <span>{this.state.currentTime.hours()}</span>:
           <span>{this.state.currentTime.minutes()}</span>
         </p>
         {`${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
-        this.state.dailyDate
+        `${this.state.dailyDate.hours()}:${this.state.dailyDate.minutes()}`
           ? "Time for daily!"
           : ""}
-        <img
-          src={this.props.user.profilePicture}
-          alt=""
-          className="profile-picture"
-        />
+
         <br />
         <DatePicker
           selected={this.state.currentTime}
@@ -91,6 +115,7 @@ class Profile extends Component {
           onChangeRaw={event => this.handleChangeRaw(event.target.value)}
           showTimeSelect
           showTimeSelectOnly
+          //in case i want to change the interval
           // timeIntervals={30}
           dateFormat="LT"
           timeCaption="Time"
@@ -100,8 +125,12 @@ class Profile extends Component {
         <br />
         <button onClick={this.handleSubmit}>submit</button>
         <br />
-        <br />
-
+        <br /> */}
+        <img
+          src={this.props.user.profilePicture}
+          alt=""
+          className="profile-picture"
+        />
         {this.props.user.email}
       </div>
     );
