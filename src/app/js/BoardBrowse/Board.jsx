@@ -106,7 +106,7 @@ class Board extends Component {
           {/* Board header with title and add ticket btn */}
           <div className="board-header">
             {`${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
-              `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}` &&
+              `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}` ||
             this.state.dailyModalOpen ? (
               <Modal>
                 <DailyAlarm
@@ -118,6 +118,14 @@ class Board extends Component {
             ) : null}
 
             <p className="title">{this.state.title}</p>
+
+            <button
+              onClick={() => {
+                this.openModal("daily");
+              }}
+            >
+              start daily
+            </button>
 
             <button
               className="add-btn marg-left-md"
@@ -250,29 +258,29 @@ class Board extends Component {
 
         return newState;
       });
-      if (
-        Math.abs(
-          this.state.currentTime.hours() - this.state.dailyTime.hours()
-        ) > 1
-      ) {
-        this.interval = setInterval(this.countingSecond, 3600000);
-      } else if (
-        Math.abs(
-          this.state.dailyTime.minutes() - this.state.currentTime.minutes()
-        ) > 10
-      ) {
-        this.interval = setInterval(this.countingSecond, 600000);
-      } else {
-        this.interval = setInterval(this.countingSecond, 1000);
-        if (
-          `${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
-          `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}`
-        ) {
-          this.setState((prevState, props) => {
-            return { dailyModalOpen: true };
-          });
-        }
-      }
+      // if (
+      //   Math.abs(
+      //     this.state.currentTime.hours() - this.state.dailyTime.hours()
+      //   ) > 1
+      // ) {
+      //   this.interval = setInterval(this.countingSecond, 3600000);
+      // } else if (
+      //   Math.abs(
+      //     this.state.dailyTime.minutes() - this.state.currentTime.minutes()
+      //   ) > 10
+      // ) {
+      //   this.interval = setInterval(this.countingSecond, 600000);
+      // } else {
+      //   this.interval = setInterval(this.countingSecond, 1000);
+      //   if (
+      //     `${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
+      //     `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}`
+      //   ) {
+      //     this.setState((prevState, props) => {
+      //       return { dailyModalOpen: true };
+      //     });
+      //   }
+      // }
     });
   };
 
