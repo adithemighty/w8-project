@@ -2,10 +2,6 @@
   background-image: $side-menu-gb;
   padding: 0rem 5rem;
 
-  @media (max-width: 500px) {
-    background-image: $side-menu-gb;
-  }
-
   position: relative;
 }
 
@@ -59,9 +55,6 @@
   &:hover {
     box-shadow: $shadow-bottom;
   }
-  // &:hover {
-  //   background-color: rgba(255, 255, 255, 0.473);
-  // }
 
   &:visited {
     color: $text-color;

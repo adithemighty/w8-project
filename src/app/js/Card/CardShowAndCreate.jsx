@@ -17,94 +17,61 @@ class CardShowAndCreate extends Component {
       id: null,
       description: "",
       estimation: 0,
-      ticketType: "",
-      ticketTypeFieldValue: { id: "2", text: "User Story" },
-      ticketTypeOptions: [
-        { id: "1", text: "Bug" },
-        { id: "2", text: "User Story" },
-        { id: "3", text: "Action Item" }
-      ]
+      ticketType: ""
+      // ticketTypeFieldValue: { id: "2", text: "User Story" },
+      // ticketTypeOptions: [
+      //   { id: "1", text: "Bug" },
+      //   { id: "2", text: "User Story" },
+      //   { id: "3", text: "Action Item" }
+      // ]
     };
   }
 
   render() {
-    if (this.state.title.length < 0) {
-      return <p>Loading</p>;
-    } else {
-      return (
-        <div
-          className="modal"
-          onClick={event => this.handleModalQuitClick(event)}
-        >
-          <div className="card-details">
-            {/* Here come the editable fields made with RIE */}
-            <div className="editable-fields">
-              <label>Title</label>
-              <RIEInput
-                className="input"
-                value={this.state.title}
-                change={this.handleInputChange}
-                propName="title"
-              />
-              <label>Ticket type</label>
-              <RIESelect
-                className="select"
-                value={this.state.ticketTypeFieldValue}
-                options={this.state.ticketTypeOptions}
-                change={this.handleInputChange}
-                propName="ticketType"
-              />
-              <label>Estimation</label>
-              <RIEInput
-                className="input"
-                value={this.state.estimation}
-                change={this.handleInputChange}
-                propName="estimation"
-              />
-              <label>Description</label>
-              <RIETextArea
-                className="text-area"
-                value={this.state.description}
-                change={this.handleInputChange}
-                propName="description"
-              />
-              {/* action handlers for cancel and submit */}
+    return (
+      <div
+        className="modal"
+        onClick={event => this.handleModalQuitClick(event)}
+      >
+        <div className="card-details">
+          {/* Here come the editable fields made with RIE */}
+          <div className="editable-fields">
+            <label>Title</label>
+            <input
+              type="text"
+              onChange={e => this.handleInputChange(e.target.value)}
+              value={this.state.title}
+            />
 
-              <div className="action-btns">
-                <button
-                  onClick={this.handleInputSubmit}
-                  className="btn-confirm"
-                >
-                  {/* so that the user is not confused and I don't want to use any too generic button text */}
-                  {this.state.new ? "Create Issue" : "Save changes"}
-                </button>
-                <button
-                  className="btn-cancel"
-                  onClick={() => {
-                    this.props.history.push(
-                      `/b/${this.props.match.params.boardId}`
-                    );
-                  }}
-                >
-                  {/* <Link
-                    className="link"
-                    to={`/b/${this.props.match.params.boardId}`}
-                  > */}
-                  Back to board
-                  {/* </Link> */}
-                </button>
-              </div>
+            {/* action handlers for cancel and submit */}
+
+            <div className="action-btns">
+              <button onClick={this.handleInputSubmit} className="btn-confirm">
+                {/* so that the user is not confused and I don't want to use any too generic button text */}
+                {this.state.new ? "Create Issue" : "Save changes"}
+              </button>
+              <button
+                className="btn-cancel"
+                onClick={() => {
+                  this.props.history.push(
+                    `/b/${this.props.match.params.boardId}`
+                  );
+                }}
+              >
+                Back to board
+              </button>
             </div>
           </div>
         </div>
-      );
-    }
+      </div>
+    );
   }
 
   componentDidMount = () => {
+    console.log("hallo");
     if (this.props.match.path.indexOf("new") > 0) {
       this.setState((prevState, props) => {
-        return { new: true };
+        return { new: true, title: "" };
       });
     }
     const ticketId = this.props.match.params.ticketId;
@@ -118,32 +85,16 @@ class CardShowAndCreate extends Component {
         estimation
       } = ticket;
 
-      const newState = {};
+      const newState = {
+        id: _id,
+        title,
+        blocker,
+        ticketType,
+        description,
+        estimation
+      };
 
       //   make sure that all states in the field have some value because RIE cannot handle undefined as value
-
-      newState["id"] = _id;
-      newState["blocker"] = blocker;
-
-      if (title) {
-        newState["title"] = title;
-      }
-
-      if (estimation) {
-        newState["estimation"] = estimation;
-      }
-
-      if (description) {
-        newState["description"] = description;
-      }
-
-      if (ticketType === "Bug") {
-        newState["ticketTypeFieldValue"] = { id: "1", text: "Bug" };
-      } else if (ticketType === "User Story") {
-        newState["ticketTypeFieldValue"] = { id: "2", text: "User Story" };
-      } else if (ticketType === "Action Item") {
-        newState["ticketTypeFieldValue"] = { id: "3", text: "Action Item" };
-      }
 
       this.setState((prevState, props) => {
         return newState;
@@ -157,30 +108,22 @@ class CardShowAndCreate extends Component {
     }
   };
 
-  handleInputChange = field => {
-    if (Object.keys(field)[0] === "ticketType") {
-      field[""];
-      this.setState((prevState, props) => {
-        return {
-          ticketTypeFieldValue: field.ticketType,
-          ticketType: field.ticketType.text
-        };
-      });
-    }
+  handleInputChange = value => {
+    console.log(value);
     this.setState((prevState, props) => {
-      return field;
+      return { title: value };
     });
   };
 
   handleInputSubmit = () => {
-    const { title, description, estimation, blocker } = this.state;
+    const { title } = this.state;
 
-    const submitableFields = { title, description, estimation, blocker };
-    submitableFields["boardId"] = this.props.match.params.boardId;
+    // const submitableFields = { title, description, estimation, blocker };
+    // submitableFields["boardId"] = this.props.match.params.boardId;
 
-    submitableFields["ticketType"] = this.state.ticketType.text;
+    // submitableFields["ticketType"] = this.state.ticketType.text;
     if (!this.state.new) {
-      api.post(`/api/t/update/${this.state.id}`, submitableFields).then(() => {
+      api.post(`/api/t/update/${this.state.id}`, { title }).then(() => {
         this.props.ticketDetailViewOpenHandler();
         this.props.getBoardData();
         this.props.history.push(`/b/${this.props.match.params.boardId}`);
@@ -188,7 +131,7 @@ class CardShowAndCreate extends Component {
     } else {
       api
         .post(`/api/t/new`, {
-          title: submitableFields.title,
+          title,
           boardId: this.props.match.params.boardId
         })
         .then(result => {

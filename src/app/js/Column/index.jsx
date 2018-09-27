@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import Card from "../Card";
 import DeleteColumnDialog from "./DeleteColumnDialog";
 import ArrowLeft from "../../assets/arrLeft.svg";
+import PlusIcon from "../../assets/plus.svg";
 import ArrowRight from "../../assets/arrRight.svg";
 import { Droppable } from "react-beautiful-dnd";
 import { RIEInput } from "riek";
 import api from "../utils/api";
 import DeleteIcon from "../../assets/trash.svg";
+import { withRouter } from "react-router";
 
 import Modal from "../Component/Modal";
 
@@ -134,4 +136,4 @@ class Column extends Component {
   }
 }
 
-export default Column;
+export default withRouter(Column);
