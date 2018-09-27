@@ -231,7 +231,6 @@ class CardShowAndCreate extends Component {
   };
 
   handleInputChange = (key, value) => {
-    console.log(value);
     this.setState((prevState, props) => {
       return { [key]: value };
     });
@@ -253,7 +252,6 @@ class CardShowAndCreate extends Component {
     if (description) {
       submitableFields["description"] = description;
     }
-    console.log(submitableFields);
 
     if (!this.state.new) {
       api.post(`/api/t/update/${this.state.id}`, submitableFields).then(() => {

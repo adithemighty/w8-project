@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import moment from "moment";
 
 import api from "../utils/api";
@@ -36,7 +36,6 @@ class Board extends Component {
     this.setState((prevState, props) => {
       const newStatus = {};
       newStatus[`${type}ModalOpen`] = !prevState[`${type}ModalOpen`];
-      console.log(newStatus);
       return newStatus;
     });
   };

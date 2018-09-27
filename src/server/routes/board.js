@@ -48,12 +48,9 @@ router.post("/edit", (req, res) => {
     updatedFields["dailyTime"] = dailyTime;
   }
 
-  console.log(updatedFields, id);
-
   //if there was a change, edit the field
   Board.findByIdAndUpdate({ _id: id }, { $set: updatedFields }, { new: true })
     .then(updatedBoard => {
-      console.log(updatedBoard);
       res.send(updatedBoard);
     })
     .catch(err => {

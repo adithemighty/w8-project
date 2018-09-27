@@ -15,7 +15,6 @@ class DailyAlarm extends Component {
   }
 
   handleChange = date => {
-    console.log("date", date);
     this.setState({
       currentTime: date
     });
@@ -62,14 +61,10 @@ class DailyAlarm extends Component {
   }
 
   handleSubmit = () => {
-    api
-      .post("/api/b/edit", {
-        id: this.props.boardId,
-        dailyTime: this.state.dailyTime
-      })
-      .then(() => {
-        console.log("success");
-      });
+    api.post("/api/b/edit", {
+      id: this.props.boardId,
+      dailyTime: this.state.dailyTime
+    });
   };
 
   render() {
