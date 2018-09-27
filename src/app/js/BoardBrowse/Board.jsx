@@ -25,9 +25,7 @@ class Board extends Component {
       ticketDetailViewOpen: false,
       currentTicket: "",
       sortedColumnIds: [],
-      dailyModalOpen: false,
-      dailyTime: null,
-      currentTime: moment()
+      dailyModalOpen: false
     };
   }
 
@@ -106,9 +104,7 @@ class Board extends Component {
 
           {/* Board header with title and add ticket btn */}
           <div className="board-header">
-            {`${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
-              `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}` ||
-            this.state.dailyModalOpen ? (
+            {this.state.dailyModalOpen ? (
               <Modal>
                 <DailyAlarm
                   openModal={this.openModal}
@@ -239,13 +235,12 @@ class Board extends Component {
     //this function is needed for updating the board on every change
     api.get(`/api/b/data/${id}`).then(board => {
       this.setState(function(prevState, props) {
-        const { title, columns, dailyTime } = board;
+        const { title, columns } = board;
         const newState = {
           title: title,
           columns: {},
           id: id,
-          sortedColumnIds: [],
-          dailyTime: moment(dailyTime)
+          sortedColumnIds: []
         };
 
         columns.forEach(({ title, ticket, _id, limit }, ind) => {
@@ -261,29 +256,6 @@ class Board extends Component {
 
         return newState;
       });
-      // if (
-      //   Math.abs(
-      //     this.state.currentTime.hours() - this.state.dailyTime.hours()
-      //   ) > 1
-      // ) {
-      //   this.interval = setInterval(this.countingSecond, 3600000);
-      // } else if (
-      //   Math.abs(
-      //     this.state.dailyTime.minutes() - this.state.currentTime.minutes()
-      //   ) > 10
-      // ) {
-      //   this.interval = setInterval(this.countingSecond, 600000);
-      // } else {
-      //   this.interval = setInterval(this.countingSecond, 1000);
-      //   if (
-      //     `${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
-      //     `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}`
-      //   ) {
-      //     this.setState((prevState, props) => {
-      //       return { dailyModalOpen: true };
-      //     });
-      //   }
-      // }
     });
   };
 
