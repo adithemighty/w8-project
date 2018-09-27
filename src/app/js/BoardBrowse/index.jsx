@@ -53,7 +53,7 @@ class BoardBrowse extends Component {
   render() {
     const addBoardBtn = (
       <button
-        className="add-btn marg-top-md"
+        className="neutral icon-text-btn marg-top-md"
         onClick={() => {
           this.openModal("add");
           this.props.history.push(`/b/new`);
@@ -61,7 +61,7 @@ class BoardBrowse extends Component {
         }}
       >
         <p>Create new board</p>
-        <img className="add-icon" src={PlusIcon} alt="" />
+        <img className="marg-left-md add-icon" src={PlusIcon} alt="" />
       </button>
     );
 

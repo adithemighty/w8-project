@@ -16,10 +16,10 @@
 
   .modal-text {
     background-color: white;
-    min-width: 60vw;
-    max-width: 70vw;
-    min-height: 60vh;
-    max-height: 80vh;
+    min-width: 70vw;
+    // max-width: 70vw;
+    min-height: 90vh;
+    // max-height: 90vh;
     border-radius: 5px;
 
     display: flex;
@@ -59,13 +59,9 @@
       width: 60%;
     }
 
-    * {
-      // margin: 2rem 0;
-    }
-
     @media (max-width: 600px) {
-      min-width: 50vw;
-      min-height: 50vh;
+      min-width: 70vw;
+      min-height: 70vh;
     }
   }
 }

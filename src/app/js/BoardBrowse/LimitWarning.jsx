@@ -5,11 +5,13 @@ const LimitWarning = props => {
     <div className="modal">
       <div className="modal-text">
         <p>
-          You are breaking the limit of the {props.destinationColumn} column. To
-          move something into this column - finish a ticket that is already in
-          this column.
+          You are breaking the limit of the {props.destinationColumn} column.{" "}
+          <br /> <br /> <br /> To move something into this column - finish a
+          ticket that is already in this column.
         </p>
+        <br /> <br />
         <p>The card will stay in the original column</p>
+        <br /> <br />
         <button className="btn-cancel" onClick={props.limitWarningHandler}>
           Back to board
         </button>

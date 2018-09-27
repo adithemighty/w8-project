@@ -52,7 +52,7 @@ class ColumnCreate extends Component {
           />
           <button
             type="submit"
-            className="btn-confirm column-create-button"
+            className="confirm icon-text-btn"
             onClick={e => this.handleSubmit(e)}
           >
             Create new column

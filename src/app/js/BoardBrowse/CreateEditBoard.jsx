@@ -52,16 +52,15 @@ class CreateEditBoard extends Component {
     return (
       <div className="modal">
         <div className="modal-text">
-          <div className="editable-fields">
-            <label htmlFor="title">Title</label>
-            <input
-              placeholder="New board title"
-              id="title"
-              onChange={e => this.inputHandler("title", e.target.value)}
-              type="text"
-              value={this.state.title}
-            />
-          </div>
+          <label htmlFor="title">Title</label>
+          <input
+            className="active-input input"
+            placeholder="New board title"
+            id="title"
+            onChange={e => this.inputHandler("title", e.target.value)}
+            type="text"
+            value={this.state.title}
+          />
 
           <div className="action-btns">
             <button

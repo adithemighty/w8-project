@@ -6,6 +6,7 @@ import moment from "moment";
 
 import api from "../utils/api";
 import PlusIcon from "../../assets/plus.svg";
+import ClockIcon from "../../assets/clock.svg";
 
 import Column from "../Column";
 import LimitWarning from "./LimitWarning";
@@ -106,7 +107,7 @@ class Board extends Component {
           {/* Board header with title and add ticket btn */}
           <div className="board-header">
             {`${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
-              `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}` &&
+              `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}` ||
             this.state.dailyModalOpen ? (
               <Modal>
                 <DailyAlarm
@@ -120,7 +121,17 @@ class Board extends Component {
             <p className="title">{this.state.title}</p>
 
             <button
-              className="add-btn marg-left-md"
+              className=" marg-left-md icon-text-btn neutral"
+              onClick={() => {
+                this.openModal("daily");
+              }}
+            >
+              Start daily
+              <img className="marg-left-md add-icon" src={ClockIcon} alt="" />
+            </button>
+
+            <button
+              className="icon-text-btn marg-left-md neutral"
               onClick={() => {
                 this.props.history.push(
                   `/b/${this.props.match.params.id}/t/new`
@@ -128,7 +139,7 @@ class Board extends Component {
               }}
             >
               <p>Create new issue</p>
-              <img className="add-icon" src={PlusIcon} alt="" />
+              <img className="marg-left-md add-icon" src={PlusIcon} alt="" />
             </button>
           </div>
 
@@ -250,29 +261,29 @@ class Board extends Component {
 
         return newState;
       });
-      if (
-        Math.abs(
-          this.state.currentTime.hours() - this.state.dailyTime.hours()
-        ) > 1
-      ) {
-        this.interval = setInterval(this.countingSecond, 3600000);
-      } else if (
-        Math.abs(
-          this.state.dailyTime.minutes() - this.state.currentTime.minutes()
-        ) > 10
-      ) {
-        this.interval = setInterval(this.countingSecond, 600000);
-      } else {
-        this.interval = setInterval(this.countingSecond, 1000);
-        if (
-          `${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
-          `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}`
-        ) {
-          this.setState((prevState, props) => {
-            return { dailyModalOpen: true };
-          });
-        }
-      }
+      // if (
+      //   Math.abs(
+      //     this.state.currentTime.hours() - this.state.dailyTime.hours()
+      //   ) > 1
+      // ) {
+      //   this.interval = setInterval(this.countingSecond, 3600000);
+      // } else if (
+      //   Math.abs(
+      //     this.state.dailyTime.minutes() - this.state.currentTime.minutes()
+      //   ) > 10
+      // ) {
+      //   this.interval = setInterval(this.countingSecond, 600000);
+      // } else {
+      //   this.interval = setInterval(this.countingSecond, 1000);
+      //   if (
+      //     `${this.state.currentTime.hours()}:${this.state.currentTime.minutes()}` ===
+      //     `${this.state.dailyTime.hours()}:${this.state.dailyTime.minutes()}`
+      //   ) {
+      //     this.setState((prevState, props) => {
+      //       return { dailyModalOpen: true };
+      //     });
+      //   }
+      // }
     });
   };
 

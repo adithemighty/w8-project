@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import EditIcon from "../../assets/edit.svg";
 
 import api from "../utils/api";
-
-import { RIEInput, RIETextArea, RIESelect } from "riek";
 
 class CardShowAndCreate extends Component {
   constructor(props) {
@@ -18,93 +16,184 @@ class CardShowAndCreate extends Component {
       description: "",
       estimation: 0,
       ticketType: "",
-      ticketTypeFieldValue: { id: "2", text: "User Story" },
-      ticketTypeOptions: [
-        { id: "1", text: "Bug" },
-        { id: "2", text: "User Story" },
-        { id: "3", text: "Action Item" }
-      ]
+      titleInputFieldShown: false,
+      estimationInputFieldShown: false,
+      ticketTypeInputFieldShown: false,
+      descriptionTypeInputFieldShown: false,
+      oneFieldShown: false
     };
   }
 
   render() {
-    if (this.state.title.length < 0) {
-      return <p>Loading</p>;
-    } else {
-      return (
-        <div
-          className="modal"
-          onClick={event => this.handleModalQuitClick(event)}
-        >
-          <div className="card-details">
-            {/* Here come the editable fields made with RIE */}
-            <div className="editable-fields">
-              <label>Title</label>
-              <RIEInput
-                className="input"
-                value={this.state.title}
-                change={this.handleInputChange}
-                propName="title"
-              />
-              <label>Ticket type</label>
-              <RIESelect
-                className="select"
-                value={this.state.ticketTypeFieldValue}
-                options={this.state.ticketTypeOptions}
-                change={this.handleInputChange}
-                propName="ticketType"
-              />
-              <label>Estimation</label>
-              <RIEInput
-                className="input"
-                value={this.state.estimation}
-                change={this.handleInputChange}
-                propName="estimation"
-              />
-              <label>Description</label>
-              <RIETextArea
-                className="text-area"
-                value={this.state.description}
-                change={this.handleInputChange}
-                propName="description"
-              />
-              {/* action handlers for cancel and submit */}
-
-              <div className="action-btns">
-                <button
-                  onClick={this.handleInputSubmit}
-                  className="btn-confirm"
-                >
-                  {/* so that the user is not confused and I don't want to use any too generic button text */}
-                  {this.state.new ? "Create Issue" : "Save changes"}
-                </button>
-                <button
-                  className="btn-cancel"
+    return (
+      <div
+        className="modal"
+        onClick={event => this.handleModalQuitClick(event)}
+      >
+        <div className="card-details">
+          {/* Here come the editable fields made with RIE */}
+          <div className="editable-fields">
+            <div className="row row-one">
+              <label htmlFor="title">Title</label>
+              {this.state.titleInputFieldShown ||
+              !this.state.title ||
+              this.state.new ? (
+                <input
+                  className="active-input input"
+                  type="text"
+                  id="title"
+                  onChange={e =>
+                    this.handleInputChange("title", e.target.value)
+                  }
+                  value={this.state.title}
+                />
+              ) : (
+                <p
+                  className="input"
                   onClick={() => {
-                    this.props.history.push(
-                      `/b/${this.props.match.params.boardId}`
-                    );
+                    this.toggleInputField("title");
                   }}
                 >
-                  {/* <Link
-                    className="link"
-                    to={`/b/${this.props.match.params.boardId}`}
-                  > */}
-                  Back to board
-                  {/* </Link> */}
-                </button>
+                  {this.state.title}
+                </p>
+              )}
+            </div>
+
+            <div className="row row-two">
+              <div className="row-column">
+                <label htmlFor="ticketType">Issue type:</label>
+
+                {this.state.ticketTypeInputFieldShown ||
+                !this.state.ticketType ||
+                this.state.new ? (
+                  <select
+                    className="active-input select"
+                    onChange={e =>
+                      this.handleInputChange("ticketType", e.target.value)
+                    }
+                    name="ticketType"
+                    id="ticketType"
+                  >
+                    <option
+                      className="active-input option"
+                      value=""
+                      selected
+                      disabled
+                      hidden
+                    >
+                      {this.state.ticketType
+                        ? this.state.ticketType
+                        : "User Story"}
+                    </option>
+                    <option className="active-input option" value="User Story">
+                      User Story
+                    </option>
+                    <option className="active-input option" value="Bug">
+                      Bug
+                    </option>
+                    <option className="active-input option" value="Action Item">
+                      Action Item
+                    </option>
+                  </select>
+                ) : (
+                  <p
+                    onClick={() => {
+                      this.toggleInputField("ticketType");
+                    }}
+                  >
+                    {this.state.ticketType}
+                  </p>
+                )}
               </div>
+
+              <div className="row-column">
+                <label htmlFor="estimation">Estimation</label>
+
+                {this.state.estimationInputFieldShown ||
+                !this.state.estimation ||
+                this.state.new ? (
+                  <input
+                    className="active-input input"
+                    onChange={e =>
+                      this.handleInputChange("estimation", e.target.value)
+                    }
+                    type="number"
+                    min="0"
+                    id="estimation"
+                    value={this.state.estimation}
+                  />
+                ) : (
+                  <p
+                    onClick={() => {
+                      this.toggleInputField("estimation");
+                    }}
+                  >
+                    {this.state.estimation}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="row row-three">
+              <label htmlFor="description">Description</label>
+
+              {this.state.descriptionInputFieldShown ||
+              !this.state.description ||
+              this.state.new ? (
+                <textarea
+                  className="active-input textarea"
+                  onChange={e =>
+                    this.handleInputChange("description", e.target.value)
+                  }
+                  value={this.state.description}
+                  id="description"
+                />
+              ) : (
+                <p
+                  className=" textarea"
+                  onClick={() => {
+                    this.toggleInputField("description");
+                  }}
+                >
+                  {this.state.description}
+                </p>
+              )}
+            </div>
+            {/* action handlers for cancel and submit */}
+
+            <div className="action-btns">
+              <button onClick={this.handleInputSubmit} className="btn-confirm">
+                {/* so that the user is not confused and I don't want to use any too generic button text */}
+                {this.state.new ? "Create Issue" : "Save changes"}
+              </button>
+              <button
+                className="btn-cancel"
+                onClick={() => {
+                  this.props.history.push(
+                    `/b/${this.props.match.params.boardId}`
+                  );
+                }}
+              >
+                Back to board
+              </button>
             </div>
           </div>
         </div>
-      );
-    }
+      </div>
+    );
   }
+
+  toggleInputField = type => {
+    const field = `${type}InputFieldShown`;
+    this.setState((prevState, props) => {
+      return { [field]: !prevState[field], oneFieldShown: true };
+    });
+  };
 
   componentDidMount = () => {
     if (this.props.match.path.indexOf("new") > 0) {
       this.setState((prevState, props) => {
-        return { new: true };
+        return { new: true, title: "" };
       });
     }
     const ticketId = this.props.match.params.ticketId;
@@ -118,32 +207,14 @@ class CardShowAndCreate extends Component {
         estimation
       } = ticket;
 
-      const newState = {};
-
-      //   make sure that all states in the field have some value because RIE cannot handle undefined as value
-
-      newState["id"] = _id;
-      newState["blocker"] = blocker;
-
-      if (title) {
-        newState["title"] = title;
-      }
-
-      if (estimation) {
-        newState["estimation"] = estimation;
-      }
-
-      if (description) {
-        newState["description"] = description;
-      }
-
-      if (ticketType === "Bug") {
-        newState["ticketTypeFieldValue"] = { id: "1", text: "Bug" };
-      } else if (ticketType === "User Story") {
-        newState["ticketTypeFieldValue"] = { id: "2", text: "User Story" };
-      } else if (ticketType === "Action Item") {
-        newState["ticketTypeFieldValue"] = { id: "3", text: "Action Item" };
-      }
+      const newState = {
+        id: _id,
+        title,
+        blocker,
+        ticketType,
+        description,
+        estimation
+      };
 
       this.setState((prevState, props) => {
         return newState;
@@ -157,28 +228,31 @@ class CardShowAndCreate extends Component {
     }
   };
 
-  handleInputChange = field => {
-    if (Object.keys(field)[0] === "ticketType") {
-      field[""];
-      this.setState((prevState, props) => {
-        return {
-          ticketTypeFieldValue: field.ticketType,
-          ticketType: field.ticketType.text
-        };
-      });
-    }
+  handleInputChange = (key, value) => {
+    console.log(value);
     this.setState((prevState, props) => {
-      return field;
+      return { [key]: value };
     });
   };
 
   handleInputSubmit = () => {
-    const { title, description, estimation, blocker } = this.state;
+    const { title, ticketType, estimation, description } = this.state;
 
-    const submitableFields = { title, description, estimation, blocker };
-    submitableFields["boardId"] = this.props.match.params.boardId;
+    const submitableFields = {};
+    if (title) {
+      submitableFields["title"] = title;
+    }
+    if (ticketType) {
+      submitableFields["ticketType"] = ticketType;
+    }
+    if (estimation) {
+      submitableFields["estimation"] = Number(estimation);
+    }
+    if (description) {
+      submitableFields["description"] = description;
+    }
+    console.log(submitableFields);
 
-    submitableFields["ticketType"] = this.state.ticketType.text;
     if (!this.state.new) {
       api.post(`/api/t/update/${this.state.id}`, submitableFields).then(() => {
         this.props.ticketDetailViewOpenHandler();
@@ -188,7 +262,7 @@ class CardShowAndCreate extends Component {
     } else {
       api
         .post(`/api/t/new`, {
-          title: submitableFields.title,
+          title,
           boardId: this.props.match.params.boardId
         })
         .then(result => {

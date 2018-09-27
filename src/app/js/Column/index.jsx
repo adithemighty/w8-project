@@ -4,18 +4,17 @@ import DeleteColumnDialog from "./DeleteColumnDialog";
 import ArrowLeft from "../../assets/arrLeft.svg";
 import ArrowRight from "../../assets/arrRight.svg";
 import { Droppable } from "react-beautiful-dnd";
-import { RIEInput } from "riek";
 import api from "../utils/api";
 import DeleteIcon from "../../assets/trash.svg";
-
-import Modal from "../Component/Modal";
+import { withRouter } from "react-router";
 
 class Column extends Component {
   constructor(props) {
     super(props);
     this.state = {
       limit: "",
-      deleteModalOpen: false
+      deleteModalOpen: false,
+      inputActive: false
     };
   }
 
@@ -27,13 +26,30 @@ class Column extends Component {
     });
   };
 
-  handleInputChange = field => {
-    field.limit = Number(field.limit);
+  handleInputChange = value => {
+    value = Number(value);
+    this.setState({ limit: value });
+  };
+
+  handleEnter = e => {
+    if (e.key === "Enter") {
+      this.handleSubmitLimit();
+      this.handleInputFocus();
+    }
+  };
+
+  handleSubmitLimit = () => {
     api
-      .post("/api/c/update", { id: this.props.id, limit: field.limit })
+      .post("/api/c/update", { id: this.props.id, limit: this.state.limit })
       .then(() => {
         this.props.getBoardData();
       });
+  };
+
+  handleInputFocus = () => {
+    this.setState((prevState, props) => {
+      return { inputActive: !prevState.inputActive };
+    });
   };
 
   render() {
@@ -56,12 +72,32 @@ class Column extends Component {
         <div className="column-header">
           <div className="limit">
             <label htmlFor="">Column limit: </label>
-            <RIEInput
-              className="limit"
-              value={this.state.limit}
-              change={this.handleInputChange}
-              propName="limit"
-            />
+            {this.state.inputActive ? (
+              <input
+                className="limit"
+                value={this.state.limit}
+                onChange={e => {
+                  this.handleInputChange(e.target.value);
+                }}
+                onKeyPress={e => this.handleEnter(e)}
+                min="0"
+                type="number"
+              />
+            ) : (
+              <p
+                style={{
+                  border: "1px solid grey",
+                  width: "3rem",
+                  height: "3rem",
+                  borderRadius: "5px",
+                  padding: ".5rem",
+                  margin: "1rem"
+                }}
+                onClick={this.handleInputFocus}
+              >
+                {this.props.limit}
+              </p>
+            )}
           </div>
 
           {this.props.first ? null : (
@@ -134,4 +170,4 @@ class Column extends Component {
   }
 }
 
-export default Column;
+export default withRouter(Column);
