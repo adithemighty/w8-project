@@ -1,11 +1,13 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 const Home = props => {
   return (
-    <div className="container">
-      <h1>Hello, {props.user ? props.user.email : "Stranger"}!</h1>
+    <div className="">
+      {props.user && <Redirect to="/b" />}
       <div className="home-header">
-        <p>here be header</p>
+        <h1 className="header-heading-primary">DragonDrop</h1>
+        <h2 className="header-heading-secondary">teamwork made easy</h2>
       </div>
       <div className="home-features">
         <p>here be features</p>

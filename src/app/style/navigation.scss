@@ -3,6 +3,8 @@
   padding: 0rem 5rem;
 
   position: relative;
+  max-width: 100%;
+  min-width: 100%;
 }
 
 .nav-content {
@@ -13,9 +15,11 @@
 }
 
 .side-menu {
+  z-index: 12;
   background-image: $side-menu-gb;
   position: absolute;
   top: 0;
+  visibility: hidden;
   right: -30rem;
   width: 30rem;
   transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -39,6 +43,7 @@
 }
 .visible {
   right: 0rem;
+  visibility: visible;
 }
 
 .menu-icon {
