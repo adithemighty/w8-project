@@ -16,8 +16,8 @@
 
   .modal-text {
     background-color: white;
-    min-width: 70vw;
-    min-height: 90vh;
+    // min-width: 70vw;
+    // min-height: 90vh;
     border-radius: 5px;
 
     display: flex;
@@ -65,8 +65,12 @@
 }
 
 .modal-sm {
+  width: 44rem;
+  height: 26rem;
 }
 .modal-md {
+  width: 56rem;
+  height: 56rem;
 }
 .modal-lg {
 }

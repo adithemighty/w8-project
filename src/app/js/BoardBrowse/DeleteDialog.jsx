@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 const DeleteDialog = props => {
   return (
     <div className="modal">
-      <div className="modal-text">
+      <div className="modal-text modal-sm">
         <p>
           Are you sure you want to delete this board? This action cannot be
           undone

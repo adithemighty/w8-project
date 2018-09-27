@@ -70,7 +70,7 @@ class DailyAlarm extends Component {
   render() {
     return (
       <div className="modal ">
-        <div className="modal-text ">
+        <div className="modal-text modal-md">
           <div className="wrapper">
             {this.state.timerRunning ? (
               this.createTimer()
@@ -86,7 +86,7 @@ class DailyAlarm extends Component {
 
           <div className=" countdown-action-btns">
             <button
-              className="btn-dismiss"
+              className=""
               onClick={() => {
                 this.props.openModal("daily");
                 this.toggleTimer();
@@ -94,7 +94,7 @@ class DailyAlarm extends Component {
             >
               Dismiss
             </button>
-            <button className="btn-start" onClick={this.toggleTimer}>
+            <button className="marg-left-md" onClick={this.toggleTimer}>
               {this.state.timerRunning ? "Reset timer" : "Start Daily"}
             </button>
           </div>
