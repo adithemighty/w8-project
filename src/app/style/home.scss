@@ -164,8 +164,13 @@
   background-image: url("../assets/3.jpg");
   background-size: cover;
   background-position: center;
+  font-size: 2rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  span {
+    font-size: 3rem;
+  }
 }

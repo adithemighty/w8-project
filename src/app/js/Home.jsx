@@ -30,9 +30,10 @@ const Home = props => {
       </div>
       <div className="home-footer">
         <p>
-          Created with 💖 by Adiya Mohr 🙋🏻‍♀️ with gradients 🌈 from{" "}
-          <a href="https://cssgradient.io">cssgradient </a> and icons 🦄 from{" "}
-          <a href="www.flaticon.com ">flaticon</a>
+          Created with <span>💖</span> by Adiya Mohr <span>🙋🏻‍♀️</span> with
+          gradients <span>🌈</span> from{" "}
+          <a href="https://cssgradient.io">cssgradient </a> and icons{" "}
+          <span>🦄</span> from <a href="www.flaticon.com ">flaticon</a>
         </p>
       </div>
     </React.Fragment>
