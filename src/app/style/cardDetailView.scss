@@ -92,5 +92,10 @@
 }
 
 .action-item {
-  background-image: linear-gradient(to right, #ede574 0%, #e1f5c4 5%, white 5%);
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 230, 0, 0.678) 0%,
+    rgba(255, 245, 151, 0.767) 5%,
+    white 5%
+  );
 }

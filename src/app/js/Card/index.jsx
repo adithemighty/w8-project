@@ -3,8 +3,6 @@ import { Draggable } from "react-beautiful-dnd";
 import { withRouter } from "react-router";
 import EditIcon from "../../assets/edit.svg";
 
-import { Link, Route, Switch } from "react-router-dom";
-
 const Card = props => {
   const { title, blocker, _id, ticketType } = props.ticket;
   return (
@@ -24,7 +22,6 @@ const Card = props => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              {/* <Link to={`${props.match.url}/t/${_id}`}>{title}</Link> */}
               {title}
               <button
                 className="icon-button"
