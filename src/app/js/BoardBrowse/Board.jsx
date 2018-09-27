@@ -126,7 +126,7 @@ class Board extends Component {
                 this.openModal("daily");
               }}
             >
-              start daily
+              Start daily
               <img className="marg-left-md add-icon" src={ClockIcon} alt="" />
             </button>
 
