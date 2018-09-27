@@ -161,13 +161,16 @@ class CardShowAndCreate extends Component {
             </div>
             {/* action handlers for cancel and submit */}
 
-            <div className="action-btns">
-              <button onClick={this.handleInputSubmit} className="btn-confirm">
+            <div>
+              <button
+                onClick={this.handleInputSubmit}
+                className="icon-text-btn btn-md confirm"
+              >
                 {/* so that the user is not confused and I don't want to use any too generic button text */}
                 {this.state.new ? "Create Issue" : "Save changes"}
               </button>
               <button
-                className="btn-cancel"
+                className="icon-text-btn btn-md cancel"
                 onClick={() => {
                   this.props.history.push(
                     `/b/${this.props.match.params.boardId}`

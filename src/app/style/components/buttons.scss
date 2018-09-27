@@ -77,17 +77,15 @@
 }
 
 .icon-text-btn {
-  font-size: inherit;
   border-radius: 50px;
-  padding: 1rem;
+  // padding: 1rem;
   border: none;
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  // padding: 1rem 2rem;
 
   background-size: 300% 100%;
 
-  // moz-transition: all 0.4s ease-in-out;
   -o-transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
@@ -101,25 +99,78 @@
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
   }
+}
 
-  // p {
-  //   margin: 0 3rem;
-  // }
-  .add-icon {
-    height: 2.5rem;
-    width: 2.5rem;
+.text-btn {
+  border-radius: 50px;
+  border: none;
+
+  align-items: center;
+  text-align: center;
+
+  background-size: 300% 100%;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $shadow-hover;
+    background-position: 100% 0;
+    // moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
   }
 }
 
+.btn-sm {
+}
+
+.btn-md {
+  font-size: 1.4rem;
+  padding: 1rem 2rem;
+}
+
+.add-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
 .neutral {
+  //the yellow one in case I feel like changing the neutral btn color
+  // background-image: linear-gradient(
+  //   to right,
+  //   #f09619a8 0%,
+  //   #edde5d9f 51%,
+  //   #f09619bb 100%
+  // );
+  background-color: #ffffff;
   background-image: linear-gradient(
     to right,
-    #f0961942 0%,
-    #edde5d48 51%,
-    #f0961946 100%
+    #757f9a83 0%,
+    #d7dde8 51%,
+    #757f9a7c 100%
   );
 }
 
 .confirm {
-  background-image: $btn-yepp;
+  background-image: linear-gradient(
+    to right,
+    #0ba361b9,
+    #3cba92c2,
+    #30dd89b4,
+    #2bb673b0
+  );
+}
+
+.cancel {
+  background-image: linear-gradient(
+    to right,
+    #eb3941,
+    #f15e64,
+    #e14e53,
+    #e2373f
+  );
+  box-shadow: 0 5px 15px rgba(242, 97, 103, 0.4);
 }

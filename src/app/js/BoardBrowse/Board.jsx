@@ -117,7 +117,7 @@ class Board extends Component {
             <p className="title">{this.state.title}</p>
 
             <button
-              className=" marg-left-md icon-text-btn neutral"
+              className=" marg-left-md btn-md icon-text-btn neutral"
               onClick={() => {
                 this.openModal("daily");
               }}
@@ -127,7 +127,7 @@ class Board extends Component {
             </button>
 
             <button
-              className="icon-text-btn marg-left-md neutral"
+              className="icon-text-btn btn-md marg-left-md neutral"
               onClick={() => {
                 this.props.history.push(
                   `/b/${this.props.match.params.id}/t/new`
@@ -135,7 +135,7 @@ class Board extends Component {
               }}
             >
               <p>Create new issue</p>
-              <img className="marg-left-md add-icon" src={PlusIcon} alt="" />
+              <img className="marg-left-md  add-icon" src={PlusIcon} alt="" />
             </button>
           </div>
 

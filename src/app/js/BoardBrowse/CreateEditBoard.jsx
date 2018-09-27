@@ -64,7 +64,7 @@ class CreateEditBoard extends Component {
 
           <div className="action-btns">
             <button
-              className="btn-confirm marg-left-md"
+              className="btn-md text-btn confirm marg-left-md"
               onClick={() => {
                 const type = this.state.edit ? "edit" : "add";
                 this.props.openModal(type);
@@ -74,7 +74,7 @@ class CreateEditBoard extends Component {
               {this.state.edit ? "Edit board" : "Create board"}
             </button>
             <button
-              className="btn-cancel"
+              className="btn-md text-btn neutral"
               onClick={() => {
                 const type = this.state.edit ? "edit" : "add";
                 this.props.openModal(type);

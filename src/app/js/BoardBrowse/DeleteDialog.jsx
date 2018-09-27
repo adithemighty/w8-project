@@ -11,7 +11,7 @@ const DeleteDialog = props => {
         </p>
         <div className="action-btns">
           <button
-            className="btn-confirm "
+            className="cancel btn-md text-btn"
             onClick={() => {
               props.deleteBoard(props.match.params.boardId);
               props.openModal("delete");
@@ -20,7 +20,7 @@ const DeleteDialog = props => {
             Delete board
           </button>
           <button
-            className="btn-cancel "
+            className="neutral text-btn"
             onClick={() => {
               props.history.push(`/b`);
               props.openModal("delete");
