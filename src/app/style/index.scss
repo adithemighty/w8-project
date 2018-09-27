@@ -49,7 +49,12 @@ $grey: rgb(200, 200, 200);
 @import "./components/column.scss";
 @import "./components/modal.scss";
 @import "./components/createDialog.scss";
+@import "./home.scss";
 @import "./navigation.scss";
 @import "./profile.scss";
 @import "./timer.scss";
 @import "./utils.scss";
+
+.body-wrapper {
+  overflow-x: hidden;
+}
