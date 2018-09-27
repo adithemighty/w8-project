@@ -22,6 +22,11 @@ router.post("/new", (req, res) => {
     });
 });
 
+//redirect to retromat
+router.get("/retromat", (req, res) => {
+  res.redirect("https://retromat.org/en");
+});
+
 router.post("/delete", (req, res) => {
   const { id } = req.body;
 

@@ -7,6 +7,7 @@ import moment from "moment";
 import api from "../utils/api";
 import PlusIcon from "../../assets/plus.svg";
 import ClockIcon from "../../assets/clock.svg";
+import RetroIcon from "../../assets/idea.svg";
 
 import Column from "../Column";
 import LimitWarning from "./LimitWarning";
@@ -14,6 +15,7 @@ import ColumnCreate from "../Column/ColumnCreate";
 import CardShowAndCreate from "../Card/CardShowAndCreate";
 import Modal from "../Component/Modal";
 import DailyAlarm from "./DailyAlarm";
+import RetroModal from "./RetroModal";
 
 class Board extends Component {
   constructor(props) {
@@ -25,7 +27,8 @@ class Board extends Component {
       ticketDetailViewOpen: false,
       currentTicket: "",
       sortedColumnIds: [],
-      dailyModalOpen: false
+      dailyModalOpen: false,
+      retroModalOpen: false
     };
   }
 
@@ -33,6 +36,7 @@ class Board extends Component {
     this.setState((prevState, props) => {
       const newStatus = {};
       newStatus[`${type}ModalOpen`] = !prevState[`${type}ModalOpen`];
+      console.log(newStatus);
       return newStatus;
     });
   };
@@ -114,7 +118,29 @@ class Board extends Component {
               </Modal>
             ) : null}
 
+            {this.state.retroModalOpen ? (
+              <Modal>
+                <RetroModal
+                  openModal={this.openModal}
+                  boardId={this.state.id}
+                />
+              </Modal>
+            ) : // <p>hallo</p>
+            null}
+
             <p className="title">{this.state.title}</p>
+
+            <button
+              className="icon-text-btn btn-md marg-left-md confirm"
+              onClick={() => {
+                this.props.history.push(
+                  `/b/${this.props.match.params.id}/t/new`
+                );
+              }}
+            >
+              <p>Create new issue</p>
+              <img className="marg-left-md  add-icon" src={PlusIcon} alt="" />
+            </button>
 
             <button
               className=" marg-left-md btn-md icon-text-btn neutral"
@@ -127,15 +153,13 @@ class Board extends Component {
             </button>
 
             <button
-              className="icon-text-btn btn-md marg-left-md neutral"
+              className=" marg-left-md btn-md icon-text-btn neutral"
               onClick={() => {
-                this.props.history.push(
-                  `/b/${this.props.match.params.id}/t/new`
-                );
+                this.openModal("retro");
               }}
             >
-              <p>Create new issue</p>
-              <img className="marg-left-md  add-icon" src={PlusIcon} alt="" />
+              Start retrospective
+              <img className="marg-left-md add-icon" src={RetroIcon} alt="" />
             </button>
           </div>
 
