@@ -21,6 +21,19 @@
   }
 }
 
+.action-btns {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  button {
+    min-width: 20rem;
+    max-width: 30vw;
+    min-height: 5rem;
+    margin: 2rem 2rem 0;
+  }
+}
+
 .btn {
   &-cancel {
     background-image: $btn-nope;
