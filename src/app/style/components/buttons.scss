@@ -1,56 +1,6 @@
-.button {
-  padding: 10px 15px;
-  background-color: $primary-color;
-  color: #fff;
-  transition: 250ms all ease-in-out;
-  border: none;
-  outline: none;
-  border-radius: 3px;
-
-  &:hover {
-    cursor: pointer;
-    background-color: lighten($primary-color, 20%);
-  }
-
-  &-secondary {
-    background-color: $secondary-color;
-
-    &:hover {
-      background-color: lighten($secondary-color, 8%);
-    }
-  }
-}
-
 .action-btns {
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin: 0 auto;
-  button {
-    min-width: 20rem;
-    max-width: 30vw;
-    min-height: 5rem;
-    margin: 2rem 2rem 0;
-  }
-}
-
-.btn {
-  &-cancel {
-    background-image: $btn-nope;
-    font-size: inherit;
-    cursor: pointer;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-  }
-
-  &-confirm {
-    background-image: $btn-yepp;
-
-    font-size: inherit;
-    cursor: pointer;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-  }
 }
 
 .icon-button {
@@ -78,12 +28,9 @@
 
 .icon-text-btn {
   border-radius: 50px;
-  // padding: 1rem;
   border: none;
   display: flex;
   align-items: center;
-  // padding: 1rem 2rem;
-
   background-size: 300% 100%;
 
   -o-transition: all 0.4s ease-in-out;
@@ -98,6 +45,9 @@
     -o-transition: all 0.4s ease-in-out;
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
+  }
+  &:active {
+    transform: translateY(2px);
   }
 }
 
@@ -122,12 +72,21 @@
     -webkit-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
   }
+
+  &:active {
+    transform: translateY(2px);
+  }
 }
 
-.btn-sm {
+// SIZES
+
+.btn-lg {
+  padding: 1.5rem 4rem;
+  font-size: 1.7rem;
 }
 
 .btn-md {
+  min-width: 14rem;
   font-size: 1.4rem;
   padding: 1rem 2rem;
 }
@@ -136,6 +95,8 @@
   height: 2.5rem;
   width: 2.5rem;
 }
+
+// COLORS
 
 .neutral {
   //the yellow one in case I feel like changing the neutral btn color

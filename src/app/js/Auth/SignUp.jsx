@@ -27,7 +27,7 @@ class SignUp extends React.Component {
           onChange={evt =>
             this.props.handleInputChange("username", evt.target.value)
           }
-          className="input"
+          className="marg-left-md input"
           placeholder="Username"
         />
         <br />
@@ -54,7 +54,10 @@ class SignUp extends React.Component {
         />
         <br />
         <br />
-        <button className="button" onClick={() => this.props.sign("up")}>
+        <button
+          className="btn-lg text-btn confirm"
+          onClick={() => this.props.sign("up")}
+        >
           Sign Up
         </button>
         <br />

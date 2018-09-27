@@ -161,7 +161,7 @@ class CardShowAndCreate extends Component {
             </div>
             {/* action handlers for cancel and submit */}
 
-            <div>
+            <div className="action-btns">
               <button
                 onClick={this.handleInputSubmit}
                 className="icon-text-btn btn-md confirm"

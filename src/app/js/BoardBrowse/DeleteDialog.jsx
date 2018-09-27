@@ -9,7 +9,7 @@ const DeleteDialog = props => {
           Are you sure you want to delete this board? This action cannot be
           undone
         </p>
-        <div className="action-btns">
+        <div className="marg-top-md action-btns">
           <button
             className="cancel btn-md text-btn"
             onClick={() => {
@@ -20,7 +20,7 @@ const DeleteDialog = props => {
             Delete board
           </button>
           <button
-            className="neutral text-btn"
+            className="neutral  marg-left-md btn-md text-btn"
             onClick={() => {
               props.history.push(`/b`);
               props.openModal("delete");
