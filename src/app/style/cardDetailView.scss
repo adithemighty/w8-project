@@ -54,8 +54,6 @@
       font-size: inherit;
     }
 
-    .row-one {
-    }
     .row-two {
       display: flex;
     }
@@ -73,4 +71,26 @@
       }
     }
   }
+}
+
+.user-story {
+  background-image: linear-gradient(
+    to right,
+    #d5fc79a8 0%,
+    #96e6a1a9 5%,
+    white 5%
+  );
+}
+
+.bug {
+  background-image: linear-gradient(
+    to right,
+    #fc22588a 0%,
+    #ff0040a2 5%,
+    white 5%
+  );
+}
+
+.action-item {
+  background-image: linear-gradient(to right, #ede574 0%, #e1f5c4 5%, white 5%);
 }

@@ -6,14 +6,19 @@ import EditIcon from "../../assets/edit.svg";
 import { Link, Route, Switch } from "react-router-dom";
 
 const Card = props => {
-  const { title, blocker, _id } = props.ticket;
+  const { title, blocker, _id, ticketType } = props.ticket;
   return (
     <div>
       <Draggable key={_id} draggableId={_id} index={props.index}>
         {(provided, snapshot) => {
+          const ticketColor = ticketType
+            .toLowerCase()
+            .split(" ")
+            .join("-");
+          const className = `card ${ticketColor}`;
           return (
             <div
-              className="card"
+              className={className}
               onClick={() => props.ticketDetailViewOpenHandler(_id)}
               ref={provided.innerRef}
               {...provided.draggableProps}
