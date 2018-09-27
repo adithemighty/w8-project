@@ -48,7 +48,29 @@ class Navigation extends Component {
           <img className="menu-icon " src={Plus} alt="" />
         </button>
         <div className={this.state.menuClass}>
-          {this.props.user && (
+          {/* {this.props.user && ( */}
+          {this.props.user === null ? (
+            <ul>
+              <li>
+                <Link
+                  className="link nav-link"
+                  to="/auth/sign-in"
+                  onClick={this.openMenuHandler}
+                >
+                  Sign in
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="link nav-link"
+                  to="/auth/sign-up"
+                  onClick={this.openMenuHandler}
+                >
+                  Sign up
+                </Link>
+              </li>
+            </ul>
+          ) : (
             <ul>
               <li>
                 <Link
@@ -68,38 +90,15 @@ class Navigation extends Component {
                   My boards
                 </Link>
               </li>
-              {this.props.user ? (
-                <li>
-                  <Link
-                    className="link nav-link"
-                    to="/auth/logout"
-                    onClick={this.openMenuHandler}
-                  >
-                    Logout
-                  </Link>
-                </li>
-              ) : (
-                <span>
-                  <li>
-                    <Link
-                      className="link nav-link"
-                      to="/auth/sign-in"
-                      onClick={this.openMenuHandler}
-                    >
-                      Sign in
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="link nav-link"
-                      to="/auth/sign-up"
-                      onClick={this.openMenuHandler}
-                    >
-                      Sign up
-                    </Link>
-                  </li>
-                </span>
-              )}
+              <li>
+                <Link
+                  className="link nav-link"
+                  to="/auth/logout"
+                  onClick={this.openMenuHandler}
+                >
+                  Logout
+                </Link>
+              </li>
             </ul>
           )}
         </div>
