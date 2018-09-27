@@ -53,7 +53,7 @@ class BoardBrowse extends Component {
   render() {
     const addBoardBtn = (
       <button
-        className="neutral icon-text-btn marg-top-md"
+        className="confirm btn-md icon-text-btn marg-top-md"
         onClick={() => {
           this.openModal("add");
           this.props.history.push(`/b/new`);

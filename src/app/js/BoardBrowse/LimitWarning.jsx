@@ -12,7 +12,10 @@ const LimitWarning = props => {
         <br /> <br />
         <p>The card will stay in the original column</p>
         <br /> <br />
-        <button className="btn-cancel" onClick={props.limitWarningHandler}>
+        <button
+          className="text-btn  btn-md neutral"
+          onClick={props.limitWarningHandler}
+        >
           Back to board
         </button>
       </div>

@@ -85,7 +85,7 @@ class DeleteColumnDialog extends Component {
 
           <div className="action-btns marg-top-md">
             <button
-              className="btn-confirm "
+              className="text-btn  btn-md cancel"
               onClick={() => {
                 this.handleDelete();
                 this.props.openModal("delete");
@@ -94,7 +94,7 @@ class DeleteColumnDialog extends Component {
               Delete column
             </button>
             <button
-              className="btn-cancel "
+              className="text-btn marg-left-md btn-md neutral"
               onClick={() => {
                 this.props.openModal("delete");
               }}

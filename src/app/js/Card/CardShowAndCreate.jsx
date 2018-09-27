@@ -160,23 +160,25 @@ class CardShowAndCreate extends Component {
               )}
             </div>
             {/* action handlers for cancel and submit */}
-
-            <div className="action-btns">
-              <button onClick={this.handleInputSubmit} className="btn-confirm">
-                {/* so that the user is not confused and I don't want to use any too generic button text */}
-                {this.state.new ? "Create Issue" : "Save changes"}
-              </button>
-              <button
-                className="btn-cancel"
-                onClick={() => {
-                  this.props.history.push(
-                    `/b/${this.props.match.params.boardId}`
-                  );
-                }}
-              >
-                Back to board
-              </button>
-            </div>
+          </div>
+          <div className="action-btns">
+            <button
+              onClick={this.handleInputSubmit}
+              className="text-btn   btn-lg confirm"
+            >
+              {/* so that the user is not confused and I don't want to use any too generic button text */}
+              {this.state.new ? "Create Issue" : "Save changes"}
+            </button>
+            <button
+              className="text-btn marg-left-md btn-lg cancel"
+              onClick={() => {
+                this.props.history.push(
+                  `/b/${this.props.match.params.boardId}`
+                );
+              }}
+            >
+              Back to board
+            </button>
           </div>
         </div>
       </div>
