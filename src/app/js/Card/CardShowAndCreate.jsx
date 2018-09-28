@@ -20,7 +20,8 @@ class CardShowAndCreate extends Component {
       estimationInputFieldShown: false,
       ticketTypeInputFieldShown: false,
       descriptionTypeInputFieldShown: false,
-      oneFieldShown: false
+      oneFieldShown: false,
+      errorMessage: ""
     };
   }
 
@@ -40,6 +41,7 @@ class CardShowAndCreate extends Component {
               this.state.new ? (
                 <input
                   className="active-input input"
+                  required
                   type="text"
                   id="title"
                   onChange={e =>
@@ -161,6 +163,7 @@ class CardShowAndCreate extends Component {
             </div>
             {/* action handlers for cancel and submit */}
           </div>
+          {this.state.errorMessage}
           <div className="action-btns">
             <button
               onClick={this.handleInputSubmit}
@@ -252,24 +255,29 @@ class CardShowAndCreate extends Component {
     if (description) {
       submitableFields["description"] = description;
     }
+    submitableFields["boardId"] = this.props.match.params.boardId;
 
     if (!this.state.new) {
-      api.post(`/api/t/update/${this.state.id}`, submitableFields).then(() => {
-        this.props.ticketDetailViewOpenHandler();
-        this.props.getBoardData();
-        this.props.history.push(`/b/${this.props.match.params.boardId}`);
-      });
-    } else {
       api
-        .post(`/api/t/new`, {
-          title,
-          ticketType,
-          boardId: this.props.match.params.boardId
-        })
+        .post(`/api/t/update/${this.state.id}`, submitableFields)
         .then(result => {
+          console.log(result);
+          this.props.ticketDetailViewOpenHandler();
           this.props.getBoardData();
           this.props.history.push(`/b/${this.props.match.params.boardId}`);
         });
+    } else {
+      api.post(`/api/t/new`, submitableFields).then(result => {
+        if (result.error) {
+          console.log("error!", result);
+          this.setState({
+            errorMessage: "Please create at least one column first"
+          });
+        } else {
+          this.props.getBoardData();
+          this.props.history.push(`/b/${this.props.match.params.boardId}`);
+        }
+      });
     }
   };
 }

@@ -93,36 +93,36 @@ router.post("/update", (req, res) => {
   });
 });
 
-router.get("/unsplash", (req, res) => {
-  axios
-    .get(`https://api.unsplash.com/search/photos?page=1&query=flower`, {
-      headers: {
-        Authorization: `Client-ID ${config.UNSPLASH_ACCESS_KEY}`
-      }
-    })
-    .then(result => {
-      res.send(result.data);
-    })
-    .catch(err => res.send(err));
-});
+// router.get("/unsplash", (req, res) => {
+//   axios
+//     .get(`https://api.unsplash.com/search/photos?page=1&query=flower`, {
+//       headers: {
+//         Authorization: `Client-ID ${config.UNSPLASH_ACCESS_KEY}`
+//       }
+//     })
+//     .then(result => {
+//       res.send(result.data);
+//     })
+//     .catch(err => res.send(err));
+// });
 
-router.post("/gitTest", (req, res) => {
-  axios
-    .post(
-      "https://api.github.com/repos/adiyathemighty/w8-project/issues",
-      { title: "Ticket title" },
-      {
-        headers: {
-          Authorization: "token 80618094caf92bc277d8d7da0ebc1968722da421",
-          Accept: "application/vnd.github.symmetra-preview+json",
-          "Content-Type": "application/json"
-        }
-      }
-    )
-    .then(result => {
-      res.send(result);
-    })
-    .catch(err => res.send(err));
-});
+// router.post("/gitTest", (req, res) => {
+//   axios
+//     .post(
+//       "https://api.github.com/repos/adiyathemighty/w8-project/issues",
+//       { title: "Ticket title" },
+//       {
+//         headers: {
+//           Authorization: "token 80618094caf92bc277d8d7da0ebc1968722da421",
+//           Accept: "application/vnd.github.symmetra-preview+json",
+//           "Content-Type": "application/json"
+//         }
+//       }
+//     )
+//     .then(result => {
+//       res.send(result);
+//     })
+//     .catch(err => res.send(err));
+// });
 
 module.exports = router;

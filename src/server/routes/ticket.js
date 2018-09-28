@@ -26,23 +26,30 @@ router.post("/new", (req, res) => {
 
   //TODO generate keys based on board
   let firstColumnId;
-  Board.findById({ _id: boardId }).then(board => {
-    firstColumnId = board.columns[0]._id;
-
-    Ticket.create(newTicket).then(ticket => {
-      Column.findByIdAndUpdate(
-        { _id: firstColumnId },
-        { $push: { ticket: ticket._id } },
-        { new: true }
-      )
-        .then(column => {
-          res.send(column);
+  console.log(boardId);
+  Board.findById({ _id: boardId })
+    .then(board => {
+      if (board.columns.length === 0) {
+        res.send({ error: "no to do column found" });
+      }
+      firstColumnId = board.columns[0]._id;
+      Ticket.create(newTicket)
+        .then(ticket => {
+          Column.findByIdAndUpdate(
+            { _id: firstColumnId },
+            { $push: { ticket: ticket._id } },
+            { new: true }
+          ).then(column => {
+            res.send(column);
+          });
         })
         .catch(err => {
           res.send(err);
         });
+    })
+    .catch(err => {
+      res.send(err);
     });
-  });
 });
 
 router.get("/show/:id", (req, res) => {
