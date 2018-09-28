@@ -70,14 +70,19 @@ class DailyAlarm extends Component {
   render() {
     return (
       <div className="modal ">
-        <div className="modal-text modal-md">
+        <div className="modal-text modal-lg">
           <div className="wrapper">
             {this.state.timerRunning ? (
               this.createTimer()
             ) : (
               <div className="text">
-                The goal of the daily is to make a plan for the day and raise
-                blockers
+                <h2>The goal of the daily:</h2>
+                <br />
+                <div className="text-list">
+                  <li>Raise blockers</li>
+                  <li>Make a plan for the day</li>
+                  <li>No small talk</li>
+                </div>
               </div>
             )}
           </div>

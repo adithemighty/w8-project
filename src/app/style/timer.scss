@@ -104,6 +104,13 @@
   left: 100%;
   top: 200%;
   padding: 5rem;
+
+  .text-list {
+    margin-left: 7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .countdown {

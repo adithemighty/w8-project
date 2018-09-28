@@ -30,7 +30,7 @@
     }
 
     .options {
-      width: 50%;
+      width: 100%;
       border: none;
       padding: 2rem;
       margin: 0.1rem 0;
@@ -70,7 +70,36 @@
 }
 .modal-md {
   width: 56rem;
-  height: 56rem;
+  height: 33rem;
 }
 .modal-lg {
+  width: 56rem;
+  height: 45rem;
+}
+
+.modal-md-short {
+  width: 56rem;
+  height: 43rem;
+
+  @media (max-width: 600px) {
+    min-width: 70vw;
+    min-height: 70vh;
+  }
+}
+.modal-lg-short {
+  width: 56rem;
+  height: 30;
+
+  @media (max-width: 600px) {
+    min-width: 70vw;
+    min-height: 70vh;
+  }
+}
+
+.scrolling-box {
+  display: flex;
+  flex-direction: column;
+  max-height: 15rem;
+  overflow: auto;
+  width: 20rem;
 }

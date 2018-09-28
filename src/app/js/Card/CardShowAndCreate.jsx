@@ -164,13 +164,13 @@ class CardShowAndCreate extends Component {
           <div className="action-btns">
             <button
               onClick={this.handleInputSubmit}
-              className="text-btn   btn-lg confirm"
+              className="text-btn   btn-md confirm"
             >
               {/* so that the user is not confused and I don't want to use any too generic button text */}
               {this.state.new ? "Create Issue" : "Save changes"}
             </button>
             <button
-              className="text-btn marg-left-md btn-lg cancel"
+              className="text-btn marg-left-md btn-md cancel"
               onClick={() => {
                 this.props.history.push(
                   `/b/${this.props.match.params.boardId}`
@@ -263,6 +263,7 @@ class CardShowAndCreate extends Component {
       api
         .post(`/api/t/new`, {
           title,
+          ticketType,
           boardId: this.props.match.params.boardId
         })
         .then(result => {

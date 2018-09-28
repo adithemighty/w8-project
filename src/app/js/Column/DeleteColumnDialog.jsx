@@ -73,7 +73,7 @@ class DeleteColumnDialog extends Component {
     );
     return (
       <div className="modal">
-        <div className="modal-text">
+        <div className="modal-text modal-md-short">
           <p className="marg-bottom-md">
             This action cannot be undone.{" "}
             {this.props.columnHasTickets
@@ -81,7 +81,9 @@ class DeleteColumnDialog extends Component {
               : null}
           </p>
 
-          {this.props.columnHasTickets ? destinationColumnIdOptions : null}
+          {this.props.columnHasTickets ? (
+            <div className="scrolling-box">{destinationColumnIdOptions}</div>
+          ) : null}
 
           <div className="action-btns marg-top-md">
             <button

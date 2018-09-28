@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 const RetroModal = props => {
   return (
     <div className="modal">
-      <div className="modal-text ">
+      <div className="modal-text modal-md">
         <p>Retrospectives are an important tool to improve team performances</p>
         <br />
 
