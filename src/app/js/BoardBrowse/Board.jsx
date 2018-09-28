@@ -130,6 +130,7 @@ class Board extends Component {
             <p className="title">{this.state.title}</p>
 
             <button
+              disabled={numberOfColumns === 0}
               className="icon-text-btn btn-md marg-left-md confirm"
               onClick={() => {
                 this.props.history.push(
