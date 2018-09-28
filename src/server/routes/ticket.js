@@ -5,7 +5,7 @@ const Ticket = require("../models/Ticket");
 const Board = require("../models/Board");
 
 router.post("/new", (req, res) => {
-  const { title, description, estimation, boardId } = req.body;
+  const { title, description, estimation, ticketType, boardId } = req.body;
 
   const newTicket = {};
 
@@ -19,6 +19,9 @@ router.post("/new", (req, res) => {
 
   if (typeof estimation !== "undefined") {
     newTicket["estimation"] = estimation;
+  }
+  if (typeof ticketType !== "undefined") {
+    newTicket["ticketType"] = ticketType;
   }
 
   //TODO generate keys based on board
