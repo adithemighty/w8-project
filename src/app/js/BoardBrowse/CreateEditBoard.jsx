@@ -51,7 +51,7 @@ class CreateEditBoard extends Component {
   render() {
     return (
       <div className="modal">
-        <div className="modal-text">
+        <div className="modal-text modal-sm">
           <label htmlFor="title">Title</label>
           <input
             className="active-input input"

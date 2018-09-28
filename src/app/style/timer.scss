@@ -70,7 +70,6 @@
     width: 9rem;
 
     border-radius: 5px;
-    margin-top: 6rem;
     margin-bottom: 0.2rem;
     min-height: 4rem;
     font-size: 1.5rem;
@@ -89,16 +88,8 @@
     &:active {
       transform: translateY(3px);
     }
-
-    @media (max-width: 630px) {
-      width: 8rem;
-      padding: 0.5rem 1rem;
-      min-height: 3rem;
-      font-size: 1.2rem;
-    }
   }
   .btn-start {
-    margin-left: 3rem;
     @media (max-width: 630px) {
       margin-left: 0.5rem;
     }
@@ -109,7 +100,7 @@
   width: 100%;
   display: inline-block;
   text-align: center;
-  font-size: 4rem;
+  font-size: 2.5rem;
   left: 100%;
   top: 200%;
   padding: 5rem;
@@ -122,14 +113,10 @@
   height: 1em;
   position: absolute;
   left: 50%;
-  top: 100%;
+  top: 73%;
   transform: translate3d(-50%, -50%, 0);
   animation: container var(--durationInternal) steps(1) infinite;
   overflow: hidden;
-
-  @media (max-width: 630px) {
-    font-size: 30rem;
-  }
 
   &::before,
   &::after {
