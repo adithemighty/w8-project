@@ -26,7 +26,6 @@ router.post("/new", (req, res) => {
 
   //TODO generate keys based on board
   let firstColumnId;
-  console.log(boardId);
   Board.findById({ _id: boardId })
     .then(board => {
       if (board.columns.length === 0) {

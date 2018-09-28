@@ -51,6 +51,7 @@ class ColumnCreate extends Component {
             onKeyPress={e => this.handleEnter(e)}
           />
           <button
+            disabled={this.state.columnTitle.length === 0}
             type="submit"
             className="confirm btn-md icon-text-btn"
             onClick={e => this.handleSubmit(e)}
