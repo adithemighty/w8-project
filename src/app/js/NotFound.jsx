@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
+import unicorn from "../assets/unicorn.jpg";
 
 const NotFound = () => {
-    return (
-        <div className="container">
-            <h1>404</h1>
-        </div>
-    )
-}
+  return (
+    <div className="not-found">
+      <h1>Page not found</h1>
+      <div>
+        <img src={unicorn} alt="" />
+      </div>
+    </div>
+  );
+};
 
-export default NotFound
+export default NotFound;
