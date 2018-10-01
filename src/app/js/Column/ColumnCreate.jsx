@@ -45,6 +45,7 @@ class ColumnCreate extends Component {
         className="confirm btn-md icon-text-btn"
         onClick={e => this.handleSubmit(e)}
       >
+        {/* this span is needed for the tooltip to work on hover */}
         <span>Create new column</span>
       </button>
     );

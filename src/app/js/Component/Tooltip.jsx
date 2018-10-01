@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 class Tooltip extends React.Component {
   constructor(props) {
@@ -18,7 +17,6 @@ class Tooltip extends React.Component {
 
   render() {
     const { element, tooltipText } = this.props;
-    console.log(this.props);
 
     const visibility = this.state.hover
       ? "tooltip-visible "
@@ -26,11 +24,7 @@ class Tooltip extends React.Component {
 
     return (
       <div className="tooltip-parent">
-        <div
-          key={tooltipText}
-          onMouseOver={this.handleMouseIn}
-          onMouseOut={this.handleMouseOut}
-        >
+        <div onMouseOver={this.handleMouseIn} onMouseOut={this.handleMouseOut}>
           {element}
         </div>
 

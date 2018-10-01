@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import api from "../utils/api";
-
-import DeleteIcon from "../../assets/trash.svg";
-import { link } from "fs";
+import Tooltip from "../Component/Tooltip";
 
 class DeleteColumnDialog extends Component {
   constructor(props) {
@@ -59,11 +57,24 @@ class DeleteColumnDialog extends Component {
       disabledStatus = false;
     }
 
+    const deleteBtn = (
+      <button
+        className="text-btn  btn-md cancel"
+        disabled={disabledStatus}
+        onClick={() => {
+          this.handleDelete();
+          this.props.openModal("delete");
+        }}
+      >
+        <span>Delete column</span>
+      </button>
+    );
+
     const destinationColumnIdOptions = Object.keys(this.props.columns).map(
       (el, ind) => {
         const column = this.props.columns[el];
         if (column.id === this.props.sourceColumnId) {
-          //origin column can't be destination column because it will be moved
+          //origin column can't be destination column because it will be removed
           return;
         }
 
@@ -97,16 +108,15 @@ class DeleteColumnDialog extends Component {
           ) : null}
 
           <div className="action-btns marg-top-md">
-            <button
-              className="text-btn  btn-md cancel"
-              disabled={disabledStatus}
-              onClick={() => {
-                this.handleDelete();
-                this.props.openModal("delete");
-              }}
-            >
-              Delete column
-            </button>
+            {this.props.columnHasTickets &&
+            this.state.destinationColumnId.length === 0 ? (
+              <Tooltip
+                tooltipText="Select destination column"
+                element={deleteBtn}
+              />
+            ) : (
+              deleteBtn
+            )}
             <button
               className="text-btn marg-left-md btn-md neutral"
               onClick={() => {
