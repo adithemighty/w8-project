@@ -18,14 +18,19 @@ class Tooltip extends React.Component {
 
   render() {
     const { element, tooltipText } = this.props;
+    console.log(this.props);
 
     const visibility = this.state.hover
-      ? "tooltip-visible tooltip-size-md"
+      ? "tooltip-visible "
       : "tooltip-invisible";
 
     return (
       <div className="tooltip-parent">
-        <div onMouseOver={this.handleMouseIn} onMouseOut={this.handleMouseOut}>
+        <div
+          key={tooltipText}
+          onMouseOver={this.handleMouseIn}
+          onMouseOut={this.handleMouseOut}
+        >
           {element}
         </div>
 
