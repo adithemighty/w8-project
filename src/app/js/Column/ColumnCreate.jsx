@@ -38,6 +38,16 @@ class ColumnCreate extends Component {
   };
 
   render() {
+    const createColumnBtn = (
+      <button
+        disabled={this.state.columnTitle.length === 0}
+        type="submit"
+        className="confirm btn-md icon-text-btn"
+        onClick={e => this.handleSubmit(e)}
+      >
+        <span>Create new column</span>
+      </button>
+    );
     return (
       <div className="column">
         <div className="new">
@@ -51,36 +61,14 @@ class ColumnCreate extends Component {
             type="text"
             onKeyPress={e => this.handleEnter(e)}
           />
-          {/* <button
-            // disabled={this.state.columnTitle.length === 0}
-            type="submit"
-            className="confirm btn-md icon-text-btn"
-            onClick={e => this.handleSubmit(e)}
-          >
-            Create new column
-          </button> */}
+
           {this.state.columnTitle.length === 0 ? (
             <Tooltip
               tooltipText="Title is required"
-              element={
-                <button
-                  disabled={this.state.columnTitle.length === 0}
-                  type="submit"
-                  className="confirm btn-md icon-text-btn"
-                  onClick={e => this.handleSubmit(e)}
-                >
-                  <span>Create new column</span>
-                </button>
-              }
+              element={createColumnBtn}
             />
           ) : (
-            <button
-              type="submit"
-              className="confirm btn-md icon-text-btn"
-              onClick={e => this.handleSubmit(e)}
-            >
-              Create new column
-            </button>
+            createColumnBtn
           )}
         </div>
       </div>
