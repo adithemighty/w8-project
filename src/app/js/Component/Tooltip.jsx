@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 class Tooltip extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class Tooltip extends React.Component {
     const { element, tooltipText } = this.props;
 
     const visibility = this.state.hover
-      ? "tooltip-visible tooltip-size-md"
+      ? "tooltip-visible "
       : "tooltip-invisible";
 
     return (

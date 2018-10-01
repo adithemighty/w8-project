@@ -68,7 +68,7 @@ class Board extends Component {
       );
     });
 
-    const createColumnBtn = (
+    const createIssueBtn = (
       <button
         disabled={numberOfColumns === 0}
         className="icon-text-btn btn-md marg-left-md confirm "
@@ -148,10 +148,10 @@ class Board extends Component {
             {numberOfColumns === 0 ? (
               <Tooltip
                 tooltipText="Create a column first"
-                element={createColumnBtn}
+                element={createIssueBtn}
               />
             ) : (
-              createColumnBtn
+              createIssueBtn
             )}
 
             <button

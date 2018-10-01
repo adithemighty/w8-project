@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import api from "../utils/api";
+import Tooltip from "../Component/Tooltip";
 
 class ColumnCreate extends Component {
   constructor(props) {
@@ -37,6 +38,17 @@ class ColumnCreate extends Component {
   };
 
   render() {
+    const createColumnBtn = (
+      <button
+        disabled={this.state.columnTitle.length === 0}
+        type="submit"
+        className="confirm btn-md icon-text-btn"
+        onClick={e => this.handleSubmit(e)}
+      >
+        {/* this span is needed for the tooltip to work on hover */}
+        <span>Create new column</span>
+      </button>
+    );
     return (
       <div className="column">
         <div className="new">
@@ -50,14 +62,15 @@ class ColumnCreate extends Component {
             type="text"
             onKeyPress={e => this.handleEnter(e)}
           />
-          <button
-            disabled={this.state.columnTitle.length === 0}
-            type="submit"
-            className="confirm btn-md icon-text-btn"
-            onClick={e => this.handleSubmit(e)}
-          >
-            Create new column
-          </button>
+
+          {this.state.columnTitle.length === 0 ? (
+            <Tooltip
+              tooltipText="Title is required"
+              element={createColumnBtn}
+            />
+          ) : (
+            createColumnBtn
+          )}
         </div>
       </div>
     );
