@@ -10,6 +10,7 @@ import ClockIcon from "../../assets/clock.svg";
 import RetroIcon from "../../assets/idea.svg";
 
 import Column from "../Column";
+import Tooltip from "../Component/Tooltip";
 import LimitWarning from "./LimitWarning";
 import ColumnCreate from "../Column/ColumnCreate";
 import CardShowAndCreate from "../Card/CardShowAndCreate";
@@ -66,6 +67,21 @@ class Board extends Component {
         />
       );
     });
+
+    const createColumnBtn = (
+      <button
+        disabled={numberOfColumns === 0}
+        className="icon-text-btn btn-md marg-left-md confirm "
+        onClick={() => {
+          this.props.history.push(`/b/${this.props.match.params.id}/t/new`);
+        }}
+      >
+        <span>
+          <p>Create new issue</p>
+          <img className="marg-left-md  add-icon" src={PlusIcon} alt="" />
+        </span>
+      </button>
+    );
 
     if (this.state.id === "") {
       return <div>Loading</div>;
@@ -129,18 +145,14 @@ class Board extends Component {
 
             <p className="title">{this.state.title}</p>
 
-            <button
-              disabled={numberOfColumns === 0}
-              className="icon-text-btn btn-md marg-left-md confirm"
-              onClick={() => {
-                this.props.history.push(
-                  `/b/${this.props.match.params.id}/t/new`
-                );
-              }}
-            >
-              <p>Create new issue</p>
-              <img className="marg-left-md  add-icon" src={PlusIcon} alt="" />
-            </button>
+            {numberOfColumns === 0 ? (
+              <Tooltip
+                tooltipText="Create a column first"
+                element={createColumnBtn}
+              />
+            ) : (
+              createColumnBtn
+            )}
 
             <button
               className=" marg-left-md btn-md icon-text-btn neutral"
@@ -186,10 +198,6 @@ class Board extends Component {
       currentTime: moment()
     });
   };
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
 
   componentDidMount() {
     this.getBoardData();
@@ -272,9 +280,9 @@ class Board extends Component {
           newState.columns[title] = {
             tickets: ticket,
             id: _id,
-            title: title,
-            limit: limit,
-            ind: ind
+            title,
+            limit,
+            ind
           };
         });
 
