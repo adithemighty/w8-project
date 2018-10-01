@@ -49,6 +49,16 @@ class DeleteColumnDialog extends Component {
   };
 
   render() {
+    let disabledStatus = true;
+    if (
+      this.state.destinationColumnId.length > 0 &&
+      this.props.columnHasTickets
+    ) {
+      disabledStatus = false;
+    } else if (!this.props.columnHasTickets) {
+      disabledStatus = false;
+    }
+
     const destinationColumnIdOptions = Object.keys(this.props.columns).map(
       (el, ind) => {
         const column = this.props.columns[el];
@@ -71,6 +81,7 @@ class DeleteColumnDialog extends Component {
         );
       }
     );
+
     return (
       <div className="modal">
         <div className="modal-text modal-md-short">
@@ -88,6 +99,7 @@ class DeleteColumnDialog extends Component {
           <div className="action-btns marg-top-md">
             <button
               className="text-btn  btn-md cancel"
+              disabled={disabledStatus}
               onClick={() => {
                 this.handleDelete();
                 this.props.openModal("delete");
