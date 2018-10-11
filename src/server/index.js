@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const chalk = require("chalk");
 const fs = require("fs");
 const fileUpload = require("express-fileupload");
+const graphqlHTTP = require("express-graphql");
 
 const config = require("./config");
 
@@ -38,6 +39,8 @@ server.use(express.static(path.join(__dirname, "public")));
 server.use("/api", apiRoutes);
 // server.use("/b", boardRoutes);
 server.use("/c", columnRoutes);
+//options for graphql
+server.use("/graphql", graphqlHTTP({}));
 server.use(appRoutes);
 
 mongoose.connection.on("connected", () => {
