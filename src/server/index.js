@@ -10,12 +10,11 @@ const chalk = require("chalk");
 const fs = require("fs");
 const fileUpload = require("express-fileupload");
 const graphqlHTTP = require("express-graphql");
-
+const schema = require("./schema/schema");
 const config = require("./config");
 
 const apiRoutes = require("./routes/api");
 const appRoutes = require("./routes/app");
-// const boardRoutes = require("./routes/board");
 const columnRoutes = require("./routes/column");
 
 mongoose.connect(
@@ -25,11 +24,21 @@ mongoose.connect(
 
 const server = express();
 
+server.use(bodyParser.json());
+
+server.use(
+  "/graphql",
+  graphqlHTTP({
+    //options for graphql
+    schema,
+    graphiql: true
+  })
+);
+
 server.use(helmet());
 server.use(morgan("dev"));
 server.use(compression());
 server.use(fileUpload());
-server.use(bodyParser.json());
 
 if (!config.IS_PRODUCTION) {
   server.use(express.static(path.join(__dirname, "../../dist")));
@@ -37,10 +46,6 @@ if (!config.IS_PRODUCTION) {
 
 server.use(express.static(path.join(__dirname, "public")));
 server.use("/api", apiRoutes);
-// server.use("/b", boardRoutes);
-server.use("/c", columnRoutes);
-//options for graphql
-server.use("/graphql", graphqlHTTP({}));
 server.use(appRoutes);
 
 mongoose.connection.on("connected", () => {
