@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import api from "../utils/api";
 import Tooltip from "../Component/Tooltip";
+import Button from "../Component/Button";
 
 class DeleteColumnDialog extends Component {
   constructor(props) {
@@ -58,16 +59,17 @@ class DeleteColumnDialog extends Component {
     }
 
     const deleteBtn = (
-      <button
-        className="text-btn  btn-md cancel"
-        disabled={disabledStatus}
-        onClick={() => {
+      <Button
+        callBack={() => {
           this.handleDelete();
           this.props.openModal("delete");
         }}
-      >
-        <span>Delete column</span>
-      </button>
+        type="text-btn"
+        color="cancel"
+        size="btn-md"
+        text="Delete column"
+        disabled={disabledStatus}
+      />
     );
 
     const destinationColumnIdOptions = Object.keys(this.props.columns).map(
@@ -117,14 +119,15 @@ class DeleteColumnDialog extends Component {
             ) : (
               deleteBtn
             )}
-            <button
-              className="text-btn marg-left-md btn-md neutral"
-              onClick={() => {
-                this.props.openModal("delete");
-              }}
-            >
-              Cancel
-            </button>
+
+            <Button
+              callBackOption="delete"
+              callBack={() => this.props.openModal("delete")}
+              type="text-btn"
+              color="neutral"
+              size="btn-md"
+              text="Cancel"
+            />
           </div>
         </div>
       </div>
